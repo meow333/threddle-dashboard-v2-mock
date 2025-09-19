@@ -1,0 +1,8 @@
+<svg width="800" height="400" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#f3f4f6"/>
+  <rect x="50" y="50" width="700" height="300" rx="8" fill="#e5e7eb" stroke="#d1d5db" stroke-width="2"/>
+  <text x="400" y="200" text-anchor="middle" fill="#6b7280" font-family="Arial, sans-serif" font-size="18">World Map Placeholder</text>
+  <circle cx="200" cy="150" r="8" fill="#2563eb"/>
+  <circle cx="400" cy="180" r="6" fill="#ef4444"/>
+  <circle cx="600" cy="160" r="7" fill="#10b981"/>
+</svg>
