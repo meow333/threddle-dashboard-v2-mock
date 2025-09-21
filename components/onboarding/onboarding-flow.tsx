@@ -8,63 +8,90 @@ import { RecommendationsSetup } from "./recommendations-setup";
 import { WelcomePage } from "./welcome-page";
 
 interface OnboardingFlowProps {
-  onComplete: () => void;
+	onComplete: () => void;
 }
 
 export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [userData, setUserData] = useState({
-    email: "",
-    primaryCategory: "",
-    geography: "",
-    growthFocus: "",
-    notifications: {
-      inventoryAlerts: false,
-      weeklyDigest: false,
-      competitorAlerts: false,
-    }
-  });
+	const [currentStep, setCurrentStep] = useState(0);
+	const [userData, setUserData] = useState({
+		email: "",
+		primaryCategory: "",
+		geography: "",
+		growthFocus: "",
+		notifications: {
+			inventoryAlerts: false,
+			weeklyDigest: false,
+			competitorAlerts: false
+		}
+	});
 
-  const handleNext = () => {
-    setCurrentStep(prev => prev + 1);
-  };
+	const handleNext = () => {
+		setCurrentStep((prev) => prev + 1);
+	};
 
-  const handleBack = () => {
-    setCurrentStep(prev => Math.max(0, prev - 1));
-  };
+	const handleBack = () => {
+		setCurrentStep((prev) => Math.max(0, prev - 1));
+	};
 
-  const handleRegister = () => {
-    // For new users starting onboarding, go to welcome screen
-    handleNext();
-  };
+	const handleRegister = () => {
+		// For new users starting onboarding, go to welcome screen
+		handleNext();
+	};
 
-  const handleLogin = () => {
-    handleNext();
-  };
+	const handleLogin = () => {
+		handleNext();
+	};
 
-  const handleBusinessContext = (data: { primaryCategory: string; growthFocus: string[] }) => {
-    setUserData(prev => ({ ...prev, primaryCategory: data.primaryCategory, growthFocus: data.growthFocus.join(', ') }));
-    handleNext();
-  };
+	const handleBusinessContext = (data: {
+		primaryCategory: string;
+		growthFocus: string[];
+	}) => {
+		setUserData((prev) => ({
+			...prev,
+			primaryCategory: data.primaryCategory,
+			growthFocus: data.growthFocus.join(", ")
+		}));
+		handleNext();
+	};
 
-  const handleNotificationSettings = (notifications: { inventoryAlerts: boolean; weeklyDigest: boolean; competitorAlerts: boolean }) => {
-    setUserData(prev => ({ ...prev, notifications }));
-    handleNext();
-  };
+	const handleNotificationSettings = (notifications: {
+		inventoryAlerts: boolean;
+		weeklyDigest: boolean;
+		competitorAlerts: boolean;
+	}) => {
+		setUserData((prev) => ({ ...prev, notifications }));
+		handleNext();
+	};
 
-  const steps = [
-    <LoginRegistration key="login" onSignIn={handleLogin} onRegister={handleRegister} />,
-    <WelcomeScreen key="welcome" onNext={handleNext} onBack={handleBack} />,
-    <StoreConnectionProgress key="connection" onNext={handleNext} onBack={handleBack} />,
-    <BusinessContext key="business" onNext={handleBusinessContext} onBack={handleBack} />,
-    <ProductInsightsDashboard key="insights" onNext={handleNext} onBack={handleBack} />,
-    <RecommendationsSetup key="recommendations" onNext={handleNotificationSettings} onBack={handleBack} />,
-    <WelcomePage key="final" onComplete={onComplete} onBack={handleBack} />
-  ];
+	const steps = [
+		<LoginRegistration
+			key="login"
+			onSignIn={handleLogin}
+			onRegister={handleRegister}
+		/>,
+		<WelcomeScreen key="welcome" onNext={handleNext} onBack={handleBack} />,
+		<StoreConnectionProgress
+			key="connection"
+			onNext={handleNext}
+			onBack={handleBack}
+		/>,
+		<BusinessContext
+			key="business"
+			onNext={handleBusinessContext}
+			onBack={handleBack}
+		/>,
+		<ProductInsightsDashboard
+			key="insights"
+			onNext={handleNext}
+			onBack={handleBack}
+		/>,
+		<RecommendationsSetup
+			key="recommendations"
+			onNext={handleNotificationSettings}
+			onBack={handleBack}
+		/>,
+		<WelcomePage key="final" onComplete={onComplete} onBack={handleBack} />
+	];
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {steps[currentStep]}
-    </div>
-  );
+	return <div className="min-h-screen bg-slate-50">{steps[currentStep]}</div>;
 }

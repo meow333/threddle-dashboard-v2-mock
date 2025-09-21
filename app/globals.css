@@ -190,9 +190,11 @@ html {
 
 /* Fallbacks for Tailwind CDN (no @apply processing) */
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+	background-color: var(--background);
+	color: var(--foreground);
 }
-*, ::before, ::after {
-  border-color: var(--border);
+*,
+::before,
+::after {
+	border-color: var(--border);
 }

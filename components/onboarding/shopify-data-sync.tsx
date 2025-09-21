@@ -31,7 +31,7 @@ export function ShopifyDataSync({ onNext, onBack }: ShopifyDataSyncProps) {
 	const sampleProduct = {
 		name: "Executive Wool Suit",
 		price: "$599.99",
-		image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=2980&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+		image: "/images/products/exec-wool-suit.jpg"
 	};
 
 	return (

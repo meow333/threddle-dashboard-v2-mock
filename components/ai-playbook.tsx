@@ -145,7 +145,7 @@ export function AIPlaybook() {
 			case "low":
 				return "text-green-600 bg-green-50 border-green-200";
 			default:
-				return "text-gray-600 bg-gray-50 border-gray-200";
+				return "text-slate-600 bg-slate-50 border-slate-200";
 		}
 	};
 
@@ -158,7 +158,7 @@ export function AIPlaybook() {
 			case "medium":
 				return "text-blue-600";
 			default:
-				return "text-gray-600";
+				return "text-slate-600";
 		}
 	};
 
@@ -254,7 +254,7 @@ export function AIPlaybook() {
 	return (
 		<div className="p-6 space-y-6">
 			{/* Header */}
-			<div className="flex items-center justify-between">
+			{/* <div className="flex items-center justify-between">
 				<div>
 					<h1 className="flex items-center gap-2 mb-2">
 						<Brain className="h-6 w-6 text-primary" />
@@ -264,12 +264,12 @@ export function AIPlaybook() {
 						Priority engine for formal wear execution readiness
 					</p>
 				</div>
-			</div>
+			</div> */}
 
 			{/* Priority Actions List */}
 			<Card>
 				<CardHeader>
-					<CardTitle className="flex items-center gap-2">
+					<CardTitle className="text-xl text-black font-bold flex items-center gap-2">
 						<Target className="h-5 w-5" />
 						Action Priority List
 					</CardTitle>
@@ -373,7 +373,7 @@ export function AIPlaybook() {
 				{Object.entries(recommendations).map(([category, items]) => (
 					<Card key={category}>
 						<CardHeader>
-							<CardTitle className="flex items-center gap-2">
+							<CardTitle className="text-xl text-black font-bold flex items-center gap-2">
 								{category === "Product Ideas" && (
 									<Lightbulb className="h-4 w-4" />
 								)}
@@ -425,7 +425,7 @@ export function AIPlaybook() {
 			{/* Urgency Heatmap */}
 			<Card>
 				<CardHeader>
-					<CardTitle className="flex items-center gap-2">
+					<CardTitle className="text-xl text-black font-bold flex items-center gap-2">
 						<Zap className="h-5 w-5" />
 						Urgency Heatmap
 					</CardTitle>

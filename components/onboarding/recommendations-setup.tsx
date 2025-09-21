@@ -15,6 +15,7 @@ import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { Switch } from "../ui/switch";
 import { ProgressIndicator } from "./progress-indicator";
+const parentBackgroundImage = "/images/backgrounds/bg6.jpg";
 
 interface RecommendationsSetupProps {
 	onNext: (notifications: {
@@ -71,32 +72,40 @@ export function RecommendationsSetup({
 	];
 
 	return (
-		<div className="min-h-screen flex flex-col items-center justify-center p-8 bg-gray-50">
-			<div className="w-full max-w-2xl space-y-10">
+		<div
+			className="min-h-screen flex flex-col items-center justify-center p-8 bg-slate-100"
+			style={{
+				backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 1)), url(${parentBackgroundImage})`,
+				backgroundSize: "cover",
+				backgroundPosition: "center",
+				backgroundRepeat: "no-repeat"
+			}}
+		>
+			<div className="w-full max-w-2xl space-y-6">
 				{/* Logo */}
 				<div className="flex justify-center">
 					<img
 						src={logoImage}
 						alt="Threddle Logo"
-						className="h-10 object-contain"
+						className="h-8 object-contain"
 					/>
 				</div>
 
 				{/* Header */}
 				<div className="text-center space-y-4">
-					<h1 className="text-3xl font-medium text-gray-900">
+					<h1 className="text-3xl font-medium text-slate-900">
 						Customize Your Insights
 					</h1>
-					<p className="text-lg text-gray-600 font-normal">
+					<p className="text-lg text-slate-600 font-normal">
 						Choose how you want to receive updates and
 						recommendations
 					</p>
 				</div>
 
 				{/* Recommendations Cards */}
-				<div className="space-y-6">
+				<div className="space-y-2">
 					{/* Inventory Alerts */}
-					<Card className="border border-gray-200 shadow-sm bg-white rounded-xl">
+					<Card className="border border-slate-200 shadow-sm bg-white rounded-xl">
 						<CardContent className="p-6">
 							<div className="flex items-start justify-between">
 								<div className="flex items-start gap-4">
@@ -104,15 +113,15 @@ export function RecommendationsSetup({
 										<Package className="h-6 w-6 text-orange-600" />
 									</div>
 									<div className="flex-1">
-										<h3 className="font-medium text-gray-900 mb-2">
+										<h3 className="font-medium text-slate-900 mb-2">
 											Inventory Health Alerts
 										</h3>
-										<p className="text-sm text-gray-600 font-normal mb-3">
+										<p className="text-sm text-slate-600 font-normal mb-3">
 											Get notified when products are
 											running low or trending items need
 											restocking
 										</p>
-										<div className="flex items-center gap-2 text-xs text-gray-500">
+										<div className="flex items-center gap-2 text-xs text-slate-500">
 											<Bell className="h-3 w-3" />
 											<span className="font-normal">
 												Daily notifications • Email +
@@ -135,7 +144,7 @@ export function RecommendationsSetup({
 					</Card>
 
 					{/* Weekly Digest */}
-					<Card className="border border-gray-200 shadow-sm bg-white rounded-xl">
+					<Card className="border border-slate-200 shadow-sm bg-white rounded-xl">
 						<CardContent className="p-6">
 							<div className="flex items-start justify-between">
 								<div className="flex items-start gap-4">
@@ -143,15 +152,15 @@ export function RecommendationsSetup({
 										<TrendingUp className="h-6 w-6 text-blue-600" />
 									</div>
 									<div className="flex-1">
-										<h3 className="font-medium text-gray-900 mb-2">
+										<h3 className="font-medium text-slate-900 mb-2">
 											Weekly Trends Digest
 										</h3>
-										<p className="text-sm text-gray-600 font-normal mb-3">
+										<p className="text-sm text-slate-600 font-normal mb-3">
 											Comprehensive weekly report with
 											market trends, competitor insights,
 											and growth opportunities
 										</p>
-										<div className="flex items-center gap-2 text-xs text-gray-500">
+										<div className="flex items-center gap-2 text-xs text-slate-500">
 											<Calendar className="h-3 w-3" />
 											<span className="font-normal">
 												Every Monday • Email summary
@@ -173,7 +182,7 @@ export function RecommendationsSetup({
 					</Card>
 
 					{/* Competitor Alerts */}
-					<Card className="border border-gray-200 shadow-sm bg-white rounded-xl">
+					<Card className="border border-slate-200 shadow-sm bg-white rounded-xl">
 						<CardContent className="p-6">
 							<div className="flex items-start justify-between">
 								<div className="flex items-start gap-4">
@@ -181,15 +190,15 @@ export function RecommendationsSetup({
 										<Users className="h-6 w-6 text-green-600" />
 									</div>
 									<div className="flex-1">
-										<h3 className="font-medium text-gray-900 mb-2">
+										<h3 className="font-medium text-slate-900 mb-2">
 											Competitor Activity Alerts
 										</h3>
-										<p className="text-sm text-gray-600 font-normal mb-3">
+										<p className="text-sm text-slate-600 font-normal mb-3">
 											Real-time alerts when competitors
 											launch new products, change pricing,
 											or run promotions
 										</p>
-										<div className="flex items-center gap-2 text-xs text-gray-500">
+										<div className="flex items-center gap-2 text-xs text-slate-500">
 											<Zap className="h-3 w-3" />
 											<span className="font-normal">
 												Real-time • Push notifications
@@ -212,15 +221,15 @@ export function RecommendationsSetup({
 				</div>
 
 				{/* Summary */}
-				<Card className="border border-gray-200 shadow-sm bg-gray-50 rounded-xl">
+				<Card className="border border-slate-200 shadow-sm bg-slate-50 rounded-xl">
 					<CardContent className="p-6">
 						<div className="flex items-center gap-3 mb-4">
 							<Sparkles className="h-5 w-5 text-blue-600" />
-							<h3 className="font-medium text-gray-900">
+							<h3 className="font-medium text-slate-900">
 								You&apos;re All Set!
 							</h3>
 						</div>
-						<p className="text-sm text-gray-600 font-normal mb-4">
+						<p className="text-sm text-slate-600 font-normal mb-4">
 							Based on your selections, you&apos;ll receive
 							personalized insights to help grow your formal wear
 							business.
@@ -250,7 +259,7 @@ export function RecommendationsSetup({
 						<Button
 							variant="outline"
 							onClick={onBack}
-							className="w-full h-12 flex items-center justify-center gap-2 border-gray-200 text-gray-700 hover:bg-gray-50 rounded-lg font-normal"
+							className="w-full h-12 flex items-center justify-center gap-2 border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg font-normal"
 						>
 							<ArrowLeft className="h-4 w-4" />
 							Back

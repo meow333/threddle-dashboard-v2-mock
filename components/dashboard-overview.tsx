@@ -6,6 +6,7 @@ import {
 	DollarSign,
 	Lightbulb,
 	Clock,
+	ArrowUp,
 	ArrowUpRight,
 	ArrowDownRight,
 	Minus,
@@ -171,12 +172,29 @@ const priorityActions = [
 		category: "Promotions",
 		urgency: "Medium",
 		impact: "High"
+	},
+	{
+		id: 4,
+		title: "Sustainable Wool Line",
+		confidence: 76,
+		expectedRevenue: "$156,000",
+		expectedMargin: "44%",
+		competitorRisk: "Medium",
+		timeToAct: "Next 30 days",
+		category: "Product Ideas",
+		urgency: "Medium",
+		impact: "High"
 	}
 ];
 
 // AI Playbook recommendations data
 const recommendations = {
 	"Product Ideas": [
+		{
+			title: "Bronze Brooches & Pins",
+			potential: "$149K",
+			confidence: 93
+		},
 		{
 			title: "Classic Cufflink Collection",
 			potential: "$32K",
@@ -208,6 +226,11 @@ const recommendations = {
 			title: "Reallocate Accessories",
 			potential: "$22K",
 			confidence: 78
+		},
+		{
+			title: "Increase Butterscotch Ties Stock",
+			potential: "$67K",
+			confidence: 73
 		}
 	],
 	Promotions: [
@@ -222,9 +245,14 @@ const recommendations = {
 			confidence: 76
 		},
 		{
-			title: "Corporate Partnership",
+			title: "Corporate Partnership with Gaux3",
 			potential: "$124K",
 			confidence: 88
+		},
+		{
+			title: "Discount: Butterscotch Ties",
+			potential: "$18K",
+			confidence: 64
 		}
 	]
 };
@@ -381,12 +409,12 @@ const recentActivities = [
 		type: "trend",
 		description: "New trend detected: 'Minimalist Formal Accessories'"
 	},
-	{
-		time: "4 hours ago",
-		type: "product",
-		description:
-			"Product analysis completed for 'Executive Suit Collection'"
-	},
+	// {
+	// 	time: "4 hours ago",
+	// 	type: "product",
+	// 	description:
+	// 		"Product analysis completed for 'Executive Suit Collection'"
+	// },
 	{
 		time: "6 hours ago",
 		type: "competitor",
@@ -456,7 +484,7 @@ export function DashboardOverview() {
 			case "low":
 				return "text-green-600 bg-green-50 border-green-200";
 			default:
-				return "text-gray-600 bg-gray-50 border-gray-200";
+				return "text-slate-600 bg-slate-50 border-slate-200";
 		}
 	};
 
@@ -469,7 +497,7 @@ export function DashboardOverview() {
 			case "medium":
 				return "text-blue-600";
 			default:
-				return "text-gray-600";
+				return "text-slate-600";
 		}
 	};
 
@@ -485,21 +513,21 @@ export function DashboardOverview() {
 			trend.growthData[timeRange] || trend.growthData["1y"];
 
 		return (
-			<div className="flex items-center justify-between py-3 border-b border-gray-200/50 last:border-b-0 hover:bg-gray-50 transition-colors">
+			<div className="flex items-center justify-between py-3 border-b border-slate-200/50 last:border-b-0 hover:bg-slate-50 transition-colors">
 				<div className="flex items-center gap-3 flex-1">
-					<div className="w-2 h-2 rounded-full bg-gray-400"></div>
+					<div className="w-2 h-2 rounded-full bg-slate-400"></div>
 					<div className="flex-1">
-						<div className="font-medium text-sm mb-1 text-gray-900">
+						<div className="font-medium text-sm mb-1 text-slate-900">
 							{trend.name}
 						</div>
-						<div className="text-xs text-gray-500 font-normal truncate max-w-[200px]">
+						<div className="text-xs text-slate-500 font-normal truncate max-w-[200px]">
 							{trend.searchPattern}
 						</div>
 					</div>
 				</div>
 
 				{/* Mini trend chart */}
-				<div className="flex items-center gap-4 text-xs">
+				<div className="flex items-center gap-4 text-xs min-w-[120px]">
 					<div className="w-12 h-6 flex items-center justify-center">
 						<svg
 							width="48"
@@ -517,12 +545,12 @@ export function DashboardOverview() {
 							<circle cx="46" cy="2" r="2" fill="#3b82f6" />
 						</svg>
 					</div>
-					<div className="text-right min-w-[60px]">
-						<div className="font-medium text-gray-900">
+					<div className="text-right min-w-[120px]">
+						<div className="font-medium text-slate-900">
 							{trend.avgSearchWeekly}
 						</div>
 					</div>
-					<div className="text-right min-w-[80px]">
+					<div className="text-right min-w-[120px]">
 						<div
 							className={`font-medium ${
 								isAccelerated
@@ -540,25 +568,28 @@ export function DashboardOverview() {
 
 	return (
 		<>
-			<div className="p-8 space-y-8 bg-gray-50">
+			<div
+				className="p-8 space-y-8"
+				style={{ backgroundColor: "#f9f9f9" }}
+			>
 				{/* Page Header */}
 				{/* <div>
-          <h1 className="text-gray-900 font-medium">Trend Monitor</h1>
-          <p className="text-gray-600 font-normal">
+          <h1 className="text-slate-900 font-medium">Trend Monitor</h1>
+          <p className="text-slate-600 font-normal">
             AI-powered fashion trend intelligence for your
             Shopify store
           </p>
         </div> */}
 
 				{/* Header */}
-				<header className="border-b border-gray-200 bg-white rounded-xl px-8 py-6 shadow-sm">
+				<header className="border border-slate-200 bg-white rounded-xl px-8 py-6 shadow-sm ">
 					<div className="flex items-center justify-between">
-						<div className="flex items-center gap-6 flex-1 max-w-2xl">
+						<div className="flex items-center gap-6 flex-1 max-w-2xl ">
 							<div className="relative flex-1">
-								<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+								<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-500 " />
 								<Input
 									placeholder="Search trends, products, competitors..."
-									className="pl-10 border-gray-200 bg-white font-normal"
+									className="pl-10 border-slate-200 bg-white font-normal"
 								/>
 							</div>
 						</div>
@@ -569,7 +600,7 @@ export function DashboardOverview() {
 								value={timeRange}
 								onValueChange={setTimeRange}
 							>
-								<SelectTrigger className="w-32 border-gray-200 bg-white font-normal">
+								<SelectTrigger className="w-32 border-slate-200 bg-white font-normal">
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
@@ -586,7 +617,7 @@ export function DashboardOverview() {
 								value={geography}
 								onValueChange={setGeography}
 							>
-								<SelectTrigger className="w-32 border-gray-200 bg-white font-normal">
+								<SelectTrigger className="w-32 border-slate-200 bg-white font-normal">
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
@@ -611,11 +642,11 @@ export function DashboardOverview() {
 				</header>
 
 				{/* KPI Summary Cards - Enhanced Hero Cards */}
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-					<Card className="border-0 shadow-lg bg-white rounded-xl relative overflow-hidden group hover:shadow-xl transition-all duration-300 hover:scale-105">
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+					<Card className="border bg-white rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105">
 						<div className="absolute top-0 right-0 w-20 h-20 bg-green-200/30 rounded-full -translate-y-6 translate-x-6"></div>
 						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
-							<CardTitle className="text-sm font-medium text-black">
+							<CardTitle className="text-xl text-black font-bold">
 								Trending Now
 							</CardTitle>
 							<div className="p-3 bg-green-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
@@ -623,11 +654,11 @@ export function DashboardOverview() {
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
-							<div className="text-3xl font-bold text-black mb-1">
+							<div className="text-5xl font-bold text-slate-700 mb-1">
 								23
 							</div>
 							<p className="text-sm text-black font-medium mb-3">
-								Active Trends
+								Active Trends in your category this month
 							</p>
 							<div className="flex items-center mb-3">
 								<ArrowUpRight className="h-4 w-4 text-green-600 mr-1" />
@@ -644,10 +675,51 @@ export function DashboardOverview() {
 						</CardContent>
 					</Card>
 
-					<Card className="border-0 shadow-lg bg-white rounded-xl relative overflow-hidden group hover:shadow-xl transition-all duration-300 hover:scale-105">
+					<Card className="border bg-white rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105">
 						<div className="absolute top-0 right-0 w-20 h-20 bg-red-200/30 rounded-full -translate-y-6 translate-x-6"></div>
 						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
-							<CardTitle className="text-sm font-medium text-black">
+							<CardTitle className="text-xl text-black font-bold">
+								Trend Alignment
+							</CardTitle>
+							<div className="p-3 bg-red-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+								<Heart className="h-5 w-5 text-white" />
+							</div>
+						</CardHeader>
+						<CardContent className="relative z-10">
+							<div className="text-5xl font-bold text-slate-700 mb-1">
+								78
+								<span className="text-lg  text-slate-400">
+									{" "}
+									/ 100
+								</span>
+							</div>
+							<Progress value={78} className="mt-2 mb-3" />
+							<div className="flex items-center mb-3">
+								<ArrowUp className="h-4 w-4 text-green-600 mr-1" />
+								<span className="text-sm text-green-600 font-medium">
+									+15% vs last month
+								</span>
+							</div>
+							<p className="text-xs text-muted-foreground mt-2">
+								Your products are 23% more trend-aligned than
+								industry average
+							</p>
+							{/* <p className="text-sm text-red-700 font-medium mb-3">
+								12 products need attention
+							</p> */}
+							{/* <Button
+								variant="link"
+								className="p-0 h-auto text-sm text-black hover:text-red-800 font-medium"
+							>
+								View recommendations →
+							</Button> */}
+						</CardContent>
+					</Card>
+
+					{/* <Card className="border bg-white rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105">
+						<div className="absolute top-0 right-0 w-20 h-20 bg-red-200/30 rounded-full -translate-y-6 translate-x-6"></div>
+						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
+							<CardTitle className="text-xl text-black font-bold">
 								Product Health
 							</CardTitle>
 							<div className="p-3 bg-red-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
@@ -655,8 +727,12 @@ export function DashboardOverview() {
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
-							<div className="text-3xl font-bold text-black mb-1">
-								78/100
+							<div className="text-5xl font-bold text-slate-700 mb-1">
+								78
+								<span className="text-lg  text-slate-400">
+									{" "}
+									/ 100
+								</span>
 							</div>
 							<Progress value={78} className="mt-2 mb-3" />
 							<p className="text-sm text-red-700 font-medium mb-3">
@@ -669,12 +745,12 @@ export function DashboardOverview() {
 								View recommendations →
 							</Button>
 						</CardContent>
-					</Card>
+					</Card> */}
 
-					<Card className="border-0 shadow-lg bg-white rounded-xl relative overflow-hidden group hover:shadow-xl transition-all duration-300 hover:scale-105">
+					<Card className="border bg-white rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105">
 						<div className="absolute top-0 right-0 w-20 h-20 bg-blue-200/30 rounded-full -translate-y-6 translate-x-6"></div>
 						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
-							<CardTitle className="text-sm font-medium text-blue-800">
+							<CardTitle className="text-xl text-black font-bold">
 								Market Position
 							</CardTitle>
 							<div className="p-3 bg-blue-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
@@ -682,7 +758,7 @@ export function DashboardOverview() {
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
-							<div className="text-3xl font-bold text-black mb-1">
+							<div className="text-5xl font-bold text-slate-700 mb-1">
 								#3
 							</div>
 							<p className="text-sm text-black font-medium mb-3">
@@ -702,18 +778,60 @@ export function DashboardOverview() {
 						</CardContent>
 					</Card>
 
-					<Card className="border-0 shadow-lg bg-white rounded-xl relative overflow-hidden group hover:shadow-xl transition-all duration-300 hover:scale-105">
+					<Card className="border bg-white rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105">
+						<div className="absolute top-0 right-0 w-20 h-20 bg-blue-200/30 rounded-full -translate-y-6 translate-x-6"></div>
+						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
+							<CardTitle className="text-xl text-black font-bold">
+								Inventory Optimization
+							</CardTitle>
+							<div className="p-3 bg-blue-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+								<Radar className="h-5 w-5 text-white" />
+							</div>
+						</CardHeader>
+						<CardContent className="relative z-10">
+							<div className="text-5xl font-bold text-slate-700 mb-1">
+								31%
+							</div>
+							<p className="text-sm text-black font-medium mb-3">
+								improvement
+							</p>
+							<div className="text-xs space-y-1 mt-2">
+								<div className="flex justify-between">
+									<span className="text-muted-foreground">
+										Overstock avoided:
+									</span>
+									<span className="text-green-600">
+										$12.4K
+									</span>
+								</div>
+								<div className="flex justify-between">
+									<span className="text-muted-foreground">
+										Stockouts prevented:
+									</span>
+									<span className="text-green-600">18</span>
+								</div>
+								<div className="flex justify-between">
+									<span className="text-muted-foreground">
+										Efficiency score:
+									</span>
+									<span>92/100</span>
+								</div>
+							</div>
+						</CardContent>
+					</Card>
+
+					<Card className="border bg-white rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105">
 						<div className="absolute top-0 right-0 w-20 h-20 bg-orange-200/30 rounded-full -translate-y-6 translate-x-6"></div>
 						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
-							<CardTitle className="text-sm font-medium text-black">
-								AI Impact
+							<CardTitle className="text-xl text-black font-bold">
+								Threddle Impact
 							</CardTitle>
 							<div className="p-3 bg-orange-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
 								<DollarSign className="h-5 w-5 text-white" />
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
-							<div className="text-3xl font-bold text-black mb-1">
+							<div className="text-5xl font-bold text-slate-700 mb-1">
 								$12.4K
 							</div>
 							<p className="text-sm text-black font-medium mb-3">
@@ -736,11 +854,11 @@ export function DashboardOverview() {
 				</div>
 
 				{/* Action Priority List from AI Playbook - Horizontal Cards */}
-				<Card className="border border-gray-200 shadow-sm bg-white rounded-xl">
+				<Card className="border border-slate-200 shadow-sm bg-white rounded-xl">
 					<CardHeader>
-						<CardTitle className="flex items-center gap-2">
-							<Target className="h-5 w-5 text-blue-600" />
-							Action Priority List
+						<CardTitle className="text-xl text-black font-bold flex items-center gap-2">
+							<Target className="h-5 w-5 text-black" />
+							Your Priority List
 						</CardTitle>
 						<CardDescription>
 							AI-recommended actions prioritized by impact and
@@ -748,16 +866,16 @@ export function DashboardOverview() {
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+						<div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
 							{priorityActions.map((action) => (
 								<Card
 									key={action.id}
-									className="border border-gray-200 hover:border-blue-300 transition-all duration-200 hover:shadow-md bg-white rounded-lg"
+									className="border border-slate-200 hover:border-blue-300 transition-all duration-200 hover:shadow-md bg-white rounded-lg"
 								>
 									<CardContent className="p-6">
 										<div className="flex items-start justify-between mb-4">
 											<div className="flex-1">
-												<h3 className="font-semibold text-gray-900 mb-2 text-base">
+												<h3 className="font-semibold text-slate-900 mb-2 text-base">
 													{action.title}
 												</h3>
 												<Badge
@@ -774,10 +892,10 @@ export function DashboardOverview() {
 											{/* Confidence */}
 											<div>
 												<div className="flex items-center justify-between mb-2">
-													<span className="text-sm text-gray-600">
+													<span className="text-sm text-slate-600">
 														Confidence
 													</span>
-													<span className="text-sm font-medium text-gray-900">
+													<span className="text-sm font-medium text-slate-900">
 														{action.confidence}%
 													</span>
 												</div>
@@ -790,7 +908,7 @@ export function DashboardOverview() {
 											{/* Revenue and Margin */}
 											<div className="grid grid-cols-2 gap-4">
 												<div>
-													<span className="text-sm text-gray-600 block mb-1">
+													<span className="text-sm text-slate-600 block mb-1">
 														Revenue
 													</span>
 													<div className="text-lg font-bold text-black">
@@ -798,7 +916,7 @@ export function DashboardOverview() {
 													</div>
 												</div>
 												<div>
-													<span className="text-sm text-gray-600 block mb-1">
+													<span className="text-sm text-slate-600 block mb-1">
 														Margin
 													</span>
 													<div className="text-lg font-bold text-blue-600">
@@ -810,7 +928,7 @@ export function DashboardOverview() {
 											{/* Risk and Time */}
 											<div className="grid grid-cols-2 gap-4">
 												<div>
-													<span className="text-sm text-gray-600 block mb-2">
+													<span className="text-sm text-slate-600 block mb-2">
 														Risk Level
 													</span>
 													<Badge
@@ -823,7 +941,7 @@ export function DashboardOverview() {
 													</Badge>
 												</div>
 												<div>
-													<span className="text-sm text-gray-600 block mb-2">
+													<span className="text-sm text-slate-600 block mb-2">
 														Timeline
 													</span>
 													<div
@@ -839,7 +957,7 @@ export function DashboardOverview() {
 
 										{/* Action Button */}
 										<Button
-											className="w-full bg-white text-black bg-gray-100 hover:bg-gray-300"
+											className="w-full bg-white text-black bg-slate-100 hover:bg-slate-300"
 											size="sm"
 										>
 											Take Action
@@ -852,20 +970,20 @@ export function DashboardOverview() {
 				</Card>
 
 				{/* Grouped Recommendations from AI Playbook */}
-				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+				<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 					{Object.entries(recommendations).map(
 						([category, items]) => (
 							<Card key={category}>
 								<CardHeader>
-									<CardTitle className="flex items-center gap-2">
+									<CardTitle className="text-xl text-black font-bold flex items-center gap-2">
 										{category === "Product Ideas" && (
-											<Lightbulb className="h-4 w-4" />
+											<Lightbulb className="h-6 w-6  text-blue-500" />
 										)}
 										{category === "Inventory Moves" && (
-											<Package className="h-4 w-4" />
+											<Package className="h-6 w-6  text-blue-500" />
 										)}
 										{category === "Promotions" && (
-											<Percent className="h-4 w-4" />
+											<Percent className="h-6 w-6  text-blue-500" />
 										)}
 										{category}
 									</CardTitle>
@@ -908,6 +1026,40 @@ export function DashboardOverview() {
 							</Card>
 						)
 					)}
+					{/* Recent Activity */}
+					<div className="h-full">
+						<Card className="h-full">
+							<CardHeader>
+								<div className="flex items-center gap-2">
+									<Clock className="h-6 w-6 text-blue-500" />
+									<div className="font-bold text-2xl">
+										Recent Insights
+									</div>
+								</div>
+							</CardHeader>
+							<CardContent className="space-y-4">
+								{recentActivities.map((activity, index) => (
+									<div
+										key={index}
+										className="flex items-start gap-3 p-3 border rounded-lg"
+									>
+										<div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
+										<div className="flex-1">
+											<p className="text-sm">
+												{activity.description}
+											</p>
+											<p className="text-xs text-muted-foreground mt-1">
+												{activity.time}
+											</p>
+										</div>
+										{/* <Button variant="outline" size="sm">
+											View Details
+										</Button> */}
+									</div>
+								))}
+							</CardContent>
+						</Card>
+					</div>
 				</div>
 
 				{/* Trending Products Carousel */}
@@ -915,9 +1067,9 @@ export function DashboardOverview() {
 					<CardHeader>
 						<div className="flex items-center justify-between">
 							<div>
-								<CardTitle>
+								<div className=" font-bold text-2xl">
 									What&apos;s Trending in Your Category
-								</CardTitle>
+								</div>
 								<CardDescription>
 									Discover emerging trends in formal wear and
 									professional attire
@@ -1021,13 +1173,13 @@ export function DashboardOverview() {
 				</Card>
 
 				{/* Fast & Slow Growth Trends */}
-				<Card>
-					<CardContent>
-						<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 py-6">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+					<Card>
+						<CardContent>
 							{/* Accelerated Growth Column */}
 							<div>
-								<div className="flex items-center justify-between mb-4">
-									<h3 className="text-lg font-medium">
+								<div className="flex items-center justify-between my-4">
+									<h3 className="font-bold text-2xl">
 										Accelerated Growth
 									</h3>
 								</div>
@@ -1039,13 +1191,13 @@ export function DashboardOverview() {
 								{/* Header Row */}
 								<div className="flex items-center justify-between py-2 text-xs font-medium text-muted-foreground border-b border-border mb-2">
 									<div className="flex-1">Trend</div>
-									<div className="text-right min-w-[60px]">
+									<div className="text-right min-w-[120px]">
 										Search Pattern
 									</div>
-									<div className="text-right min-w-[80px]">
+									<div className="text-right min-w-[120px]">
 										Avg Search Weekly
 									</div>
-									<div className="text-right min-w-[80px]">
+									<div className="text-right min-w-[120px]">
 										{getGrowthHeader(timeRange)}
 									</div>
 								</div>
@@ -1063,11 +1215,15 @@ export function DashboardOverview() {
 									)}
 								</div>
 							</div>
+						</CardContent>
+					</Card>
 
+					<Card>
+						<CardContent>
 							{/* Steady Growth Column */}
 							<div>
-								<div className="flex items-center justify-between mb-4">
-									<h3 className="text-lg font-medium">
+								<div className="flex items-center justify-between my-4">
+									<h3 className=" font-bold text-2xl">
 										Steady Growth
 									</h3>
 								</div>
@@ -1079,13 +1235,13 @@ export function DashboardOverview() {
 								{/* Header Row */}
 								<div className="flex items-center justify-between py-2 text-xs font-medium text-muted-foreground border-b border-border mb-2">
 									<div className="flex-1">Trend</div>
-									<div className="text-right min-w-[60px]">
+									<div className="text-right min-w-[120px]">
 										Search Pattern
 									</div>
-									<div className="text-right min-w-[80px]">
+									<div className="text-right min-w-[120px]">
 										Avg Search Weekly
 									</div>
-									<div className="text-right min-w-[80px]">
+									<div className="text-right min-w-[120px]">
 										{getGrowthHeader(timeRange)}
 									</div>
 								</div>
@@ -1101,14 +1257,14 @@ export function DashboardOverview() {
 									))}
 								</div>
 							</div>
-						</div>
-					</CardContent>
-				</Card>
+						</CardContent>
+					</Card>
+				</div>
 
 				{/* Quick Actions Grid */}
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 					{/* Smart Recommendations */}
-					<Card>
+					{/* <Card>
 						<CardHeader>
 							<div className="flex items-center gap-2">
 								<Lightbulb className="h-5 w-5 text-yellow-500" />
@@ -1169,38 +1325,7 @@ export function DashboardOverview() {
 								</div>
 							))}
 						</CardContent>
-					</Card>
-
-					{/* Recent Activity */}
-					<Card>
-						<CardHeader>
-							<div className="flex items-center gap-2">
-								<Clock className="h-5 w-5 text-blue-500" />
-								<CardTitle>Recent Insights</CardTitle>
-							</div>
-						</CardHeader>
-						<CardContent className="space-y-4">
-							{recentActivities.map((activity, index) => (
-								<div
-									key={index}
-									className="flex items-start gap-3 p-3 border rounded-lg"
-								>
-									<div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
-									<div className="flex-1">
-										<p className="text-sm">
-											{activity.description}
-										</p>
-										<p className="text-xs text-muted-foreground mt-1">
-											{activity.time}
-										</p>
-									</div>
-									<Button variant="ghost" size="sm">
-										View Details
-									</Button>
-								</div>
-							))}
-						</CardContent>
-					</Card>
+					</Card> */}
 				</div>
 
 				{/* Trend Analysis Dialog */}

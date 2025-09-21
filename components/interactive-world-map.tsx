@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Badge } from "./ui/badge";
-const mapImage = "/images/maps/world-map-logo-threddle.png";
+const mapImage = "/images/maps/world.png";
 
 interface RegionData {
 	country: string;
@@ -76,7 +76,7 @@ export function InteractiveWorldMap({
 			<div className="relative">
 				{/* Background Map */}
 				<div
-					className="relative w-full h-64 bg-cover bg-center bg-no-repeat rounded-lg overflow-hidden"
+					className="relative w-full h-[350px] bg-cover bg-center bg-no-repeat rounded-lg overflow-hidden"
 					style={{
 						backgroundImage: `url(${mapImage})`,
 						backgroundSize: "cover"
