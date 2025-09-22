@@ -58,7 +58,7 @@ export function QuickProductInsight({
 						<div className="flex items-center justify-between">
 							<Badge
 								variant="secondary"
-								className="bg-green-50 text-green-700 border-green-200"
+								className="text-green-700 border-green-200"
 							>
 								<TrendingUp className="h-3 w-3 mr-1" />
 								{trendData.trend} {trendData.growth}{" "}
@@ -118,7 +118,7 @@ export function QuickProductInsight({
 					{/* Back Button */}
 					{onBack && (
 						<Button
-							variant="outline"
+							variant="secondary"
 							onClick={onBack}
 							className="w-full h-12 flex items-center justify-center gap-2"
 						>

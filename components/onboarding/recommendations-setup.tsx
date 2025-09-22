@@ -72,28 +72,20 @@ export function RecommendationsSetup({
 	];
 
 	return (
-		<div
-			className="min-h-screen flex flex-col items-center justify-center p-8 bg-slate-100"
-			style={{
-				backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 1)), url(${parentBackgroundImage})`,
-				backgroundSize: "cover",
-				backgroundPosition: "center",
-				backgroundRepeat: "no-repeat"
-			}}
-		>
+		<div className="min-h-screen flex flex-col items-center justify-center p-8 space-y-12 bg-background text-foreground transition-colors">
 			<div className="w-full max-w-2xl space-y-6">
 				{/* Logo */}
 				<div className="flex justify-center">
 					<img
 						src={logoImage}
 						alt="Threddle Logo"
-						className="h-8 object-contain"
+						className="h-8 object-contain transform dark:invert"
 					/>
 				</div>
 
 				{/* Header */}
 				<div className="text-center space-y-4">
-					<h1 className="text-3xl font-medium text-slate-900">
+					<h1 className="text-3xl font-medium text-foreground">
 						Customize Your Insights
 					</h1>
 					<p className="text-lg text-slate-600 font-normal">
@@ -105,15 +97,15 @@ export function RecommendationsSetup({
 				{/* Recommendations Cards */}
 				<div className="space-y-2">
 					{/* Inventory Alerts */}
-					<Card className="border border-slate-200 shadow-sm bg-white rounded-xl">
+					<Card className="border shadow-sm bg-card rounded-xl">
 						<CardContent className="p-6">
 							<div className="flex items-start justify-between">
 								<div className="flex items-start gap-4">
-									<div className="p-3 bg-orange-50 rounded-lg">
+									<div className="p-3 bg-orange-500/20 rounded-lg">
 										<Package className="h-6 w-6 text-orange-600" />
 									</div>
 									<div className="flex-1">
-										<h3 className="font-medium text-slate-900 mb-2">
+										<h3 className="font-medium text-foreground mb-2">
 											Inventory Health Alerts
 										</h3>
 										<p className="text-sm text-slate-600 font-normal mb-3">
@@ -144,15 +136,15 @@ export function RecommendationsSetup({
 					</Card>
 
 					{/* Weekly Digest */}
-					<Card className="border border-slate-200 shadow-sm bg-white rounded-xl">
+					<Card className="border shadow-sm bg-card rounded-xl">
 						<CardContent className="p-6">
 							<div className="flex items-start justify-between">
 								<div className="flex items-start gap-4">
-									<div className="p-3 bg-blue-50 rounded-lg">
+									<div className="p-3 bg-blue-500/20 rounded-lg">
 										<TrendingUp className="h-6 w-6 text-blue-600" />
 									</div>
 									<div className="flex-1">
-										<h3 className="font-medium text-slate-900 mb-2">
+										<h3 className="font-medium text-foreground mb-2">
 											Weekly Trends Digest
 										</h3>
 										<p className="text-sm text-slate-600 font-normal mb-3">
@@ -182,15 +174,15 @@ export function RecommendationsSetup({
 					</Card>
 
 					{/* Competitor Alerts */}
-					<Card className="border border-slate-200 shadow-sm bg-white rounded-xl">
+					<Card className="border shadow-sm bg-card rounded-xl">
 						<CardContent className="p-6">
 							<div className="flex items-start justify-between">
 								<div className="flex items-start gap-4">
-									<div className="p-3 bg-green-50 rounded-lg">
+									<div className="p-3 bg-green-500/20 rounded-lg">
 										<Users className="h-6 w-6 text-green-600" />
 									</div>
 									<div className="flex-1">
-										<h3 className="font-medium text-slate-900 mb-2">
+										<h3 className="font-medium text-foreground mb-2">
 											Competitor Activity Alerts
 										</h3>
 										<p className="text-sm text-slate-600 font-normal mb-3">
@@ -221,11 +213,11 @@ export function RecommendationsSetup({
 				</div>
 
 				{/* Summary */}
-				<Card className="border border-slate-200 shadow-sm bg-slate-50 rounded-xl">
+				<Card className="border shadow-sm bg-slate-50 dark:bg-slate-900/70 rounded-xl">
 					<CardContent className="p-6">
 						<div className="flex items-center gap-3 mb-4">
 							<Sparkles className="h-5 w-5 text-blue-600" />
-							<h3 className="font-medium text-slate-900">
+							<h3 className="font-medium text-foreground">
 								You&apos;re All Set!
 							</h3>
 						</div>
@@ -257,9 +249,9 @@ export function RecommendationsSetup({
 					</Button>
 					{onBack && (
 						<Button
-							variant="outline"
+							variant="secondary"
 							onClick={onBack}
-							className="w-full h-12 flex items-center justify-center gap-2 border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg font-normal"
+							className="w-full h-12 flex items-center justify-center gap-2 border-slate-200 text-slate-700 rounded-lg font-normal"
 						>
 							<ArrowLeft className="h-4 w-4" />
 							Back

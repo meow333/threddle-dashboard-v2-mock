@@ -164,7 +164,7 @@ export function InsightsHub() {
 			{/* Reports Library */}
 			<Card>
 				<CardHeader>
-					<CardTitle className="text-xl text-black font-bold flex flex-row justify-between">
+					<CardTitle className="text-xl text-foreground font-bold flex flex-row justify-between">
 						<div className=" flex items-center gap-2">
 							<Archive className="h-5 w-5" />
 							Reports Library
@@ -231,7 +231,7 @@ export function InsightsHub() {
 				{/* Saved Insights */}
 				<Card>
 					<CardHeader>
-						<CardTitle className="text-xl text-black font-bold flex items-center gap-2">
+						<CardTitle className="text-xl text-foreground font-bold flex items-center gap-2">
 							<Star className="h-5 w-5" />
 							Saved Insights
 						</CardTitle>
@@ -280,7 +280,7 @@ export function InsightsHub() {
 				{/* Scheduled Reports */}
 				<Card>
 					<CardHeader>
-						<CardTitle className="text-xl text-black font-bold flex items-center gap-2">
+						<CardTitle className="text-xl text-foreground font-bold flex items-center gap-2">
 							<Calendar className="h-5 w-5" />
 							Scheduled Reports
 						</CardTitle>
@@ -314,7 +314,7 @@ export function InsightsHub() {
 											aria-label={`Toggle ${schedule.title}`}
 										/>
 									</div>
-									<div className="flex items-center justify-between pt-2 border-t">
+									<div className="flex items-center justify-between pt-2 border-t border-border">
 										<span className="text-xs text-muted-foreground">
 											Next run: {schedule.nextRun}
 										</span>

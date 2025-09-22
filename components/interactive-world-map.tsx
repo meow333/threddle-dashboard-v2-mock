@@ -108,7 +108,7 @@ export function InteractiveWorldMap({
 
 							{/* Main marker */}
 							<div
-								className="w-4 h-4 rounded-full border border-white shadow-lg relative z-10"
+								className="w-4 h-4 rounded-full border border-border shadow-lg relative z-10"
 								style={{ backgroundColor: region.color }}
 							></div>
 
@@ -129,7 +129,7 @@ export function InteractiveWorldMap({
 				</div>
 
 				{/* Legend */}
-				<div className="absolute bottom-2 right-2 bg-white/90 backdrop-blur-sm rounded-lg p-2 text-xs">
+				<div className="absolute bottom-2 right-2 bg-white/90 dark:bg-slate-900 backdrop-blur-sm rounded-lg p-2 text-xs">
 					<div className="font-medium mb-1">Trend Intensity</div>
 					<div className="flex items-center gap-2">
 						<div className="flex items-center gap-1">
@@ -153,8 +153,8 @@ export function InteractiveWorldMap({
 							variant="secondary"
 							className="text-xs"
 							style={{
-								backgroundColor: displayRegion.color + "20",
-								color: displayRegion.color,
+								backgroundColor: displayRegion.color,
+								color: "#fff", //displayRegion.color
 								borderColor: displayRegion.color
 							}}
 						>
@@ -166,8 +166,8 @@ export function InteractiveWorldMap({
 						{displayRegion.intensity >= 80
 							? "very popular"
 							: displayRegion.intensity >= 60
-							? "moderately popular"
-							: "gaining traction"}{" "}
+								? "moderately popular"
+								: "gaining traction"}{" "}
 						in {displayRegion.country}
 					</p>
 				</div>
@@ -178,7 +178,7 @@ export function InteractiveWorldMap({
 				{topRegions.map((region, index) => (
 					<div
 						key={region.code}
-						className="text-center p-3 rounded-lg border cursor-pointer transition-colors hover:bg-accent/50"
+						className="text-center p-3 rounded-lg border  border-border cursor-pointer transition-colors hover:bg-accent/50"
 						onClick={() => setSelectedRegion(region)}
 					>
 						<div className="flex items-center justify-center mb-2">

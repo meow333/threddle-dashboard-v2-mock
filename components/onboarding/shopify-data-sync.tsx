@@ -128,7 +128,7 @@ export function ShopifyDataSync({ onNext, onBack }: ShopifyDataSyncProps) {
 									{/* Back Button */}
 									{onBack && (
 										<Button
-											variant="outline"
+											variant="secondary"
 											onClick={onBack}
 											className="w-full h-12 flex items-center justify-center gap-2"
 										>

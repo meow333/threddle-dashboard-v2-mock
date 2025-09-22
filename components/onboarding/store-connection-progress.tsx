@@ -35,24 +35,16 @@ export function StoreConnectionProgress({
 	}, [onNext]);
 
 	return (
-		<div
-			className="min-h-screen flex flex-col items-center justify-center p-8 space-y-12 bg-white"
-			style={{
-				backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 1)), url(${parentBackgroundImage})`,
-				backgroundSize: "cover",
-				backgroundPosition: "center",
-				backgroundRepeat: "no-repeat"
-			}}
-		>
+		<div className="min-h-screen flex flex-col items-center justify-center p-8 space-y-12 bg-background text-foreground transition-colors">
 			{/* Logo */}
 			<div className="flex justify-center">
 				<img
 					src={logoImage}
 					alt="Threddle Logo"
-					className="h-8 object-contain"
+					className="h-8 object-contain transform dark:invert"
 				/>
 			</div>
-			<div className="max-w-6xl h-auto rounded-3xl overflow-clip p-12 bg-white border border-slate-200 shadow-sm">
+			<div className="max-w-6xl h-auto rounded-3xl overflow-clip p-12 bg-card border border-slate-200 dark:border-slate-900 shadow-sm">
 				<div className="w-full max-w-md text-center space-y-10">
 					{/* Connection Status */}
 					<div className="space-y-8">
@@ -62,7 +54,7 @@ export function StoreConnectionProgress({
 									<Loader2 className="h-12 w-12 text-blue-500 animate-spin" />
 								</div>
 								<div className="space-y-3">
-									<h2 className="text-2xl font-medium text-slate-900">
+									<h2 className="text-2xl font-medium text-foreground">
 										Connecting your store...
 									</h2>
 									<p className="text-slate-600 font-normal">
@@ -78,7 +70,7 @@ export function StoreConnectionProgress({
 								</div>
 								<div className="space-y-6">
 									<div className="space-y-3">
-										<h2 className="text-2xl font-medium text-slate-900">
+										<h2 className="text-2xl font-medium text-foreground">
 											Store Connected!
 										</h2>
 										<p className="text-slate-600 font-normal">
@@ -88,14 +80,14 @@ export function StoreConnectionProgress({
 									</div>
 
 									{/* Store Info Card */}
-									<Card className="border border-slate-200 shadow-sm bg-white rounded-xl">
+									<Card className="border shadow-sm bg-card rounded-xl">
 										<CardContent className="p-5">
 											<div className="flex items-center space-x-4">
 												<div className="p-3 bg-green-50 rounded-lg">
 													<Store className="h-6 w-6 text-green-600" />
 												</div>
 												<div className="flex-1 text-left">
-													<h4 className="font-medium text-slate-900">
+													<h4 className="font-medium text-foreground">
 														Elite Formal Wear
 													</h4>
 													<p className="text-sm text-slate-500 font-normal">
@@ -123,7 +115,7 @@ export function StoreConnectionProgress({
 
 									{onBack && (
 										<Button
-											variant="outline"
+											variant="secondary"
 											onClick={onBack}
 											className="w-full h-12 flex items-center justify-center gap-2 border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg font-normal"
 										>

@@ -274,7 +274,7 @@ export function CompetitorMirror() {
 			<Card className="mb-6">
 				<CardHeader>
 					<div className="flex items-center justify-between">
-						<CardTitle className="text-xl text-black font-bold">
+                    <CardTitle className="text-xl text-foreground font-bold">
 							Competitor Management
 						</CardTitle>
 						<div className="flex gap-2">
@@ -351,7 +351,7 @@ export function CompetitorMirror() {
 						{/* Market Position Chart */}
 						<Card>
 							<CardHeader>
-								<CardTitle className="text-xl text-black font-bold">
+                    <CardTitle className="text-xl text-foreground font-bold">
 									Market Position Analysis
 								</CardTitle>
 								<CardDescription>
@@ -415,7 +415,7 @@ export function CompetitorMirror() {
 						{/* Competitive Metrics Table */}
 						<Card>
 							<CardHeader>
-								<CardTitle className="text-xl text-black font-bold">
+                    <CardTitle className="text-xl text-foreground font-bold">
 									Competitive Metrics
 								</CardTitle>
 							</CardHeader>
@@ -503,7 +503,7 @@ export function CompetitorMirror() {
 							{productComparisons.map((comparison, index) => (
 								<Card key={index}>
 									<CardHeader>
-										<CardTitle className="text-xl text-black font-bold">
+                        <CardTitle className="text-xl text-foreground font-bold">
 											{comparison.category}
 										</CardTitle>
 										<Badge
@@ -606,7 +606,7 @@ export function CompetitorMirror() {
 						{/* Gap Analysis */}
 						<Card>
 							<CardHeader>
-								<CardTitle className="text-xl text-black font-bold">
+                    <CardTitle className="text-xl text-foreground font-bold">
 									Market Gap Analysis
 								</CardTitle>
 								<CardDescription>
@@ -705,7 +705,7 @@ export function CompetitorMirror() {
 						{/* Trend Adoption Timeline */}
 						<Card>
 							<CardHeader>
-								<CardTitle className="text-xl text-black font-bold">
+                    <CardTitle className="text-xl text-foreground font-bold">
 									Trend Adoption Speed
 								</CardTitle>
 								<CardDescription>
@@ -768,7 +768,7 @@ export function CompetitorMirror() {
 						{/* Competitive Advantage Matrix */}
 						<Card>
 							<CardHeader>
-								<CardTitle className="text-xl text-black font-bold">
+                    <CardTitle className="text-xl text-foreground font-bold">
 									Competitive Advantage Matrix
 								</CardTitle>
 								<CardDescription>

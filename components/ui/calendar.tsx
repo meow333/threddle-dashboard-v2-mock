@@ -6,7 +6,10 @@ import * as React from "react";
 function Calendar({ className, ...props }: React.ComponentProps<"div"> & { showOutsideDays?: boolean; classNames?: Record<string, string> }) {
   return (
     <div className={className} {...props}>
-      <input type="date" className="border rounded px-2 py-1 text-sm" />
+      <input
+        type="date"
+        className="border rounded px-2 py-1 text-sm bg-slate-100 dark:bg-slate-900"
+      />
     </div>
   );
 }

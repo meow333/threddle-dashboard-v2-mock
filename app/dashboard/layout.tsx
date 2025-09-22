@@ -75,25 +75,25 @@ export default function DashboardLayout({
 	}, [router]);
 	return (
 		<SidebarProvider>
-			<div className="flex h-screen w-full">
+			<div className="flex h-screen w-full bg-background text-foreground transition-colors">
 				<Sidebar
 					collapsible="icon"
-					className="bg-white border-r border-slate-200"
+					className="bg-white dark:bg-background border-r border-border"
 				>
-					<SidebarHeader className="p-6">
+					<SidebarHeader className="p-6 bg-white dark:bg-background">
 						<div className="flex items-center gap-3">
-							<div className="text-xl font-bold text-blue-600">
+							<div className="text-xl font-bold text-primary">
 								<img
 									src={logoImage}
 									alt="Threddle Logo"
-									className="h-8 object-contain"
+									className="h-8 object-contain transform dark:invert"
 								/>
 							</div>
 						</div>
 					</SidebarHeader>
-					<SidebarContent className="bg-white">
+					<SidebarContent className="bg-white dark:bg-background">
 						<SidebarGroup>
-							<SidebarGroupLabel className="text-slate-500 font-medium text-sm">
+							<SidebarGroupLabel className="text-muted-foreground font-medium text-sm">
 								Navigation
 							</SidebarGroupLabel>
 							<SidebarGroupContent>
@@ -110,7 +110,7 @@ export default function DashboardLayout({
 													isActive={
 														pathname === item.href
 													}
-													className="text-slate-700 hover:bg-blue-50 hover:text-blue-600 font-normal"
+													className="text-foreground font-normal transition-colors"
 												>
 													<a>
 														<item.icon className="h-4 w-4" />
@@ -126,16 +126,16 @@ export default function DashboardLayout({
 							</SidebarGroupContent>
 						</SidebarGroup>
 					</SidebarContent>
-					<SidebarFooter className="p-6 space-y-3 bg-white border-t border-slate-200 group-data-[collapsible=icon]:hidden">
+					<SidebarFooter className="p-6 space-y-3 bg-background border-t border-border group-data-[collapsible=icon]:hidden">
 						<SidebarMenu>
 							<SidebarMenuItem>
-								<SidebarMenuButton className="text-slate-700 hover:bg-slate-50 font-normal">
+								<SidebarMenuButton className="text-foreground hover:bg-accent font-normal transition-colors">
 									<Bell className="h-4 w-4" />
 									<span>Notifications</span>
 								</SidebarMenuButton>
 							</SidebarMenuItem>
 							<SidebarMenuItem>
-								<SidebarMenuButton className="text-slate-700 hover:bg-slate-50 font-normal">
+								<SidebarMenuButton className="text-foreground hover:bg-accent font-normal transition-colors">
 									<Settings className="h-4 w-4" />
 									<span>Settings</span>
 								</SidebarMenuButton>
@@ -146,7 +146,7 @@ export default function DashboardLayout({
 										logout();
 										router.replace("/login");
 									}}
-									className="text-slate-700 hover:bg-slate-50 font-normal"
+									className="text-foreground hover:bg-accent font-normal transition-colors"
 								>
 									<svg
 										className="h-4 w-4"
@@ -165,20 +165,20 @@ export default function DashboardLayout({
 								</SidebarMenuButton>
 							</SidebarMenuItem>
 						</SidebarMenu>
-						<Card className="bg-slate-50 border border-slate-200 rounded-lg shadow-sm">
+						<Card className="bg-card rounded-lg shadow-sm transition-colors">
 							<CardContent className="p-4">
 								<div className="flex items-center gap-3">
 									<Avatar className="h-8 w-8">
 										<AvatarImage src="" />
-										<AvatarFallback className="bg-blue-100 text-blue-600 text-sm font-medium">
+										<AvatarFallback className="bg-accent text-white text-sm font-medium">
 											EF
 										</AvatarFallback>
 									</Avatar>
 									<div className="flex-1 min-w-0">
-										<p className="text-sm font-medium text-slate-900 truncate">
+										<p className="text-sm font-medium text-foreground truncate">
 											Elite Formal Wear
 										</p>
-										<p className="text-xs text-slate-500 font-normal truncate">
+										<p className="text-xs text-muted-foreground font-normal truncate">
 											elitestore.shopify.com
 										</p>
 									</div>
@@ -187,9 +187,9 @@ export default function DashboardLayout({
 						</Card>
 					</SidebarFooter>
 				</Sidebar>
-				<SidebarInset className="flex flex-col min-w-0">
+				<SidebarInset className="flex flex-col min-w-0 bg-background text-foreground transition-colors">
 					<ExecutionPanel />
-					<main className="flex-1 overflow-auto bg-slate-50">
+					<main className="flex-1 overflow-auto bg-background transition-colors">
 						{children}
 					</main>
 				</SidebarInset>

@@ -15,6 +15,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Initialize theme before paint to avoid FOUC */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('theme');var d=t==='dark'||(!t&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);var c=document.documentElement.classList;c.toggle('dark', d);}catch(e){}})();",
+          }}
+        />
         <script src="https://cdn.tailwindcss.com"></script>
         <script dangerouslySetInnerHTML={{ __html: `
               tailwind.config = {
@@ -65,7 +72,7 @@ export default function RootLayout({
               }
         `}} />
       </head>
-      <body>{children}</body>
+      <body className="transition-colors">{children}</body>
     </html>
   )
 }

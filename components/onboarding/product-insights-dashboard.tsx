@@ -78,24 +78,16 @@ export function ProductInsightsDashboard({
 
 	if (isSyncing) {
 		return (
-			<div
-				className="min-h-screen flex flex-col items-center justify-center p-8 space-y-12 bg-slate-100"
-				style={{
-					backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 1)), url(${parentBackgroundImage})`,
-					backgroundSize: "cover",
-					backgroundPosition: "center",
-					backgroundRepeat: "no-repeat"
-				}}
-			>
+			<div className="min-h-screen flex flex-col items-center justify-center p-8 space-y-12 bg-background text-foreground transition-colors">
 				{/* Logo */}
 				<div className="flex justify-center">
 					<img
 						src={logoImage}
 						alt="Threddle Logo"
-						className="h-8 object-contain"
+						className="h-8 object-contain transform dark:invert"
 					/>
 				</div>
-				<div className="max-w-6xl h-auto rounded-3xl overflow-clip p-12 bg-white border border-slate-200 shadow-sm">
+				<div className="max-w-6xl h-auto rounded-3xl overflow-clip p-12 bg-card border border-slate-200 dark:border-slate-900 shadow-sm">
 					<div className="w-full max-w-md text-center space-y-10">
 						{/* Sync Status */}
 						<div className="space-y-8">
@@ -103,7 +95,7 @@ export function ProductInsightsDashboard({
 								<Loader2 className="h-12 w-12 text-blue-500 animate-spin" />
 							</div>
 							<div className="space-y-3">
-								<h2 className="text-2xl font-medium text-slate-900">
+								<h2 className="text-2xl font-medium text-foreground">
 									Analyzing Your Products...
 								</h2>
 								<p className="text-slate-600 font-normal">
@@ -151,21 +143,13 @@ export function ProductInsightsDashboard({
 	}
 
 	return (
-		<div
-			className="min-h-screen flex flex-col items-center justify-center p-8 space-y-12 bg-slate-100"
-			style={{
-				backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 1)), url(${parentBackgroundImage})`,
-				backgroundSize: "cover",
-				backgroundPosition: "center",
-				backgroundRepeat: "no-repeat"
-			}}
-		>
+		<div className="min-h-screen flex flex-col items-center justify-center p-8 space-y-12 bg-background text-foreground transition-colors">
 			{/* Logo */}
 			<div className="flex justify-center">
 				<img
 					src={logoImage}
 					alt="Threddle Logo"
-					className="h-8 object-contain"
+					className="h-8 object-contain transform dark:invert"
 				/>
 			</div>
 			<div className="max-w-6xl h-auto">
@@ -176,7 +160,7 @@ export function ProductInsightsDashboard({
 							<AnimatedCheck className="h-12 w-12 text-green-500" />
 						</div>
 						<div className="space-y-3">
-							<h1 className="text-2xl font-medium text-slate-900">
+							<h1 className="text-2xl font-medium text-foreground">
 								Your Insights are Ready!
 							</h1>
 							<p className="text-slate-600 font-normal">
@@ -190,14 +174,14 @@ export function ProductInsightsDashboard({
 					{/* Insights Grid */}
 					<div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 						{/* Inventory Health Insight */}
-						<Card className="border border-slate-200 shadow-sm bg-white rounded-2xl flex flex-col justify-between">
+						<Card className="border shadow-sm bg-card rounded-2xl flex flex-col justify-between">
 							<CardHeader className="pb-4 p-6">
 								<div className="flex flex-col text-center items-center gap-4">
-									<div className="p-3 bg-orange-50 rounded-lg">
+									<div className="p-3 bg-orange-500/20 rounded-lg">
 										<AlertTriangle className="h-5 w-5 text-orange-500" />
 									</div>
 									<div className="flex-1">
-										<h3 className="font-medium text-slate-900">
+										<h3 className="font-medium text-foreground">
 											Inventory Health Alert
 										</h3>
 										<p className="text-sm text-slate-500 font-normal">
@@ -206,7 +190,7 @@ export function ProductInsightsDashboard({
 									</div>
 									<Badge
 										variant="secondary"
-										className="bg-orange-50 text-orange-600 border-orange-200 font-normal"
+										className="bg-orange-600 text-white font-normal"
 									>
 										Urgent
 									</Badge>
@@ -214,7 +198,7 @@ export function ProductInsightsDashboard({
 							</CardHeader>
 							<CardContent className="space-y-5 p-6 pt-0">
 								<div className="flex items-center space-x-4">
-									<div className="w-16 h-16 rounded-lg overflow-hidden bg-slate-100">
+									<div className="w-16 h-16 rounded-lg overflow-hidden bg-slate-100 ">
 										<ImageWithFallback
 											src={inventoryInsight.image}
 											alt={inventoryInsight.product}
@@ -222,7 +206,7 @@ export function ProductInsightsDashboard({
 										/>
 									</div>
 									<div className="flex-1">
-										<h4 className="font-medium text-slate-900">
+										<h4 className="font-medium text-foreground">
 											{inventoryInsight.product}
 										</h4>
 										<p className="text-sm text-slate-500 font-normal">
@@ -238,7 +222,7 @@ export function ProductInsightsDashboard({
 								</div>
 							</CardContent>
 							<CardFooter>
-								<div className="bg-orange-50 rounded-2xl p-4 border border-orange-100">
+								<div className="bg-orange-500/10 rounded-2xl p-4">
 									<div className="flex items-center space-x-2 mb-2">
 										<div className="w-2 h-2 bg-orange-500 rounded-full"></div>
 										<span className="font-medium text-sm text-orange-700">
@@ -253,14 +237,14 @@ export function ProductInsightsDashboard({
 						</Card>
 
 						{/* Competitor Analysis Insight */}
-						<Card className="border border-slate-200 shadow-sm bg-white rounded-2xl  flex flex-col justify-between">
+						<Card className="border shadow-sm bg-card rounded-2xl  flex flex-col justify-between">
 							<CardHeader className="pb-4 p-6">
 								<div className="flex flex-col text-center items-center gap-4">
-									<div className="p-3 bg-blue-50 rounded-lg">
+									<div className="p-3 bg-blue-500/20 rounded-lg">
 										<Target className="h-5 w-5 text-blue-500" />
 									</div>
 									<div className="flex-1">
-										<h3 className="font-medium text-slate-900">
+										<h3 className="font-medium text-foreground">
 											Competitor Match Found
 										</h3>
 										<p className="text-sm text-slate-500 font-normal">
@@ -269,7 +253,7 @@ export function ProductInsightsDashboard({
 									</div>
 									<Badge
 										variant="secondary"
-										className="bg-blue-50 text-blue-600 border-blue-200 font-normal"
+										className="bg-blue-600 text-white font-normal"
 									>
 										Advantage
 									</Badge>
@@ -286,7 +270,7 @@ export function ProductInsightsDashboard({
 											/>
 										</div>
 										<div className="flex-1">
-											<h4 className="font-medium text-slate-900">
+											<h4 className="font-medium text-foreground">
 												{competitorInsight.product}
 											</h4>
 											<p className="text-sm text-slate-500 font-normal">
@@ -318,7 +302,7 @@ export function ProductInsightsDashboard({
 								</div>
 							</CardContent>
 							<CardFooter>
-								<div className="bg-blue-50 rounded-2xl p-4 border border-blue-100">
+								<div className="bg-blue-500/10 rounded-2xl p-4">
 									<div className="flex items-center space-x-2 mb-2">
 										<div className="w-2 h-2 bg-blue-500 rounded-full"></div>
 										<span className="font-medium text-sm text-blue-700">
@@ -333,14 +317,14 @@ export function ProductInsightsDashboard({
 						</Card>
 
 						{/* Social Trend Insight */}
-						<Card className="border border-slate-200 shadow-sm bg-white rounded-2xl  flex flex-col justify-between">
+						<Card className="border shadow-sm bg-card rounded-2xl  flex flex-col justify-between">
 							<CardHeader className="pb-4 p-6">
 								<div className="flex flex-col text-center items-center gap-4">
-									<div className="p-3 bg-green-50 rounded-lg">
+									<div className="p-3 bg-green-500/20 rounded-lg">
 										<Sparkles className="h-5 w-5 text-green-500" />
 									</div>
 									<div className="flex-1">
-										<h3 className="font-medium text-slate-900">
+										<h3 className="font-medium text-foreground">
 											Social Trend Match
 										</h3>
 										<p className="text-sm text-slate-500 font-normal">
@@ -349,7 +333,7 @@ export function ProductInsightsDashboard({
 									</div>
 									<Badge
 										variant="secondary"
-										className="bg-green-50 text-green-600 border-green-200 font-normal"
+										className="bg-green-600 text-white font-normal"
 									>
 										<TrendingUp className="h-3 w-3 mr-1" />
 										{trendInsight.growth}
@@ -394,7 +378,7 @@ export function ProductInsightsDashboard({
 								</div>
 							</CardContent>
 							<CardFooter>
-								<div className="bg-green-50 rounded-2xl p-4 border border-green-100">
+								<div className="bg-green-500/10 rounded-2xl p-4">
 									<div className="flex items-center space-x-2 mb-2">
 										<div className="w-2 h-2 bg-green-500 rounded-full"></div>
 										<span className="font-medium text-sm text-green-700">
@@ -414,9 +398,9 @@ export function ProductInsightsDashboard({
 						{/* Back Button */}
 						{onBack && (
 							<Button
-								variant="outline"
+								variant="secondary"
 								onClick={onBack}
-								className="h-12 flex items-center justify-center gap-2 border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg font-normal"
+								className="h-12 flex items-center justify-center gap-2 border-slate-200 text-slate-700 rounded-lg font-normal"
 							>
 								<ArrowLeft className="h-4 w-4" />
 								Back

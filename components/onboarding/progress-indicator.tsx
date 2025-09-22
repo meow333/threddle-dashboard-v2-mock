@@ -14,8 +14,8 @@ export function ProgressIndicator({
 					key={index}
 					className={`h-2 w-2 rounded-full transition-colors ${
 						index + 1 <= currentStep
-							? "bg-amber-600"
-							: "bg-amber-100"
+							? "bg-slate-600"
+							: "bg-slate-500/30"
 					}`}
 				/>
 			))}

@@ -30,7 +30,8 @@ import {
 interface AIPlaybookProps {}
 
 export function AIPlaybook() {
-	// Mock data - in a real app this would come from API based on timeRange/geography
+	// Mock data - in a real app this would come from API based on
+	// timeRange/geography
 	const priorityActions = [
 		{
 			id: 1,
@@ -139,13 +140,13 @@ export function AIPlaybook() {
 	const getRiskColor = (risk: string) => {
 		switch (risk.toLowerCase()) {
 			case "high":
-				return "text-red-600 bg-red-50 border-red-200";
+				return "text-red-600 border-red-200/20";
 			case "medium":
-				return "text-orange-600 bg-orange-50 border-orange-200";
+				return "text-orange-600 border-orange-200/20";
 			case "low":
-				return "text-green-600 bg-green-50 border-green-200";
+				return "text-green-600 border-green-200/20";
 			default:
-				return "text-slate-600 bg-slate-50 border-slate-200";
+				return "text-slate-600 border-slate-200/20";
 		}
 	};
 
@@ -269,7 +270,7 @@ export function AIPlaybook() {
 			{/* Priority Actions List */}
 			<Card>
 				<CardHeader>
-					<CardTitle className="text-xl text-black font-bold flex items-center gap-2">
+					<CardTitle className="text-xl text-foreground font-bold flex items-center gap-2">
 						<Target className="h-5 w-5" />
 						Action Priority List
 					</CardTitle>
@@ -282,8 +283,8 @@ export function AIPlaybook() {
 								className="border hover:border-primary/20 transition-colors"
 							>
 								<CardContent className="p-6">
-									<div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6">
-										<div className="flex-1">
+									<div className="flex flex-row items-start justify-between gap-4 mb-6">
+										<div className="">
 											<div className="flex items-center gap-3 mb-2">
 												<h3 className="text-lg font-medium">
 													{action.title}
@@ -293,8 +294,11 @@ export function AIPlaybook() {
 												</Badge>
 											</div>
 										</div>
-										<div className="flex gap-3">
-											<Button size="sm">
+										<div className="flex flex-row gap-3">
+											<Button
+												size="sm"
+												className="bg-slate-900 hover:bg-slate-800 text-white font-medium"
+											>
 												Take Action
 											</Button>
 											<Button size="sm" variant="outline">
@@ -303,7 +307,6 @@ export function AIPlaybook() {
 											</Button>
 										</div>
 									</div>
-
 									<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
 										<div className="space-y-2">
 											<span className="text-muted-foreground text-sm block">
@@ -341,9 +344,7 @@ export function AIPlaybook() {
 											</span>
 											<Badge
 												variant="outline"
-												className={`${getRiskColor(
-													action.competitorRisk
-												)}`}
+												className={`${getRiskColor(action.competitorRisk)}`}
 											>
 												{action.competitorRisk}
 											</Badge>
@@ -353,9 +354,7 @@ export function AIPlaybook() {
 												Time to Act
 											</span>
 											<div
-												className={`font-medium ${getUrgencyColor(
-													action.urgency
-												)}`}
+												className={`font-medium ${getUrgencyColor(action.urgency)}`}
 											>
 												{action.timeToAct}
 											</div>
@@ -373,7 +372,7 @@ export function AIPlaybook() {
 				{Object.entries(recommendations).map(([category, items]) => (
 					<Card key={category}>
 						<CardHeader>
-							<CardTitle className="text-xl text-black font-bold flex items-center gap-2">
+							<CardTitle className="text-xl text-foreground font-bold flex items-center gap-2">
 								{category === "Product Ideas" && (
 									<Lightbulb className="h-4 w-4" />
 								)}
@@ -425,7 +424,7 @@ export function AIPlaybook() {
 			{/* Urgency Heatmap */}
 			<Card>
 				<CardHeader>
-					<CardTitle className="text-xl text-black font-bold flex items-center gap-2">
+					<CardTitle className="text-xl text-foreground font-bold flex items-center gap-2">
 						<Zap className="h-5 w-5" />
 						Urgency Heatmap
 					</CardTitle>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
 	TrendingUp,
 	Heart,
@@ -18,7 +18,8 @@ import {
 	ExternalLink,
 	Target,
 	Package,
-	Percent
+	Percent,
+	Shirt
 } from "lucide-react";
 import {
 	Card,
@@ -41,6 +42,8 @@ import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
 import { TrendAnalysisDialog } from "./trend-analysis-dialog";
 const exampleImage = "/images/examples/dashboard-logo-threddle.png";
+const cardDarkBackground = "/images/backgrounds/card.png";
+const cardLightBackground = "/images/backgrounds/card-white.png";
 
 const trendingProducts = [
 	{
@@ -429,6 +432,19 @@ const recentActivities = [
 
 export function DashboardOverview() {
 	const [timeRange, setTimeRange] = useState("30d");
+	const [isDark, setIsDark] = useState(false);
+
+	useEffect(() => {
+		const root = document.documentElement;
+		const update = () => setIsDark(root.classList.contains("dark"));
+		update();
+		const observer = new MutationObserver(update);
+		observer.observe(root, {
+			attributes: true,
+			attributeFilter: ["class"]
+		});
+		return () => observer.disconnect();
+	}, []);
 	const [geography, setGeography] = useState("global");
 	const [selectedCategory, setSelectedCategory] = useState("All");
 	const [selectedTrend, setSelectedTrend] = useState<{
@@ -478,13 +494,13 @@ export function DashboardOverview() {
 	const getRiskColor = (risk: string) => {
 		switch (risk.toLowerCase()) {
 			case "high":
-				return "text-red-600 bg-red-50 border-red-200";
+				return "text-red-600 ";
 			case "medium":
-				return "text-orange-600 bg-orange-50 border-orange-200";
+				return "text-orange-600 ";
 			case "low":
-				return "text-green-600 bg-green-50 border-green-200";
+				return "text-green-600 ";
 			default:
-				return "text-slate-600 bg-slate-50 border-slate-200";
+				return "text-slate-600 ";
 		}
 	};
 
@@ -513,14 +529,14 @@ export function DashboardOverview() {
 			trend.growthData[timeRange] || trend.growthData["1y"];
 
 		return (
-			<div className="flex items-center justify-between py-3 border-b border-slate-200/50 last:border-b-0 hover:bg-slate-50 transition-colors">
+			<div className="flex items-center justify-between py-3 border-b border-border last:border-b-0 hover:bg-accent/50 transition-colors">
 				<div className="flex items-center gap-3 flex-1">
 					<div className="w-2 h-2 rounded-full bg-slate-400"></div>
 					<div className="flex-1">
-						<div className="font-medium text-sm mb-1 text-slate-900">
+						<div className="font-medium text-sm mb-1 text-foreground">
 							{trend.name}
 						</div>
-						<div className="text-xs text-slate-500 font-normal truncate max-w-[200px]">
+						<div className="text-xs text-muted-foreground font-normal truncate max-w-[200px]">
 							{trend.searchPattern}
 						</div>
 					</div>
@@ -546,7 +562,7 @@ export function DashboardOverview() {
 						</svg>
 					</div>
 					<div className="text-right min-w-[120px]">
-						<div className="font-medium text-slate-900">
+						<div className="font-medium text-foreground">
 							{trend.avgSearchWeekly}
 						</div>
 					</div>
@@ -568,13 +584,10 @@ export function DashboardOverview() {
 
 	return (
 		<>
-			<div
-				className="p-8 space-y-8"
-				style={{ backgroundColor: "#f9f9f9" }}
-			>
+			<div className="p-8 space-y-8 bg-background text-foreground transition-colors">
 				{/* Page Header */}
 				{/* <div>
-          <h1 className="text-slate-900 font-medium">Trend Monitor</h1>
+          <h1 className="text-foreground font-medium">Trend Monitor</h1>
           <p className="text-slate-600 font-normal">
             AI-powered fashion trend intelligence for your
             Shopify store
@@ -582,14 +595,14 @@ export function DashboardOverview() {
         </div> */}
 
 				{/* Header */}
-				<header className="border border-slate-200 bg-white rounded-xl px-8 py-6 shadow-sm ">
+				<header className="border border-slate-200 dark:border-slate-900 bg-card rounded-xl px-8 py-6 shadow-sm ">
 					<div className="flex items-center justify-between">
 						<div className="flex items-center gap-6 flex-1 max-w-2xl ">
 							<div className="relative flex-1">
-								<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-500 " />
+								<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground " />
 								<Input
 									placeholder="Search trends, products, competitors..."
-									className="pl-10 border-slate-200 bg-white font-normal"
+									className="pl-10 font-normal"
 								/>
 							</div>
 						</div>
@@ -600,7 +613,7 @@ export function DashboardOverview() {
 								value={timeRange}
 								onValueChange={setTimeRange}
 							>
-								<SelectTrigger className="w-32 border-slate-200 bg-white font-normal">
+								<SelectTrigger className="w-32 font-normal">
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
@@ -617,7 +630,7 @@ export function DashboardOverview() {
 								value={geography}
 								onValueChange={setGeography}
 							>
-								<SelectTrigger className="w-32 border-slate-200 bg-white font-normal">
+								<SelectTrigger className="w-32 font-normal">
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
@@ -643,21 +656,29 @@ export function DashboardOverview() {
 
 				{/* KPI Summary Cards - Enhanced Hero Cards */}
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-					<Card className="border bg-white rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105">
-						<div className="absolute top-0 right-0 w-20 h-20 bg-green-200/30 rounded-full -translate-y-6 translate-x-6"></div>
+					<Card
+						className="rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105"
+						style={{
+							backgroundImage: `url(${isDark ? cardDarkBackground : cardLightBackground})`,
+							backgroundSize: "cover",
+							backgroundPosition: "center",
+							backgroundRepeat: "no-repeat"
+						}}
+					>
+						{/* <div className="absolute top-0 right-0 w-20 h-20 bg-green-200/30 rounded-full -translate-y-6 translate-x-6"></div> */}
 						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
-							<CardTitle className="text-xl text-black font-bold">
+							<CardTitle className="text-xl text-foreground font-semibold">
 								Trending Now
 							</CardTitle>
-							<div className="p-3 bg-green-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+							<div className="p-3 bg-purple-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
 								<TrendingUp className="h-5 w-5 text-white" />
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
-							<div className="text-5xl font-bold text-slate-700 mb-1">
+							<div className="text-5xl font-semibold text-slate-700 dark:text-white mb-1">
 								23
 							</div>
-							<p className="text-sm text-black font-medium mb-3">
+							<p className="text-sm text-foreground font-medium mb-3">
 								Active Trends in your category this month
 							</p>
 							<div className="flex items-center mb-3">
@@ -668,17 +689,25 @@ export function DashboardOverview() {
 							</div>
 							<Button
 								variant="link"
-								className="p-0 h-auto text-sm text-black hover:text-green-800 font-medium"
+								className="p-0 h-auto text-sm text-foreground hover:text-green-800 font-medium"
 							>
 								View all trends →
 							</Button>
 						</CardContent>
 					</Card>
 
-					<Card className="border bg-white rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105">
-						<div className="absolute top-0 right-0 w-20 h-20 bg-red-200/30 rounded-full -translate-y-6 translate-x-6"></div>
+					<Card
+						className="rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105"
+						style={{
+							backgroundImage: `url(${isDark ? cardDarkBackground : cardLightBackground})`,
+							backgroundSize: "cover",
+							backgroundPosition: "center",
+							backgroundRepeat: "no-repeat"
+						}}
+					>
+						{/* <div className="absolute top-0 right-0 w-20 h-20 bg-red-200/30 rounded-full -translate-y-6 translate-x-6"></div> */}
 						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
-							<CardTitle className="text-xl text-black font-bold">
+							<CardTitle className="text-xl text-foreground font-semibold">
 								Trend Alignment
 							</CardTitle>
 							<div className="p-3 bg-red-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
@@ -686,14 +715,17 @@ export function DashboardOverview() {
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
-							<div className="text-5xl font-bold text-slate-700 mb-1">
+							<div className="text-5xl font-semibold text-slate-700  dark:text-white mb-1">
 								78
-								<span className="text-lg  text-slate-400">
+								<span className="text-lg text-slate-400">
 									{" "}
 									/ 100
 								</span>
 							</div>
-							<Progress value={78} className="mt-2 mb-3" />
+							<Progress
+								value={78}
+								className="mt-2 mb-3 bg-slate-700"
+							/>
 							<div className="flex items-center mb-3">
 								<ArrowUp className="h-4 w-4 text-green-600 mr-1" />
 								<span className="text-sm text-green-600 font-medium">
@@ -709,7 +741,7 @@ export function DashboardOverview() {
 							</p> */}
 							{/* <Button
 								variant="link"
-								className="p-0 h-auto text-sm text-black hover:text-red-800 font-medium"
+                                className="p-0 h-auto text-sm text-foreground hover:text-red-800 font-medium"
 							>
 								View recommendations →
 							</Button> */}
@@ -719,7 +751,7 @@ export function DashboardOverview() {
 					{/* <Card className="border bg-white rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105">
 						<div className="absolute top-0 right-0 w-20 h-20 bg-red-200/30 rounded-full -translate-y-6 translate-x-6"></div>
 						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
-							<CardTitle className="text-xl text-black font-bold">
+                        <CardTitle className="text-xl text-foreground font-semibold">
 								Product Health
 							</CardTitle>
 							<div className="p-3 bg-red-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
@@ -727,7 +759,7 @@ export function DashboardOverview() {
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
-							<div className="text-5xl font-bold text-slate-700 mb-1">
+							<div className="text-5xl font-semibold text-slate-700  dark:text-white mb-1">
 								78
 								<span className="text-lg  text-slate-400">
 									{" "}
@@ -740,17 +772,25 @@ export function DashboardOverview() {
 							</p>
 							<Button
 								variant="link"
-								className="p-0 h-auto text-sm text-black hover:text-red-800 font-medium"
+                                className="p-0 h-auto text-sm text-foreground hover:text-red-800 font-medium"
 							>
 								View recommendations →
 							</Button>
 						</CardContent>
 					</Card> */}
 
-					<Card className="border bg-white rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105">
-						<div className="absolute top-0 right-0 w-20 h-20 bg-blue-200/30 rounded-full -translate-y-6 translate-x-6"></div>
+					<Card
+						className="rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105"
+						style={{
+							backgroundImage: `url(${isDark ? cardDarkBackground : cardLightBackground})`,
+							backgroundSize: "cover",
+							backgroundPosition: "center",
+							backgroundRepeat: "no-repeat"
+						}}
+					>
+						{/* <div className="absolute top-0 right-0 w-20 h-20 bg-blue-200/30 rounded-full -translate-y-6 translate-x-6"></div> */}
 						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
-							<CardTitle className="text-xl text-black font-bold">
+							<CardTitle className="text-xl text-foreground font-semibold">
 								Market Position
 							</CardTitle>
 							<div className="p-3 bg-blue-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
@@ -758,10 +798,10 @@ export function DashboardOverview() {
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
-							<div className="text-5xl font-bold text-slate-700 mb-1">
+							<div className="text-5xl font-semibold text-slate-700  dark:text-white mb-1">
 								#3
 							</div>
-							<p className="text-sm text-black font-medium mb-3">
+							<p className="text-sm text-foreground font-medium mb-3">
 								in category
 							</p>
 							<div className="flex items-center mb-3">
@@ -771,28 +811,36 @@ export function DashboardOverview() {
 							</div>
 							<Button
 								variant="link"
-								className="p-0 h-auto text-sm text-black hover:text-blue-800 font-medium"
+								className="p-0 h-auto text-sm text-foreground hover:text-blue-800 font-medium"
 							>
 								Analyze competitors →
 							</Button>
 						</CardContent>
 					</Card>
 
-					<Card className="border bg-white rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105">
-						<div className="absolute top-0 right-0 w-20 h-20 bg-blue-200/30 rounded-full -translate-y-6 translate-x-6"></div>
+					<Card
+						className="rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105"
+						style={{
+							backgroundImage: `url(${isDark ? cardDarkBackground : cardLightBackground})`,
+							backgroundSize: "cover",
+							backgroundPosition: "center",
+							backgroundRepeat: "no-repeat"
+						}}
+					>
+						{/* <div className="absolute top-0 right-0 w-20 h-20 bg-blue-200/30 rounded-full -translate-y-6 translate-x-6"></div> */}
 						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
-							<CardTitle className="text-xl text-black font-bold">
+							<CardTitle className="text-xl text-foreground font-semibold">
 								Inventory Optimization
 							</CardTitle>
-							<div className="p-3 bg-blue-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
-								<Radar className="h-5 w-5 text-white" />
+							<div className="p-3 bg-green-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+								<Shirt className="h-5 w-5 text-white" />
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
-							<div className="text-5xl font-bold text-slate-700 mb-1">
+							<div className="text-5xl font-semibold text-slate-700  dark:text-white mb-1">
 								31%
 							</div>
-							<p className="text-sm text-black font-medium mb-3">
+							<p className="text-sm text-foreground font-medium mb-3">
 								improvement
 							</p>
 							<div className="text-xs space-y-1 mt-2">
@@ -820,21 +868,29 @@ export function DashboardOverview() {
 						</CardContent>
 					</Card>
 
-					<Card className="border bg-white rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105">
-						<div className="absolute top-0 right-0 w-20 h-20 bg-orange-200/30 rounded-full -translate-y-6 translate-x-6"></div>
+					<Card
+						className="rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105"
+						style={{
+							backgroundImage: `url(${isDark ? cardDarkBackground : cardLightBackground})`,
+							backgroundSize: "cover",
+							backgroundPosition: "center",
+							backgroundRepeat: "no-repeat"
+						}}
+					>
+						{/* <div className="absolute top-0 right-0 w-20 h-20 bg-orange-200/30 rounded-full -translate-y-6 translate-x-6"></div> */}
 						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 relative z-10">
-							<CardTitle className="text-xl text-black font-bold">
+							<CardTitle className="text-xl text-foreground font-semibold">
 								Threddle Impact
 							</CardTitle>
 							<div className="p-3 bg-orange-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
-								<DollarSign className="h-5 w-5 text-white" />
+								<Zap className="h-5 w-5 text-white" />
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
-							<div className="text-5xl font-bold text-slate-700 mb-1">
+							<div className="text-5xl font-semibold text-slate-700 dark:text-white  mb-1">
 								$12.4K
 							</div>
-							<p className="text-sm text-black font-medium mb-3">
+							<p className="text-sm text-foreground font-medium mb-3">
 								Revenue attributed
 							</p>
 							<div className="flex items-center mb-3">
@@ -845,7 +901,7 @@ export function DashboardOverview() {
 							</div>
 							<Button
 								variant="link"
-								className="p-0 h-auto text-sm text-black hover:text-purple-800 font-medium"
+								className="p-0 h-auto text-sm text-foreground hover:text-purple-800 font-medium"
 							>
 								View full report →
 							</Button>
@@ -854,10 +910,10 @@ export function DashboardOverview() {
 				</div>
 
 				{/* Action Priority List from AI Playbook - Horizontal Cards */}
-				<Card className="border border-slate-200 shadow-sm bg-white rounded-xl">
+				<Card className="border shadow-sm bg-card rounded-xl">
 					<CardHeader>
-						<CardTitle className="text-xl text-black font-bold flex items-center gap-2">
-							<Target className="h-5 w-5 text-black" />
+						<CardTitle className="text-xl text-foreground font-semibold flex items-center gap-2">
+							<Target className="h-5 w-5 text-foreground" />
 							Your Priority List
 						</CardTitle>
 						<CardDescription>
@@ -870,18 +926,15 @@ export function DashboardOverview() {
 							{priorityActions.map((action) => (
 								<Card
 									key={action.id}
-									className="border border-slate-200 hover:border-blue-300 transition-all duration-200 hover:shadow-md bg-white rounded-lg"
+									className="border hover:border-blue-300 transition-all duration-200 hover:shadow-md bg-card rounded-lg"
 								>
 									<CardContent className="p-6">
 										<div className="flex items-start justify-between mb-4">
 											<div className="flex-1">
-												<h3 className="font-semibold text-slate-900 mb-2 text-base">
+												<h3 className="font-semibold text-foreground mb-2 text-base">
 													{action.title}
 												</h3>
-												<Badge
-													variant="secondary"
-													className="bg-blue-50 text-blue-700 border-blue-200"
-												>
+												<Badge variant="secondary">
 													{action.category}
 												</Badge>
 											</div>
@@ -895,7 +948,7 @@ export function DashboardOverview() {
 													<span className="text-sm text-slate-600">
 														Confidence
 													</span>
-													<span className="text-sm font-medium text-slate-900">
+													<span className="text-sm font-medium text-foreground">
 														{action.confidence}%
 													</span>
 												</div>
@@ -911,7 +964,7 @@ export function DashboardOverview() {
 													<span className="text-sm text-slate-600 block mb-1">
 														Revenue
 													</span>
-													<div className="text-lg font-bold text-black">
+													<div className="text-lg font-semibold text-foreground">
 														{action.expectedRevenue}
 													</div>
 												</div>
@@ -919,7 +972,7 @@ export function DashboardOverview() {
 													<span className="text-sm text-slate-600 block mb-1">
 														Margin
 													</span>
-													<div className="text-lg font-bold text-blue-600">
+													<div className="text-lg font-semibold text-blue-600">
 														{action.expectedMargin}
 													</div>
 												</div>
@@ -957,7 +1010,7 @@ export function DashboardOverview() {
 
 										{/* Action Button */}
 										<Button
-											className="w-full bg-white text-black bg-slate-100 hover:bg-slate-300"
+											className="w-full bg-slate-900 hover:bg-slate-800 text-white font-medium"
 											size="sm"
 										>
 											Take Action
@@ -975,7 +1028,7 @@ export function DashboardOverview() {
 						([category, items]) => (
 							<Card key={category}>
 								<CardHeader>
-									<CardTitle className="text-xl text-black font-bold flex items-center gap-2">
+									<CardTitle className="text-xl text-foreground font-semibold flex items-center gap-2">
 										{category === "Product Ideas" && (
 											<Lightbulb className="h-6 w-6  text-blue-500" />
 										)}
@@ -1032,7 +1085,7 @@ export function DashboardOverview() {
 							<CardHeader>
 								<div className="flex items-center gap-2">
 									<Clock className="h-6 w-6 text-blue-500" />
-									<div className="font-bold text-2xl">
+									<div className="font-semibold text-2xl text-foreground">
 										Recent Insights
 									</div>
 								</div>
@@ -1041,7 +1094,7 @@ export function DashboardOverview() {
 								{recentActivities.map((activity, index) => (
 									<div
 										key={index}
-										className="flex items-start gap-3 p-3 border rounded-lg"
+										className="flex items-start gap-3 p-3 border border-border rounded-lg"
 									>
 										<div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
 										<div className="flex-1">
@@ -1067,7 +1120,7 @@ export function DashboardOverview() {
 					<CardHeader>
 						<div className="flex items-center justify-between">
 							<div>
-								<div className=" font-bold text-2xl">
+								<div className=" font-semibold text-2xl text-foreground">
 									What&apos;s Trending in Your Category
 								</div>
 								<CardDescription>
@@ -1084,7 +1137,7 @@ export function DashboardOverview() {
 												? "default"
 												: "secondary"
 										}
-										className="cursor-pointer hover:bg-primary/10 transition-colors"
+										className="cursor-pointer transition-colors"
 										onClick={() =>
 											setSelectedCategory(category)
 										}
@@ -1112,9 +1165,9 @@ export function DashboardOverview() {
 														"hot"
 															? "destructive"
 															: trend.trajectory ===
-															  "rising"
-															? "default"
-															: "secondary"
+																  "rising"
+																? "default"
+																: "secondary"
 													}
 												>
 													{trend.trajectory}
@@ -1179,7 +1232,7 @@ export function DashboardOverview() {
 							{/* Accelerated Growth Column */}
 							<div>
 								<div className="flex items-center justify-between my-4">
-									<h3 className="font-bold text-2xl">
+									<h3 className="font-semibold text-2xl text-foreground">
 										Accelerated Growth
 									</h3>
 								</div>
@@ -1223,7 +1276,7 @@ export function DashboardOverview() {
 							{/* Steady Growth Column */}
 							<div>
 								<div className="flex items-center justify-between my-4">
-									<h3 className=" font-bold text-2xl">
+									<h3 className=" font-semibold text-2xl text-foreground">
 										Steady Growth
 									</h3>
 								</div>

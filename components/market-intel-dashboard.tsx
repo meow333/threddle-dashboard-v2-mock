@@ -211,7 +211,7 @@ export function MarketIntelDashboard() {
 					{/* Filters */}
 					<Card>
 						<CardHeader>
-							<CardTitle className="text-xl text-black font-bold">
+							<CardTitle className="text-xl text-foreground font-semibold">
 								Trend Discovery
 							</CardTitle>
 						</CardHeader>
@@ -314,7 +314,7 @@ export function MarketIntelDashboard() {
 					{/* Trending Now List */}
 					<Card className="flex-1">
 						<CardHeader>
-							<CardTitle className="text-xl text-black font-bold">
+							<CardTitle className="text-xl text-foreground font-semibold">
 								Trending Now
 							</CardTitle>
 						</CardHeader>
@@ -322,10 +322,10 @@ export function MarketIntelDashboard() {
 							{trends.map((trend) => (
 								<div
 									key={trend.id}
-									className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+									className={`p-3 border border-border rounded-lg cursor-pointer transition-colors ${
 										selectedTrend.id === trend.id
-											? "border-primary bg-primary/5"
-											: "hover:border-primary/50"
+											? "bg-blue-500/10"
+											: "bg-white dark:bg-black hover:bg-slate-500/10"
 									}`}
 									onClick={() => setSelectedTrend(trend)}
 								>
@@ -399,7 +399,7 @@ export function MarketIntelDashboard() {
 						<CardHeader>
 							<div className="flex items-center justify-between">
 								<div>
-									<CardTitle className="text-xl text-black font-bold">
+									<CardTitle className="text-xl text-foreground font-semibold">
 										{selectedTrend.name}
 									</CardTitle>
 									<CardDescription className="flex items-center gap-2">
@@ -424,7 +424,7 @@ export function MarketIntelDashboard() {
 					<Card>
 						<CardHeader>
 							<div className="flex items-center justify-between">
-								<CardTitle className="text-xl text-black font-bold">
+								<CardTitle className="text-xl text-foreground font-semibold">
 									Search Interest Over Time
 								</CardTitle>
 								<div className="flex items-center space-x-2">
@@ -488,7 +488,7 @@ export function MarketIntelDashboard() {
 					{/* Geographic Heat Map Placeholder */}
 					<Card>
 						<CardHeader>
-							<CardTitle className="text-xl text-black font-bold">
+							<CardTitle className="text-xl text-foreground font-semibold">
 								Geographic Distribution
 							</CardTitle>
 							<CardDescription>
@@ -509,7 +509,7 @@ export function MarketIntelDashboard() {
 					{/* Related Products */}
 					<Card>
 						<CardHeader>
-							<CardTitle className="text-xl text-black font-bold">
+							<CardTitle className="text-xl text-foreground font-semibold">
 								Related Products
 							</CardTitle>
 						</CardHeader>
@@ -517,12 +517,12 @@ export function MarketIntelDashboard() {
 							{relatedProducts.map((product, index) => (
 								<div
 									key={index}
-									className="border rounded-lg p-3 h-full"
+									className="border  border-border rounded-lg p-3 h-full"
 								>
 									<img
 										src={product.image}
 										alt={product.title}
-										className="w-full h-48 object-cover mb-2 border border-gray-100 rounded-xl"
+										className="w-full h-48 object-cover mb-2 border border-slate-200 dark:border-slate-900 rounded-xl"
 									/>
 									<h4 className="font-medium text-xs mb-1">
 										{product.title}
@@ -553,7 +553,7 @@ export function MarketIntelDashboard() {
 					{/* Competitor Activity */}
 					<Card>
 						<CardHeader>
-							<CardTitle className="text-xl text-black font-bold">
+							<CardTitle className="text-xl text-foreground font-semibold">
 								Competitor Moves
 							</CardTitle>
 						</CardHeader>
@@ -561,7 +561,7 @@ export function MarketIntelDashboard() {
 							{competitorActivity.map((activity, index) => (
 								<div
 									key={index}
-									className="border rounded-lg p-3"
+									className="border  border-border rounded-lg p-3"
 								>
 									<h4 className="font-medium text-xs mb-1">
 										{activity.competitor}

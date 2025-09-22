@@ -328,7 +328,7 @@ export function SmartProductMatch() {
 									<img
 										src={product.image}
 										alt={product.name}
-										className="w-full h-64 object-cover border border-gray-100 rounded-xl"
+										className="w-full h-64 object-cover border border-slate-200 dark:border-slate-900 rounded-xl"
 									/>
 									<div className="absolute top-2 left-2 flex flex-wrap gap-1">
 										{product.primaryTrends
@@ -337,7 +337,7 @@ export function SmartProductMatch() {
 												<Badge
 													key={index}
 													variant="secondary"
-													className="text-xs"
+													className="text-xs bg-white border border-slate-200"
 												>
 													{trend}
 												</Badge>
@@ -350,9 +350,9 @@ export function SmartProductMatch() {
 												"In Stock"
 													? "default"
 													: product.stockStatus ===
-													  "Low Stock"
-													? "destructive"
-													: "secondary"
+														  "Low Stock"
+														? "destructive"
+														: "destructive"
 											}
 											className="text-xs"
 										>
@@ -528,7 +528,8 @@ export function SmartProductMatch() {
 
 												<div className="text-xs">
 													<span className="text-muted-foreground">
-														Competitor Analysis:{" "}
+														Competitor
+														Analysis:{" "}
 													</span>
 													<span>
 														{
@@ -567,7 +568,7 @@ export function SmartProductMatch() {
 					{/* Top Opportunities */}
 					<Card>
 						<CardHeader>
-							<CardTitle className="text-xl text-black font-bold">
+							<CardTitle className="text-xl text-foreground font-bold">
 								Top Opportunities
 							</CardTitle>
 						</CardHeader>
@@ -575,7 +576,7 @@ export function SmartProductMatch() {
 							{topOpportunities.map((opportunity, index) => (
 								<div
 									key={index}
-									className="flex items-center justify-between p-3 border rounded-lg"
+									className="flex items-center justify-between p-3 border  border-border rounded-lg"
 								>
 									<div className="flex-1">
 										<h4 className="font-medium text-sm">
@@ -604,7 +605,7 @@ export function SmartProductMatch() {
 					{/* Market Gaps */}
 					<Card>
 						<CardHeader>
-							<CardTitle className="text-xl text-black font-bold">
+							<CardTitle className="text-xl text-foreground font-bold">
 								Market Gaps
 							</CardTitle>
 							<CardDescription>
@@ -616,7 +617,7 @@ export function SmartProductMatch() {
 							{marketGaps.map((gap, index) => (
 								<div
 									key={index}
-									className="p-3 border rounded-lg"
+									className="p-3 border  border-border rounded-lg"
 								>
 									<h4 className="font-medium text-sm mb-2">
 										{gap.category}

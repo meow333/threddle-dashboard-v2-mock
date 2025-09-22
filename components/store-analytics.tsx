@@ -312,7 +312,7 @@ export function StoreAnalytics() {
 				{performanceKPIs.map((kpi, index) => (
 					<Card key={index}>
 						<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-							<CardTitle className="text-xl text-black font-bold">
+							<CardTitle className="text-xl text-foreground font-bold">
 								{kpi.title}
 							</CardTitle>
 							<kpi.icon className={`h-4 w-4 ${kpi.color}`} />
@@ -423,7 +423,7 @@ export function StoreAnalytics() {
 				{/* Product Performance Scatter */}
 				<Card>
 					<CardHeader>
-						<CardTitle className="text-xl text-black font-bold">
+						<CardTitle className="text-xl text-foreground font-bold">
 							Product Performance by Trend Alignment
 						</CardTitle>
 						<CardDescription>
@@ -505,7 +505,7 @@ export function StoreAnalytics() {
 				{/* Category Performance */}
 				<Card>
 					<CardHeader>
-						<CardTitle className="text-xl text-black font-bold">
+						<CardTitle className="text-xl text-foreground font-bold">
 							Category Performance Breakdown
 						</CardTitle>
 						<CardDescription>
@@ -554,7 +554,7 @@ export function StoreAnalytics() {
 				{/* Demand Forecast Table */}
 				<Card className="xl:col-span-2">
 					<CardHeader>
-						<CardTitle className="text-xl text-black font-bold">
+						<CardTitle className="text-xl text-foreground font-bold">
 							Demand Forecast
 						</CardTitle>
 						<CardDescription>
@@ -633,7 +633,7 @@ export function StoreAnalytics() {
 				{/* Market Opportunity Alerts */}
 				<Card>
 					<CardHeader>
-						<CardTitle className="text-xl text-black font-bold">
+						<CardTitle className="text-xl text-foreground font-bold">
 							Market Opportunities
 						</CardTitle>
 						<CardDescription>
@@ -642,7 +642,10 @@ export function StoreAnalytics() {
 					</CardHeader>
 					<CardContent className="space-y-4">
 						{marketOpportunities.map((opportunity, index) => (
-							<div key={index} className="border rounded-lg p-4">
+							<div
+								key={index}
+								className="border border-border  rounded-lg p-4"
+							>
 								<div className="flex items-start justify-between mb-2">
 									<div className="flex items-center gap-2">
 										{opportunity.urgency === "High" ? (
@@ -692,7 +695,10 @@ export function StoreAnalytics() {
 									))}
 								</div>
 
-								<Button size="sm" className="w-full text-xs">
+								<Button
+									size="sm"
+									className="w-full bg-slate-900 hover:bg-slate-800 text-white font-medium"
+								>
 									Take Action
 								</Button>
 							</div>

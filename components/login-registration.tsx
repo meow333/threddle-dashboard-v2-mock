@@ -14,6 +14,8 @@ import {
 const logoImage = "/images/logos/logo-threddle.png";
 const backgroundImage = "/images/backgrounds/bg2.jpg";
 const parentBackgroundImage = "/images/backgrounds/bg6.jpg";
+const splitRegisterBackgroundImage = "/images/backgrounds/login-cover.png";
+const splitLoginBackgroundImage = "/images/backgrounds/login-cover-2.png";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
@@ -51,27 +53,19 @@ export function LoginRegistration({
 	};
 
 	return (
-		<div
-			className="w-full min-h-screen flex flex-col items-center justify-center"
-			style={{
-				backgroundImage: `linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.6)), url(${parentBackgroundImage})`,
-				backgroundSize: "cover",
-				backgroundPosition: "center",
-				backgroundRepeat: "no-repeat"
-			}}
-		>
+		<div className="w-full min-h-screen flex flex-col items-center justify-center bg-black text-foreground transition-colors">
 			{/* Left Panel - Hero Section */}
-			<div className="max-w-6xl h-auto grid grid-cols-2 items-center justify-center rounded-2xl overflow-clip p-2 bg-white border border-slate-200 shadow-md">
-				<div
-					className="hidden lg:flex flex-col  items-center justify-center relative rounded-2xl overflow-clip h-full"
-					style={{
-						backgroundImage: `url(${backgroundImage})`,
-						backgroundSize: "cover",
-						backgroundPosition: "center",
-						backgroundRepeat: "no-repeat"
-					}}
-				>
-					<div className="relative z-10 flex flex-col justify-between px-12 py-16 text-white h-full">
+			<div className="w-full h-full flex flex-row items-center justify-center">
+				<div className="shrink">
+					<img
+						src={
+							isLogin
+								? splitLoginBackgroundImage
+								: splitRegisterBackgroundImage
+						}
+						className="h-screen w-full transform animate-all"
+					/>
+					{/* <div className="relative z-10 flex flex-col justify-between px-12 py-16 text-white h-full">
 						<div className="mb-8">
 							<img
 								src={logoImage}
@@ -84,9 +78,6 @@ export function LoginRegistration({
 							id="feature-intro"
 							className="space-y-3 pb-4 border-b border-white/20"
 						>
-							{/* <p className="text-2xl font-bold opacity-90 font-normal">
-								Made for Fashion-First Ecommerce Brands
-							</p> */}
 							<p
 								id="feature-intro-trust"
 								className="text-4xl font-bold opacity-90 font-normal"
@@ -113,12 +104,8 @@ export function LoginRegistration({
 								Powered by Threddle AI Agents
 								<Bot className="h-8 w-8 ml-3" />{" "}
 							</p>
-							{/* <h1 className="text-6xl font-medium leading-tight">
-								Know What Sells Before It Sells Out.
-							</h1> */}
 						</div>
 
-						{/* Trust statements below feature-intro */}
 						<div
 							id="trust-statements"
 							className="w-full flex flex-row items-center justify-start gap-4 text-sm"
@@ -141,12 +128,12 @@ export function LoginRegistration({
 							</div>
 							<span className="opacity-90"></span>
 						</div>
-					</div>
+					</div> */}
 				</div>
 
 				{/* Right Panel - Form Section */}
-				<div className="flex-1 flex items-center justify-center p-8 bg-white">
-					<div className="w-full max-w-md space-y-8">
+				<div className="flex-1 flex items-center justify-center transition-colors ">
+					<div className="w-full max-w-xl space-y-8 p-12 overflow-clip rounded-3xl bg-card border border-slate-900 transition-colors ">
 						{/* Mobile Logo */}
 						<div className="lg:hidden flex justify-center">
 							<img
@@ -158,10 +145,10 @@ export function LoginRegistration({
 
 						{/* Header */}
 						<div className="space-y-3 text-center">
-							<h1 className="text-2xl font-medium text-slate-900">
+							<h1 className="text-2xl font-medium text-foreground">
 								{isLogin ? "Welcome back" : "Create an account"}
 							</h1>
-							<p className="text-slate-600 font-normal">
+							<p className="text-muted-foreground font-normal">
 								{isLogin
 									? "Sign in to access your fashion insights dashboard"
 									: "Access your trends, insights, and analytics anytime, anywhere - and keep everything flowing in one place."}
@@ -172,7 +159,7 @@ export function LoginRegistration({
 						<form onSubmit={handleSubmit} className="space-y-6">
 							<div className="space-y-5">
 								<div>
-									<label className="text-sm font-medium text-slate-700 block mb-2">
+									<label className="text-sm font-medium text-foreground block mb-2">
 										Your email
 									</label>
 									<Input
@@ -186,12 +173,12 @@ export function LoginRegistration({
 											}))
 										}
 										required
-										className="h-12 border-slate-200 bg-white font-normal"
+										className="h-12 font-normal"
 									/>
 								</div>
 
 								<div>
-									<label className="text-sm font-medium text-slate-700 block mb-2">
+									<label className="text-sm font-medium text-foreground block mb-2">
 										{isLogin
 											? "Password"
 											: "Create password"}
@@ -212,7 +199,7 @@ export function LoginRegistration({
 												}))
 											}
 											required
-											className="h-12 pr-12 border-slate-200 bg-white font-normal"
+											className="h-12 pr-12 font-normal"
 										/>
 										<Button
 											type="button"
@@ -224,9 +211,9 @@ export function LoginRegistration({
 											}
 										>
 											{showPassword ? (
-												<EyeOff className="h-4 w-4 text-slate-500" />
+												<EyeOff className="h-4 w-4 text-muted-foreground" />
 											) : (
-												<Eye className="h-4 w-4 text-slate-500" />
+												<Eye className="h-4 w-4 text-muted-foreground" />
 											)}
 										</Button>
 									</div>
@@ -237,7 +224,7 @@ export function LoginRegistration({
 								<div className="flex justify-end">
 									<Button
 										variant="link"
-										className="px-0 h-auto text-sm text-slate-500 hover:text-slate-700 font-normal"
+										className="px-0 h-auto text-sm text-muted-foreground hover:text-foreground font-normal"
 									>
 										Forgot password?
 									</Button>
@@ -247,7 +234,7 @@ export function LoginRegistration({
 							{isLogin ? (
 								<Button
 									type="submit"
-									className="w-full h-12 bg-blue-600 text-white hover:bg-blue-700 rounded-lg font-medium"
+									className="w-full h-12"
 									onClick={() => onSignIn()}
 								>
 									Sign in
@@ -255,7 +242,7 @@ export function LoginRegistration({
 							) : (
 								<Button
 									type="submit"
-									className="w-full h-12 bg-blue-600 text-white hover:bg-blue-700 rounded-lg font-medium"
+									className="w-full h-12"
 									onClick={() => onRegister()}
 								>
 									Create account
@@ -265,9 +252,9 @@ export function LoginRegistration({
 
 						{/* Divider */}
 						<div className="relative">
-							<Separator className="bg-slate-200" />
+							<Separator className="bg-border" />
 							<div className="absolute inset-0 flex justify-center">
-								<span className="bg-white px-4 text-xs text-slate-500 font-normal">
+								<span className="bg-background px-4 text-xs text-muted-foreground font-normal">
 									or continue with
 								</span>
 							</div>
@@ -276,8 +263,8 @@ export function LoginRegistration({
 						{/* Social Login */}
 						<div className="flex justify-center">
 							<Button
-								variant="outline"
-								className="w-full h-12 flex items-center justify-center gap-3 border-slate-200 text-slate-700 hover:bg-slate-50 font-normal"
+								variant="secondary"
+								className="w-full h-12 flex items-center justify-center gap-3 font-normal"
 								onClick={() =>
 									isLogin ? onSignIn() : onRegister()
 								}
@@ -306,14 +293,14 @@ export function LoginRegistration({
 
 						{/* Toggle Login/Register */}
 						<div className="text-center">
-							<span className="text-sm text-slate-600 font-normal">
+							<span className="text-sm text-muted-foreground font-normal">
 								{isLogin
 									? "Don't have an account?"
 									: "Already have an account?"}
 							</span>
 							<Button
 								variant="link"
-								className="px-1 h-auto text-sm text-blue-600 hover:text-blue-700 font-normal"
+								className="px-1 h-auto text-sm font-normal"
 								onClick={() => setIsLogin(!isLogin)}
 							>
 								{isLogin ? "Register" : "Sign in"}
@@ -322,7 +309,7 @@ export function LoginRegistration({
 
 						{/* Legal Links */}
 						<div className="text-center space-y-2">
-							<div className="flex justify-center items-center gap-1 text-xs text-slate-500 font-normal">
+							<div className="flex justify-center items-center gap-1 text-xs text-muted-foreground font-normal">
 								<span>
 									By{" "}
 									{isLogin
@@ -334,21 +321,21 @@ export function LoginRegistration({
 							<div className="flex justify-center items-center gap-4 text-xs">
 								<Button
 									variant="link"
-									className="px-0 h-auto text-xs text-slate-500 hover:text-slate-700 underline font-normal"
+									className="px-0 h-auto text-xs text-muted-foreground hover:text-foreground underline font-normal"
 								>
 									Terms of Service
 								</Button>
-								<span className="text-slate-500">•</span>
+								<span className="text-muted-foreground">•</span>
 								<Button
 									variant="link"
-									className="px-0 h-auto text-xs text-slate-500 hover:text-slate-700 underline font-normal"
+									className="px-0 h-auto text-xs text-muted-foreground hover:text-foreground underline font-normal"
 								>
 									Privacy Policy
 								</Button>
-								<span className="text-slate-500">•</span>
+								<span className="text-muted-foreground">•</span>
 								<Button
 									variant="link"
-									className="px-0 h-auto text-xs text-slate-500 underline font-normal"
+									className="px-0 h-auto text-xs text-muted-foreground underline font-normal"
 								>
 									Data Protection
 								</Button>
