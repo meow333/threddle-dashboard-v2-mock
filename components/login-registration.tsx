@@ -16,6 +16,7 @@ const backgroundImage = "/images/backgrounds/bg2.jpg";
 const parentBackgroundImage = "/images/backgrounds/bg6.jpg";
 const splitRegisterBackgroundImage = "/images/backgrounds/login-cover.png";
 const splitLoginBackgroundImage = "/images/backgrounds/login-cover-2.png";
+const loginRegisterBackgroundImage = "/images/backgrounds/login-cover-1.png";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
@@ -59,9 +60,10 @@ export function LoginRegistration({
 				<div className="shrink">
 					<img
 						src={
-							isLogin
-								? splitLoginBackgroundImage
-								: splitRegisterBackgroundImage
+							loginRegisterBackgroundImage
+							// isLogin
+							// 	? splitLoginBackgroundImage
+							// 	: splitRegisterBackgroundImage
 						}
 						className="h-screen w-full transform animate-all"
 					/>
@@ -263,7 +265,7 @@ export function LoginRegistration({
 						{/* Social Login */}
 						<div className="flex justify-center">
 							<Button
-								variant="secondary"
+								variant="default"
 								className="w-full h-12 flex items-center justify-center gap-3 font-normal"
 								onClick={() =>
 									isLogin ? onSignIn() : onRegister()

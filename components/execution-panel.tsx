@@ -62,12 +62,12 @@ export function ExecutionPanel({ className }: ExecutionPanelProps) {
 	};
 
 	return (
-		<div
-			className={`border-b border-border bg-background px-8 py-5 transition-colors ${
-				className || ""
-			}`}
-		>
-			<div className="flex items-center justify-between">
+    <div
+        className={`border-b border-border bg-white dark:bg-black px-4 sm:px-6 md:px-8 py-4 md:py-5 transition-colors ${
+            className || ""
+        }`}
+    >
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
 				{/* Header */}
 				<div className="flex items-center gap-3">
 					<SidebarTrigger />
@@ -113,7 +113,7 @@ export function ExecutionPanel({ className }: ExecutionPanelProps) {
 				</div>
 
 				{/* Metrics Grid */}
-				<div className="flex items-center gap-8 xl:gap-12">
+                <div className="flex flex-wrap items-center gap-4 sm:gap-6 md:gap-8 xl:gap-12">
 					{/* Top Priority Action */}
 					<div className="flex items-center gap-4">
 						<div className="p-2 bg-accent rounded-lg">

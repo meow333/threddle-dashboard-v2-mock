@@ -529,8 +529,8 @@ export function DashboardOverview() {
 			trend.growthData[timeRange] || trend.growthData["1y"];
 
 		return (
-			<div className="flex items-center justify-between py-3 border-b border-border last:border-b-0 hover:bg-accent/50 transition-colors">
-				<div className="flex items-center gap-3 flex-1">
+			<div className="flex flex-wrap items-center justify-between py-3 border-b border-border last:border-b-0 hover:bg-accent/50 transition-colors">
+				<div className="flex items-center gap-3 flex-1 min-w-0">
 					<div className="w-2 h-2 rounded-full bg-slate-400"></div>
 					<div className="flex-1">
 						<div className="font-medium text-sm mb-1 text-foreground">
@@ -543,7 +543,7 @@ export function DashboardOverview() {
 				</div>
 
 				{/* Mini trend chart */}
-				<div className="flex items-center gap-4 text-xs min-w-[120px]">
+				<div className="hidden sm:flex items-center gap-4 text-xs min-w-[80px] sm:min-w-[120px]">
 					<div className="w-12 h-6 flex items-center justify-center">
 						<svg
 							width="48"
@@ -561,12 +561,12 @@ export function DashboardOverview() {
 							<circle cx="46" cy="2" r="2" fill="#3b82f6" />
 						</svg>
 					</div>
-					<div className="text-right min-w-[120px]">
+					<div className="hidden sm:block text-right min-w-[80px] sm:min-w-[120px]">
 						<div className="font-medium text-foreground">
 							{trend.avgSearchWeekly}
 						</div>
 					</div>
-					<div className="text-right min-w-[120px]">
+					<div className="text-right min-w-[80px] sm:min-w-[120px]">
 						<div
 							className={`font-medium ${
 								isAccelerated
@@ -595,8 +595,8 @@ export function DashboardOverview() {
         </div> */}
 
 				{/* Header */}
-				<header className="border border-slate-200 dark:border-slate-900 bg-card rounded-xl px-8 py-6 shadow-sm ">
-					<div className="flex items-center justify-between">
+				<header className="border border-slate-200 dark:border-slate-900 bg-card rounded-xl px-4 sm:px-6 md:px-8 py-4 md:py-6 shadow-sm ">
+					<div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
 						<div className="flex items-center gap-6 flex-1 max-w-2xl ">
 							<div className="relative flex-1">
 								<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground " />
@@ -607,7 +607,7 @@ export function DashboardOverview() {
 							</div>
 						</div>
 
-						<div className="flex items-center gap-4">
+						<div className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4">
 							{/* Time Range Control */}
 							<Select
 								value={timeRange}
@@ -655,7 +655,7 @@ export function DashboardOverview() {
 				</header>
 
 				{/* KPI Summary Cards - Enhanced Hero Cards */}
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
 					<Card
 						className="rounded-xl relative overflow-hidden group transition-all duration-300 hover:scale-105"
 						style={{
@@ -1023,7 +1023,7 @@ export function DashboardOverview() {
 				</Card>
 
 				{/* Grouped Recommendations from AI Playbook */}
-				<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+				<div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
 					{Object.entries(recommendations).map(
 						([category, items]) => (
 							<Card key={category}>
@@ -1208,7 +1208,7 @@ export function DashboardOverview() {
 												</div>
 											</div>
 											<Button
-												variant="outline"
+												variant="secondary"
 												size="sm"
 												className="w-full mt-3"
 												onClick={() =>
@@ -1226,7 +1226,7 @@ export function DashboardOverview() {
 				</Card>
 
 				{/* Fast & Slow Growth Trends */}
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+				<div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
 					<Card>
 						<CardContent>
 							{/* Accelerated Growth Column */}

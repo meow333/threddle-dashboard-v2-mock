@@ -274,7 +274,7 @@ export function CompetitorMirror() {
 			<Card className="mb-6">
 				<CardHeader>
 					<div className="flex items-center justify-between">
-                    <CardTitle className="text-xl text-foreground font-bold">
+						<CardTitle className="text-xl text-foreground font-bold">
 							Competitor Management
 						</CardTitle>
 						<div className="flex gap-2">
@@ -351,7 +351,7 @@ export function CompetitorMirror() {
 						{/* Market Position Chart */}
 						<Card>
 							<CardHeader>
-                    <CardTitle className="text-xl text-foreground font-bold">
+								<CardTitle className="text-xl text-foreground font-bold">
 									Market Position Analysis
 								</CardTitle>
 								<CardDescription>
@@ -415,7 +415,7 @@ export function CompetitorMirror() {
 						{/* Competitive Metrics Table */}
 						<Card>
 							<CardHeader>
-                    <CardTitle className="text-xl text-foreground font-bold">
+								<CardTitle className="text-xl text-foreground font-bold">
 									Competitive Metrics
 								</CardTitle>
 							</CardHeader>
@@ -501,9 +501,12 @@ export function CompetitorMirror() {
 						{/* Product Comparison Cards */}
 						<div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
 							{productComparisons.map((comparison, index) => (
-								<Card key={index}>
+								<Card
+									key={index}
+									className="border border-border"
+								>
 									<CardHeader>
-                        <CardTitle className="text-xl text-foreground font-bold">
+										<CardTitle className="text-xl text-foreground font-bold">
 											{comparison.category}
 										</CardTitle>
 										<Badge
@@ -516,7 +519,7 @@ export function CompetitorMirror() {
 									</CardHeader>
 									<CardContent className="w-full grid grid-cols-2 items-center justify-between gap-4">
 										{/* Your Product */}
-										<div className="p-3 border rounded-lg flex flex-row items-end justify-between">
+										<div className="p-3 border rounded-lg flex flex-row items-end justify-between border border-border">
 											<div>
 												<h4 className="font-medium text-sm text-primary">
 													Your Product
@@ -535,7 +538,7 @@ export function CompetitorMirror() {
 													}
 												</span>
 											</div>
-											<div className="flex flex-col items-center justify-between mt-2 text-xs">
+											<div className="flex flex-col items-center justify-between mt-2 text-xs ">
 												<span>
 													★{" "}
 													{
@@ -554,7 +557,7 @@ export function CompetitorMirror() {
 										</div>
 
 										{/* Competitor Product */}
-										<div className="p-3 border rounded-lg  flex flex-row items-end justify-between">
+										<div className="p-3 border rounded-lg  flex flex-row items-end justify-between border border-border">
 											<div>
 												<h4 className="font-medium text-sm">
 													{
@@ -606,7 +609,7 @@ export function CompetitorMirror() {
 						{/* Gap Analysis */}
 						<Card>
 							<CardHeader>
-                    <CardTitle className="text-xl text-foreground font-bold">
+								<CardTitle className="text-xl text-foreground font-bold">
 									Market Gap Analysis
 								</CardTitle>
 								<CardDescription>
@@ -649,7 +652,7 @@ export function CompetitorMirror() {
 									].map((gap, index) => (
 										<div
 											key={index}
-											className="p-4 border rounded-lg"
+											className="p-4 border rounded-lg border-border"
 										>
 											<h4 className="font-medium text-sm mb-2">
 												{gap.category}
@@ -674,9 +677,9 @@ export function CompetitorMirror() {
 														"High"
 															? "default"
 															: gap.opportunity ===
-															  "Medium"
-															? "secondary"
-															: "outline"
+																  "Medium"
+																? "secondary"
+																: "outline"
 													}
 													className="text-xs"
 												>
@@ -705,7 +708,7 @@ export function CompetitorMirror() {
 						{/* Trend Adoption Timeline */}
 						<Card>
 							<CardHeader>
-                    <CardTitle className="text-xl text-foreground font-bold">
+								<CardTitle className="text-xl text-foreground font-bold">
 									Trend Adoption Speed
 								</CardTitle>
 								<CardDescription>
@@ -768,7 +771,7 @@ export function CompetitorMirror() {
 						{/* Competitive Advantage Matrix */}
 						<Card>
 							<CardHeader>
-                    <CardTitle className="text-xl text-foreground font-bold">
+								<CardTitle className="text-xl text-foreground font-bold">
 									Competitive Advantage Matrix
 								</CardTitle>
 								<CardDescription>

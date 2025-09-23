@@ -205,9 +205,9 @@ export function MarketIntelDashboard() {
 				</p>
 			</div> */}
 
-			<div className="grid grid-cols-4 gap-6">
+			<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 				{/* Left Column: Trend Discovery */}
-				<div className="space-y-4">
+				<div className="space-y-4 lg:col-span-1">
 					{/* Filters */}
 					<Card>
 						<CardHeader>
@@ -325,7 +325,7 @@ export function MarketIntelDashboard() {
 									className={`p-3 border border-border rounded-lg cursor-pointer transition-colors ${
 										selectedTrend.id === trend.id
 											? "bg-blue-500/10"
-											: "bg-white dark:bg-black hover:bg-slate-500/10"
+											: "hover:bg-slate-500/10"
 									}`}
 									onClick={() => setSelectedTrend(trend)}
 								>
@@ -505,7 +505,7 @@ export function MarketIntelDashboard() {
 				</div>
 
 				{/* Right Column: Market Intelligence */}
-				<div className=" space-y-4">
+				<div className="space-y-4 lg:col-span-1">
 					{/* Related Products */}
 					<Card>
 						<CardHeader>

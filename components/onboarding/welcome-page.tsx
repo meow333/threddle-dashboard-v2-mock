@@ -9,6 +9,7 @@ import {
 const logoImage = "/images/logos/logo-threddle.png";
 const parentBackgroundImage = "/images/backgrounds/bg6.jpg";
 import { Button } from "../ui/button";
+import { login } from "@/lib/session";
 import { AnimatedCheck } from "../ui/animated-check";
 import { Card, CardContent } from "../ui/card";
 import { ProgressIndicator } from "./progress-indicator";
@@ -121,12 +122,18 @@ export function WelcomePage({ onComplete, onBack }: WelcomePageProps) {
 
 					{/* CTA Buttons */}
 					<div className="space-y-4">
-						<Button
-							onClick={onComplete}
-							className="w-full h-12 text-base bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium"
-						>
-							Show My Dashboard
-						</Button>
+                <Button
+                    onClick={() => {
+                        // Ensure user is marked authenticated before navigating
+                        try {
+                            login();
+                        } catch {}
+                        onComplete();
+                    }}
+                    className="w-full h-12 text-base bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium"
+                >
+                    Show My Dashboard
+                </Button>
 
 						{/* Back Button */}
 						{onBack && (

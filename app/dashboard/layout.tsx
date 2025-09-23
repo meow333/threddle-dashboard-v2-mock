@@ -75,7 +75,7 @@ export default function DashboardLayout({
 	}, [router]);
 	return (
 		<SidebarProvider>
-			<div className="flex h-screen w-full bg-background text-foreground transition-colors">
+			<div className="flex min-h-screen w-full bg-background text-foreground transition-colors">
 				<Sidebar
 					collapsible="icon"
 					className="bg-white dark:bg-background border-r border-border"
