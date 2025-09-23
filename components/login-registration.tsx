@@ -56,16 +56,24 @@ export function LoginRegistration({
 	return (
 		<div className="w-full min-h-screen flex flex-col items-center justify-center bg-black text-foreground transition-colors">
 			{/* Left Panel - Hero Section */}
-			<div className="w-full h-full flex flex-row items-center justify-center">
-				<div className="shrink">
-					<img
+			<div className="w-full h-screen flex flex-col lg:flex-row items-center justify-center p-12">
+				<div className="shrink h-full">
+					{/* <img
 						src={
 							loginRegisterBackgroundImage
 							// isLogin
 							// 	? splitLoginBackgroundImage
 							// 	: splitRegisterBackgroundImage
 						}
-						className="h-screen w-full transform animate-all"
+						className="h-screen object-contain transform animate-all"
+					/> */}
+					<img
+						src={loginRegisterBackgroundImage}
+						className="hidden xl:block h-screen object-contain transform animate-all"
+					/>
+					<img
+						src={splitRegisterBackgroundImage}
+						className="xl:hidden h-screen object-contain transform animate-all"
 					/>
 					{/* <div className="relative z-10 flex flex-col justify-between px-12 py-16 text-white h-full">
 						<div className="mb-8">
@@ -134,8 +142,8 @@ export function LoginRegistration({
 				</div>
 
 				{/* Right Panel - Form Section */}
-				<div className="flex-1 flex items-center justify-center transition-colors ">
-					<div className="w-full max-w-xl space-y-8 p-12 overflow-clip rounded-3xl bg-card border border-slate-900 transition-colors ">
+				<div className="flex-1 flex items-center h-full justify-center transition-colors">
+					<div className="w-full h-full max-w-xl space-y-8 p-12 overflow-clip rounded-xl bg-card transition-colors  border border-border">
 						{/* Mobile Logo */}
 						<div className="lg:hidden flex justify-center">
 							<img

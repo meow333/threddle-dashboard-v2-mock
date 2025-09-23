@@ -3,7 +3,7 @@
 :root {
 	--font-size: 16px;
 	--background: #f9f9f9;
-	--foreground: oklch(41.077% 0.06104 269.152);
+	--foreground: oklch(68.091% 0.06262 270.989);
 	--card: #ffffff;
 	--card-foreground: oklch(0.145 0 0);
 	--popover: oklch(1 0 0);
@@ -44,7 +44,7 @@
 .dark {
 	--background: oklch(8.131% 0.04071 262.95);
 	/* oklch(14.479% 0.00002 271.152); */
-	--foreground: oklch(54.161% 0.05586 259.697);
+	--foreground: oklch(73.01% 0.07285 259.798);
 	--card: oklch(16.976% 0.04327 266.714);
 	--card-foreground: oklch(0.985 0 0);
 	--popover: oklch(0.145 0 0);
