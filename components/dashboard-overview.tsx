@@ -41,6 +41,17 @@ import { Progress } from "./ui/progress";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
 import { TrendAnalysisDialog } from "./trend-analysis-dialog";
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+	DialogDescription
+} from "./ui/dialog";
+import { Checkbox } from "./ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Textarea } from "./ui/textarea";
+import { ImageWithFallback } from "./fallback/ImageWithFallback";
 const exampleImage = "/images/examples/dashboard-logo-threddle.png";
 const cardDarkBackground = "/images/backgrounds/card.png";
 const cardLightBackground = "/images/backgrounds/card-white.png";
@@ -330,6 +341,76 @@ const acceleratedGrowthTrends = [
 		},
 		growthIcon: "↗",
 		trendLine: "........↗"
+	},
+	{
+		name: "Minimalist Accessories",
+		searchPattern: "minimalist cufflinks, sleek tie bars",
+		avgSearchWeekly: "12,345",
+		growthData: {
+			"7d": "22.1%",
+			"30d": "75.3%",
+			"3m": "345.2%",
+			"6m": "1,234.5%",
+			"1y": "3,456.7%"
+		},
+		growthIcon: "↗",
+		trendLine: "........↗"
+	},
+	{
+		name: "Performance Dress Shirts",
+		searchPattern: "moisture-wicking dress shirt, stretch formal",
+		avgSearchWeekly: "21,678",
+		growthData: {
+			"7d": "29.8%",
+			"30d": "102.4%",
+			"3m": "612.3%",
+			"6m": "2,145.9%",
+			"1y": "5,612.2%"
+		},
+		growthIcon: "↗",
+		trendLine: "........↗"
+	},
+	{
+		name: "Tailored Fit Trousers",
+		searchPattern: "tapered trousers, tailored fit pants",
+		avgSearchWeekly: "19,874",
+		growthData: {
+			"7d": "24.5%",
+			"30d": "86.9%",
+			"3m": "502.8%",
+			"6m": "1,876.4%",
+			"1y": "3,998.1%"
+		},
+		growthIcon: "↗",
+		trendLine: "........↗"
+	},
+	{
+		name: "Luxury Tie Sets",
+		searchPattern: "gift tie sets, luxury silk ties",
+		avgSearchWeekly: "10,432",
+		growthData: {
+			"7d": "18.4%",
+			"30d": "72.1%",
+			"3m": "310.6%",
+			"6m": "1,245.0%",
+			"1y": "2,965.7%"
+		},
+		growthIcon: "↗",
+		trendLine: "........↗"
+	},
+	{
+		name: "Structured Blazers",
+		searchPattern: "structured blazer, sharp silhouette jacket",
+		avgSearchWeekly: "23,210",
+		growthData: {
+			"7d": "27.6%",
+			"30d": "118.3%",
+			"3m": "689.2%",
+			"6m": "2,345.1%",
+			"1y": "5,104.8%"
+		},
+		growthIcon: "↗",
+		trendLine: "........↗"
 	}
 ];
 
@@ -403,6 +484,76 @@ const steadyGrowthTrends = [
 		},
 		growthIcon: "↗",
 		trendLine: "........↗"
+	},
+	{
+		name: "Monk Strap Shoes",
+		searchPattern: "monk strap shoes, double monk formal",
+		avgSearchWeekly: "6,110",
+		growthData: {
+			"7d": "6.4%",
+			"30d": "16.2%",
+			"3m": "43.7%",
+			"6m": "109.2%",
+			"1y": "162.8%"
+		},
+		growthIcon: "↗",
+		trendLine: "........↗"
+	},
+	{
+		name: "Leather Belts",
+		searchPattern: "full-grain leather belt, formal belt",
+		avgSearchWeekly: "7,320",
+		growthData: {
+			"7d": "5.9%",
+			"30d": "14.7%",
+			"3m": "38.9%",
+			"6m": "92.4%",
+			"1y": "141.1%"
+		},
+		growthIcon: "↗",
+		trendLine: "........↗"
+	},
+	{
+		name: "Classic Ties",
+		searchPattern: "silk tie, classic formal tie",
+		avgSearchWeekly: "9,875",
+		growthData: {
+			"7d": "7.1%",
+			"30d": "18.5%",
+			"3m": "46.2%",
+			"6m": "120.4%",
+			"1y": "178.0%"
+		},
+		growthIcon: "↗",
+		trendLine: "........↗"
+	},
+	{
+		name: "Dress Socks",
+		searchPattern: "mercerized cotton socks, formal socks",
+		avgSearchWeekly: "5,987",
+		growthData: {
+			"7d": "4.8%",
+			"30d": "12.2%",
+			"3m": "31.8%",
+			"6m": "78.9%",
+			"1y": "115.2%"
+		},
+		growthIcon: "↗",
+		trendLine: "........↗"
+	},
+	{
+		name: "Formal Vests",
+		searchPattern: "formal vest, waistcoat",
+		avgSearchWeekly: "4,832",
+		growthData: {
+			"7d": "6.2%",
+			"30d": "15.8%",
+			"3m": "40.3%",
+			"6m": "96.7%",
+			"1y": "139.5%"
+		},
+		growthIcon: "↗",
+		trendLine: "........↗"
 	}
 ];
 
@@ -434,6 +585,11 @@ export function DashboardOverview() {
 	const [timeRange, setTimeRange] = useState("30d");
 	const [isDark, setIsDark] = useState(false);
 
+	// Pagination state for growth lists
+	const ITEMS_PER_PAGE = 5;
+	const [accelPage, setAccelPage] = useState(1);
+	const [steadyPage, setSteadyPage] = useState(1);
+
 	useEffect(() => {
 		const root = document.documentElement;
 		const update = () => setIsDark(root.classList.contains("dark"));
@@ -451,6 +607,27 @@ export function DashboardOverview() {
 		name: string;
 		data: (typeof trendingProducts)[0];
 	} | null>(null);
+	// Priority action dialog state
+	const [openAction, setOpenAction] = useState<
+		null | (typeof priorityActions)[number]
+	>(null);
+	const [actionLoading, setActionLoading] = useState(false);
+	const [actionProducts, setActionProducts] = useState<
+		Array<{
+			id: string;
+			title: string;
+			sku: string;
+			image: string;
+			stock: number;
+			reserved: number;
+			sales30d: number;
+			revenue30d: number;
+			price: number;
+		}>
+	>([]);
+	const [bundleSelected, setBundleSelected] = useState<
+		Record<string, boolean>
+	>({});
 
 	const handleAnalyzeTrend = (trend: (typeof trendingProducts)[0]) => {
 		setSelectedTrend({
@@ -458,6 +635,107 @@ export function DashboardOverview() {
 			data: trend
 		});
 	};
+
+	// Simulate pulling product + inventory from Shopify for the selected action
+	useEffect(() => {
+		if (!openAction) return;
+		setActionLoading(true);
+		setActionProducts([]);
+		const timer = setTimeout(() => {
+			const mock = ((): typeof actionProducts => {
+				if (
+					openAction.title.includes("Bundle") ||
+					openAction.category === "Promotions"
+				) {
+					return [
+						{
+							id: "PSUIT-NAVY-40",
+							title: "Power Suit — Navy",
+							sku: "PSUIT-NAVY-40",
+							image: "/images/products/power-suit-navy.jpg",
+							stock: 86,
+							reserved: 12,
+							sales30d: 58,
+							revenue30d: 28900,
+							price: 599
+						},
+						{
+							id: "SHIRT-PERF-WHITE-15",
+							title: "Performance Dress Shirt — White",
+							sku: "SHIRT-PERF-WHITE-15",
+							image: "/images/products/perf-shirt-white.jpg",
+							stock: 214,
+							reserved: 35,
+							sales30d: 142,
+							revenue30d: 12460,
+							price: 89
+						},
+						{
+							id: "TIE-SILK-NAVY",
+							title: "Luxury Silk Tie — Navy",
+							sku: "TIE-SILK-NAVY",
+							image: "/images/products/luxury-tie-navy.jpg",
+							stock: 320,
+							reserved: 18,
+							sales30d: 210,
+							revenue30d: 6300,
+							price: 30
+						}
+					];
+				}
+				if (openAction.category === "Inventory Moves") {
+					return [
+						{
+							id: "TROUSER-WIDE-CHAR-32",
+							title: "Wide-Leg Trousers — Charcoal 32",
+							sku: "TROUSER-WIDE-CHAR-32",
+							image: "/images/products/wide-leg-trouser.jpg",
+							stock: 28,
+							reserved: 6,
+							sales30d: 134,
+							revenue30d: 15460,
+							price: 79
+						}
+					];
+				}
+				// Product Ideas (pre-launch preview)
+				return [
+					{
+						id: "SUIT-EXEC-GREY-42",
+						title: "Executive Wool Suit — Grey",
+						sku: "SUIT-EXEC-GREY-42",
+						image: "/images/products/exec-wool-suit.jpg",
+						stock: 0,
+						reserved: 0,
+						sales30d: 0,
+						revenue30d: 0,
+						price: 699
+					},
+					{
+						id: "SUIT-EXEC-BLUE-40",
+						title: "Executive Wool Suit — Blue",
+						sku: "SUIT-EXEC-BLUE-40",
+						image: "/images/products/exec-wool-suit.jpg",
+						stock: 0,
+						reserved: 0,
+						sales30d: 0,
+						revenue30d: 0,
+						price: 699
+					}
+				];
+			})();
+			setActionProducts(mock);
+			if (openAction.category === "Promotions") {
+				const defaults: Record<string, boolean> = {};
+				mock.forEach((p) => (defaults[p.id] = true));
+				setBundleSelected(defaults);
+			} else {
+				setBundleSelected({});
+			}
+			setActionLoading(false);
+		}, 500);
+		return () => clearTimeout(timer);
+	}, [openAction]);
 
 	// Get growth header text based on time range
 	const getGrowthHeader = (timeRange: string) => {
@@ -494,13 +772,13 @@ export function DashboardOverview() {
 	const getRiskColor = (risk: string) => {
 		switch (risk.toLowerCase()) {
 			case "high":
-				return "text-red-600 ";
+				return "text-red-600 bg-red-600/10 dark:bg-red-600/20 border border-red-600/30 dark:border-red-600/30";
 			case "medium":
-				return "text-orange-600 ";
+				return "text-orange-600 bg-orange-600/10 dark:bg-orange-600/20 border border-orange-600/30 dark:border-orange-600/30";
 			case "low":
-				return "text-green-600 ";
+				return "text-green-600 bg-green-600/10 dark:bg-green-600/20 border border-green-600/30 dark:border-green-600/30";
 			default:
-				return "text-slate-600 ";
+				return "text-slate-600 bg-slate-600/10 dark:bg-slate-600/20 border border-slate-600/30 dark:border-slate-600/30";
 		}
 	};
 
@@ -582,9 +860,27 @@ export function DashboardOverview() {
 		);
 	};
 
+	// Derived paginated lists
+	const accelTotalPages = Math.max(
+		1,
+		Math.ceil(acceleratedGrowthTrends.length / ITEMS_PER_PAGE)
+	);
+	const steadyTotalPages = Math.max(
+		1,
+		Math.ceil(steadyGrowthTrends.length / ITEMS_PER_PAGE)
+	);
+	const pagedAccelerated = acceleratedGrowthTrends.slice(
+		(accelPage - 1) * ITEMS_PER_PAGE,
+		accelPage * ITEMS_PER_PAGE
+	);
+	const pagedSteady = steadyGrowthTrends.slice(
+		(steadyPage - 1) * ITEMS_PER_PAGE,
+		steadyPage * ITEMS_PER_PAGE
+	);
+
 	return (
 		<>
-			<div className="p-8 space-y-8 bg-background text-foreground transition-colors">
+			<div className="p-4 space-y-4 bg-background text-foreground transition-colors">
 				{/* Page Header */}
 				{/* <div>
           <h1 className="text-foreground font-medium">Trend Monitor</h1>
@@ -595,9 +891,10 @@ export function DashboardOverview() {
         </div> */}
 
 				{/* Header */}
-				<header className="border border-slate-200 dark:border-slate-900 bg-card rounded-xl px-4 sm:px-6 md:px-8 py-4 md:py-6 shadow-sm ">
+				{/* <header className="border border-slate-200 dark:border-slate-900 bg-card rounded-xl p-1 shadow-sm "> */}
+				<header className="rounded-xl">
 					<div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-						<div className="flex items-center gap-6 flex-1 max-w-2xl ">
+						<div className="flex items-center gap-6 flex-1 max-w-2xl">
 							<div className="relative flex-1">
 								<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground " />
 								<Input
@@ -670,8 +967,8 @@ export function DashboardOverview() {
 							<CardTitle className="text-xl text-foreground font-semibold">
 								Trending Now
 							</CardTitle>
-							<div className="p-3 bg-purple-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
-								<TrendingUp className="h-5 w-5 text-white" />
+							<div className="p-3 bg-slate-100 dark:bg-slate-900 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+								<TrendingUp className="h-5 w-5 text-slate-500 dark:text-white" />
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
@@ -710,8 +1007,8 @@ export function DashboardOverview() {
 							<CardTitle className="text-xl text-foreground font-semibold">
 								Trend Alignment
 							</CardTitle>
-							<div className="p-3 bg-red-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
-								<Heart className="h-5 w-5 text-white" />
+							<div className="p-3 bg-slate-100 dark:bg-slate-900 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+								<Heart className="h-5 w-5 text-slate-500 dark:text-white" />
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
@@ -722,10 +1019,7 @@ export function DashboardOverview() {
 									/ 100
 								</span>
 							</div>
-							<Progress
-								value={78}
-								className="mt-2 mb-3 bg-slate-700"
-							/>
+							<Progress value={78} className="mt-2 mb-3" />
 							<div className="flex items-center mb-3">
 								<ArrowUp className="h-4 w-4 text-green-600 mr-1" />
 								<span className="text-sm text-green-600 font-medium">
@@ -755,7 +1049,7 @@ export function DashboardOverview() {
 								Product Health
 							</CardTitle>
 							<div className="p-3 bg-red-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
-								<Heart className="h-5 w-5 text-white" />
+								<Heart className="h-5 w-5 text-slate-500 dark:text-white" />
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
@@ -793,8 +1087,8 @@ export function DashboardOverview() {
 							<CardTitle className="text-xl text-foreground font-semibold">
 								Market Position
 							</CardTitle>
-							<div className="p-3 bg-blue-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
-								<Radar className="h-5 w-5 text-white" />
+							<div className="p-3 bg-slate-100 dark:bg-slate-900 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+								<Radar className="h-5 w-5 text-slate-500 dark:text-white" />
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
@@ -832,8 +1126,8 @@ export function DashboardOverview() {
 							<CardTitle className="text-xl text-foreground font-semibold">
 								Inventory Optimization
 							</CardTitle>
-							<div className="p-3 bg-green-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
-								<Shirt className="h-5 w-5 text-white" />
+							<div className="p-3 bg-slate-100 dark:bg-slate-900 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+								<Shirt className="h-5 w-5 text-slate-500 dark:text-white" />
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
@@ -882,8 +1176,8 @@ export function DashboardOverview() {
 							<CardTitle className="text-xl text-foreground font-semibold">
 								Threddle Impact
 							</CardTitle>
-							<div className="p-3 bg-orange-500 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
-								<Zap className="h-5 w-5 text-white" />
+							<div className="p-3 bg-slate-100 dark:bg-slate-900 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
+								<Zap className="h-5 w-5 text-slate-500 dark:text-white" />
 							</div>
 						</CardHeader>
 						<CardContent className="relative z-10">
@@ -944,8 +1238,8 @@ export function DashboardOverview() {
 										<div className="space-y-4 mb-6">
 											{/* Confidence */}
 											<div>
-												<div className="flex items-center justify-between mb-2">
-													<span className="text-sm text-slate-600">
+												<div className="flex items-center justify-between  text-muted-foreground mb-2">
+													<span className="text-sm">
 														Confidence
 													</span>
 													<span className="text-sm font-medium text-foreground">
@@ -961,7 +1255,7 @@ export function DashboardOverview() {
 											{/* Revenue and Margin */}
 											<div className="grid grid-cols-2 gap-4">
 												<div>
-													<span className="text-sm text-slate-600 block mb-1">
+													<span className="text-sm block  text-muted-foreground mb-1">
 														Revenue
 													</span>
 													<div className="text-lg font-semibold text-foreground">
@@ -969,7 +1263,7 @@ export function DashboardOverview() {
 													</div>
 												</div>
 												<div>
-													<span className="text-sm text-slate-600 block mb-1">
+													<span className="text-sm block  text-muted-foreground mb-1">
 														Margin
 													</span>
 													<div className="text-lg font-semibold text-blue-600">
@@ -981,7 +1275,7 @@ export function DashboardOverview() {
 											{/* Risk and Time */}
 											<div className="grid grid-cols-2 gap-4">
 												<div>
-													<span className="text-sm text-slate-600 block mb-2">
+													<span className="text-sm block  text-muted-foreground mb-2">
 														Risk Level
 													</span>
 													<Badge
@@ -994,7 +1288,7 @@ export function DashboardOverview() {
 													</Badge>
 												</div>
 												<div>
-													<span className="text-sm text-slate-600 block mb-2">
+													<span className="text-sm block  text-muted-foreground mb-2">
 														Timeline
 													</span>
 													<div
@@ -1010,10 +1304,20 @@ export function DashboardOverview() {
 
 										{/* Action Button */}
 										<Button
-											className="w-full bg-slate-900 hover:bg-slate-800 text-white font-medium"
+											className="w-full font-medium"
 											size="sm"
+											onClick={() =>
+												setOpenAction(action)
+											}
 										>
-											Take Action
+											{action.category ===
+												"Product Ideas" &&
+												"Plan Launch"}
+											{action.category ===
+												"Inventory Moves" &&
+												"Adjust Inventory"}
+											{action.category === "Promotions" &&
+												"Create Promotion"}
 										</Button>
 									</CardContent>
 								</Card>
@@ -1096,7 +1400,7 @@ export function DashboardOverview() {
 										key={index}
 										className="flex items-start gap-3 p-3 border border-border rounded-lg"
 									>
-										<div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
+										<div className="w-2 h-2 rounded-full bg-blue-900 mt-2 flex-shrink-0"></div>
 										<div className="flex-1">
 											<p className="text-sm">
 												{activity.description}
@@ -1257,16 +1561,53 @@ export function DashboardOverview() {
 
 								{/* Trend Rows */}
 								<div className="space-y-0">
-									{acceleratedGrowthTrends.map(
-										(trend, index) => (
-											<TrendRow
-												key={index}
-												trend={trend}
-												isAccelerated={true}
-											/>
-										)
-									)}
+									{pagedAccelerated.map((trend, index) => (
+										<TrendRow
+											key={index}
+											trend={trend}
+											isAccelerated={true}
+										/>
+									))}
 								</div>
+
+								{/* Pagination controls */}
+								{accelTotalPages > 1 && (
+									<div className="flex items-center justify-between pt-3">
+										<Button
+											variant="outline"
+											size="sm"
+											disabled={accelPage === 1}
+											onClick={() =>
+												setAccelPage((p) =>
+													Math.max(1, p - 1)
+												)
+											}
+										>
+											Previous
+										</Button>
+										<div className="text-xs text-muted-foreground">
+											Page {accelPage} of{" "}
+											{accelTotalPages}
+										</div>
+										<Button
+											variant="outline"
+											size="sm"
+											disabled={
+												accelPage === accelTotalPages
+											}
+											onClick={() =>
+												setAccelPage((p) =>
+													Math.min(
+														accelTotalPages,
+														p + 1
+													)
+												)
+											}
+										>
+											Next
+										</Button>
+									</div>
+								)}
 							</div>
 						</CardContent>
 					</Card>
@@ -1301,7 +1642,7 @@ export function DashboardOverview() {
 
 								{/* Trend Rows */}
 								<div className="space-y-0">
-									{steadyGrowthTrends.map((trend, index) => (
+									{pagedSteady.map((trend, index) => (
 										<TrendRow
 											key={index}
 											trend={trend}
@@ -1309,6 +1650,45 @@ export function DashboardOverview() {
 										/>
 									))}
 								</div>
+
+								{/* Pagination controls */}
+								{steadyTotalPages > 1 && (
+									<div className="flex items-center justify-between pt-3">
+										<Button
+											variant="outline"
+											size="sm"
+											disabled={steadyPage === 1}
+											onClick={() =>
+												setSteadyPage((p) =>
+													Math.max(1, p - 1)
+												)
+											}
+										>
+											Previous
+										</Button>
+										<div className="text-xs text-muted-foreground">
+											Page {steadyPage} of{" "}
+											{steadyTotalPages}
+										</div>
+										<Button
+											variant="outline"
+											size="sm"
+											disabled={
+												steadyPage === steadyTotalPages
+											}
+											onClick={() =>
+												setSteadyPage((p) =>
+													Math.min(
+														steadyTotalPages,
+														p + 1
+													)
+												)
+											}
+										>
+											Next
+										</Button>
+									</div>
+								)}
 							</div>
 						</CardContent>
 					</Card>
@@ -1388,6 +1768,327 @@ export function DashboardOverview() {
 					trendName={selectedTrend?.name || ""}
 					trendData={selectedTrend?.data}
 				/>
+
+				{/* Priority Action Dialog */}
+				<Dialog
+					open={!!openAction}
+					onOpenChange={(o) => !o && setOpenAction(null)}
+				>
+					<DialogContent className="max-w-4xl">
+						<DialogHeader>
+							<DialogTitle>{openAction?.title}</DialogTitle>
+							<DialogDescription>
+								{openAction?.category} • Confidence{" "}
+								{openAction?.confidence}% • Expected Margin{" "}
+								{openAction?.expectedMargin}
+							</DialogDescription>
+						</DialogHeader>
+
+						{/* Shopify products context */}
+						<div className="mb-4">
+							<div className="text-sm text-muted-foreground mb-2">
+								{actionLoading
+									? "Fetching products from Store..."
+									: "Products from Store"}
+							</div>
+							<div className="grid grid-cols-1 gap-2">
+								{!actionLoading &&
+									actionProducts.map((p) => (
+										<div
+											key={p.id}
+											className="flex items-center gap-3 p-3 border rounded-lg"
+										>
+											<ImageWithFallback
+												src={p.image}
+												alt={p.title}
+												className="w-12 h-12 rounded object-cover bg-muted"
+											/>
+											<div className="flex-1 min-w-0">
+												<div className="text-sm font-medium truncate">
+													{p.title}
+												</div>
+												<div className="text-xs text-muted-foreground truncate">
+													SKU: {p.sku}
+												</div>
+												<div className="flex items-center gap-2 mt-1 text-xs">
+													<Badge
+														variant={
+															p.stock <= 30
+																? "destructive"
+																: "secondary"
+														}
+													>
+														{p.stock <= 30
+															? "Low Stock"
+															: "In Stock"}{" "}
+														• {p.stock - p.reserved}{" "}
+														available
+													</Badge>
+													<Badge variant="outline">
+														30d: {p.sales30d} units
+														• $
+														{p.revenue30d.toLocaleString()}
+													</Badge>
+												</div>
+											</div>
+											{openAction?.category ===
+												"Promotions" && (
+												<Checkbox
+													checked={
+														!!bundleSelected[p.id]
+													}
+													onCheckedChange={(v) =>
+														setBundleSelected(
+															(s) => ({
+																...s,
+																[p.id]: !!v
+															})
+														)
+													}
+												/>
+											)}
+										</div>
+									))}
+							</div>
+						</div>
+
+						{/* Dynamic Forms by category */}
+						{openAction?.category === "Product Ideas" && (
+							<div className="space-y-4">
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+									<div>
+										<label className="text-sm text-muted-foreground">
+											Target launch date
+										</label>
+										<Input type="date" className="mt-1" />
+									</div>
+									<div>
+										<label className="text-sm text-muted-foreground">
+											Initial SKUs
+										</label>
+										<Input
+											type="number"
+											placeholder="e.g. 8"
+											className="mt-1"
+										/>
+									</div>
+									<div>
+										<label className="text-sm text-muted-foreground">
+											Price min
+										</label>
+										<Input
+											type="number"
+											placeholder="$"
+											className="mt-1"
+										/>
+									</div>
+									<div>
+										<label className="text-sm text-muted-foreground">
+											Price max
+										</label>
+										<Input
+											type="number"
+											placeholder="$"
+											className="mt-1"
+										/>
+									</div>
+								</div>
+								<div>
+									<label className="text-sm text-muted-foreground">
+										Launch channels
+									</label>
+									<div className="flex gap-4 mt-2">
+										<label className="flex items-center gap-2 text-sm">
+											<Checkbox /> Online Store
+										</label>
+										<label className="flex items-center gap-2 text-sm">
+											<Checkbox /> Email
+										</label>
+										<label className="flex items-center gap-2 text-sm">
+											<Checkbox /> Social
+										</label>
+									</div>
+								</div>
+								<div>
+									<label className="text-sm text-muted-foreground">
+										Notes
+									</label>
+									<Textarea
+										placeholder="Add launch notes, target audience, creative requirements..."
+										className="mt-1"
+									/>
+								</div>
+								<div className="flex justify-end gap-2 pt-2">
+									<Button
+										variant="outline"
+										onClick={() => setOpenAction(null)}
+									>
+										Add to Roadmap
+									</Button>
+									<Button onClick={() => setOpenAction(null)}>
+										Create Launch Task
+									</Button>
+								</div>
+							</div>
+						)}
+
+						{openAction?.category === "Inventory Moves" && (
+							<div className="space-y-4">
+								<div>
+									<label className="text-sm text-muted-foreground">
+										Action type
+									</label>
+									<RadioGroup
+										defaultValue="restock"
+										className="mt-2"
+									>
+										<label className="flex items-center gap-2 text-sm">
+											<RadioGroupItem value="restock" />{" "}
+											Restock
+										</label>
+										<label className="flex items-center gap-2 text-sm">
+											<RadioGroupItem value="clearance" />{" "}
+											Clearance
+										</label>
+									</RadioGroup>
+								</div>
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+									<div>
+										<label className="text-sm text-muted-foreground">
+											SKU/Variant
+										</label>
+										<Input
+											placeholder="e.g. TROUSER-WIDE-CHAR-32"
+											className="mt-1"
+										/>
+									</div>
+									<div>
+										<label className="text-sm text-muted-foreground">
+											Quantity
+										</label>
+										<Input
+											type="number"
+											placeholder="e.g. 120"
+											className="mt-1"
+										/>
+									</div>
+									<div>
+										<label className="text-sm text-muted-foreground">
+											Warehouse/Location
+										</label>
+										<Input
+											placeholder="e.g. WH-2 East"
+											className="mt-1"
+										/>
+									</div>
+									<div>
+										<label className="text-sm text-muted-foreground">
+											Target date
+										</label>
+										<Input type="date" className="mt-1" />
+									</div>
+								</div>
+								<div className="flex justify-end gap-2 pt-2">
+									<Button
+										variant="outline"
+										onClick={() => setOpenAction(null)}
+									>
+										Export CSV Template
+									</Button>
+									<Button onClick={() => setOpenAction(null)}>
+										Schedule Inventory Move
+									</Button>
+								</div>
+							</div>
+						)}
+
+						{openAction?.category === "Promotions" && (
+							<div className="space-y-4">
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+									<div>
+										<label className="text-sm text-muted-foreground">
+											Discount type
+										</label>
+										<Select defaultValue="percent">
+											<SelectTrigger className="mt-1">
+												<SelectValue />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem value="percent">
+													Percentage
+												</SelectItem>
+												<SelectItem value="amount">
+													Fixed amount
+												</SelectItem>
+												<SelectItem value="bogo">
+													BOGO
+												</SelectItem>
+											</SelectContent>
+										</Select>
+									</div>
+									<div>
+										<label className="text-sm text-muted-foreground">
+											Discount value
+										</label>
+										<Input
+											type="number"
+											placeholder="e.g. 20"
+											className="mt-1"
+										/>
+									</div>
+									<div>
+										<label className="text-sm text-muted-foreground">
+											Start date
+										</label>
+										<Input type="date" className="mt-1" />
+									</div>
+									<div>
+										<label className="text-sm text-muted-foreground">
+											End date
+										</label>
+										<Input type="date" className="mt-1" />
+									</div>
+								</div>
+								<div>
+									<label className="text-sm text-muted-foreground">
+										Channels
+									</label>
+									<div className="flex gap-4 mt-2">
+										<label className="flex items-center gap-2 text-sm">
+											<Checkbox /> Online Store
+										</label>
+										<label className="flex items-center gap-2 text-sm">
+											<Checkbox /> Email
+										</label>
+										<label className="flex items-center gap-2 text-sm">
+											<Checkbox /> Social
+										</label>
+									</div>
+								</div>
+								<div>
+									<label className="text-sm text-muted-foreground">
+										Promo Code (optional)
+									</label>
+									<Input
+										placeholder="e.g. EXEC20"
+										className="mt-1"
+									/>
+								</div>
+								<div className="flex justify-end gap-2 pt-2">
+									<Button
+										variant="outline"
+										onClick={() => setOpenAction(null)}
+									>
+										Preview in Shopify
+									</Button>
+									<Button onClick={() => setOpenAction(null)}>
+										Create Promotion
+									</Button>
+								</div>
+							</div>
+						)}
+					</DialogContent>
+				</Dialog>
 			</div>
 		</>
 	);

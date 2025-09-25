@@ -38,14 +38,11 @@ export function WelcomePage({ onComplete, onBack }: WelcomePageProps) {
 							<AnimatedCheck className="h-12 w-12 text-green-500" />
 						</div>
 						<h1 className="text-4xl font-medium text-foreground">
-							Welcome to Threddle!
+							Setup Complete
 						</h1>
 						<p className="text-xl text-slate-600 font-normal">
-							{/* Your AI-powered fashion insights platform is ready
-                            to help you stay ahead of trends and boost sales. */}
-							Your dashboard is ready with AI-curated trends,
-							competitor moves, and product insights so you can
-							make the right calls before the market shifts.
+							Our agents are now continuously working to find new
+							opportunities for your brand.
 						</p>
 					</div>
 
@@ -121,21 +118,20 @@ export function WelcomePage({ onComplete, onBack }: WelcomePageProps) {
 					</div> */}
 
 					{/* CTA Buttons */}
-					<div className="space-y-4">
-                <Button
-                    onClick={() => {
-                        // Ensure user is marked authenticated before navigating
-                        try {
-                            login();
-                        } catch {}
-                        onComplete();
-                    }}
-                    className="w-full h-12 text-base bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium"
-                >
-                    Show My Dashboard
-                </Button>
+					{/* <div className="space-y-4">
+						<Button
+							onClick={() => {
+								// Ensure user is marked authenticated before navigating
+								try {
+									login();
+								} catch {}
+								onComplete();
+							}}
+							className="w-full h-12 text-base bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium"
+						>
+							Go to dashboard — grow your D2C brand faster
+						</Button>
 
-						{/* Back Button */}
 						{onBack && (
 							<Button
 								variant="secondary"
@@ -146,7 +142,7 @@ export function WelcomePage({ onComplete, onBack }: WelcomePageProps) {
 								Back
 							</Button>
 						)}
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</div>

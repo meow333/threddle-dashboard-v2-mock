@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
 	Plus,
 	Search,
@@ -30,6 +30,13 @@ import {
 } from "./ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
+	Dialog,
+	DialogContent,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle
+} from "./ui/dialog";
+import {
 	ScatterChart,
 	Scatter,
 	XAxis,
@@ -40,6 +47,7 @@ import {
 	LineChart,
 	Line
 } from "recharts";
+import { toast } from "sonner";
 
 interface CompetitorMirrorProps {}
 
@@ -243,6 +251,36 @@ export function CompetitorMirror() {
 	const [selectedCompetitor, setSelectedCompetitor] = useState<
 		(typeof competitors)[0] | null
 	>(null);
+	// Detailed Comparison dialog state
+	const [detailOpen, setDetailOpen] = useState(false);
+	const [detailIndex, setDetailIndex] = useState<number | null>(null);
+	const [showAdjustPricing, setShowAdjustPricing] = useState(false);
+	// Gap dialog state
+	const [gapOpen, setGapOpen] = useState(false);
+	const [selectedGap, setSelectedGap] = useState<{
+		category: string;
+		competitors: string[];
+		opportunity: string;
+	} | null>(null);
+
+	const comparison = useMemo(
+		() => (detailIndex != null ? productComparisons[detailIndex] : null),
+		[detailIndex]
+	);
+
+	const getImageForCategory = (category: string) => {
+		switch (category) {
+			case "Executive Suits":
+				return "/images/products/exec-wool-suit.jpg";
+			case "Oxford Shoes":
+				return "/images/products/oxford-shoes.avif";
+			case "Dress Shirts":
+				// Fallback image (no specific shirt asset in repo)
+				return "/images/products/exec-wool-suit.jpg";
+			default:
+				return "/images/products/exec-wool-suit.jpg";
+		}
+	};
 
 	const getStatusColor = (status: string) => {
 		switch (status) {
@@ -521,6 +559,13 @@ export function CompetitorMirror() {
 										{/* Your Product */}
 										<div className="p-3 border rounded-lg flex flex-row items-end justify-between border border-border">
 											<div>
+												<img
+													src={getImageForCategory(
+														comparison.category
+													)}
+													alt={`${comparison.category} - Your Product`}
+													className="w-full h-24 object-cover rounded mb-2 border border-slate-200 dark:border-slate-900"
+												/>
 												<h4 className="font-medium text-sm text-primary">
 													Your Product
 												</h4>
@@ -559,6 +604,13 @@ export function CompetitorMirror() {
 										{/* Competitor Product */}
 										<div className="p-3 border rounded-lg  flex flex-row items-end justify-between border border-border">
 											<div>
+												<img
+													src={getImageForCategory(
+														comparison.category
+													)}
+													alt={`${comparison.category} - Competitor Product`}
+													className="w-full h-24 object-cover rounded mb-2 border border-slate-200 dark:border-slate-900"
+												/>
 												<h4 className="font-medium text-sm">
 													{
 														comparison.competitor
@@ -598,6 +650,11 @@ export function CompetitorMirror() {
 											variant="outline"
 											size="sm"
 											className="w-full col-span-2"
+											onClick={() => {
+												setDetailIndex(index);
+												setDetailOpen(true);
+												setShowAdjustPricing(false);
+											}}
 										>
 											Detailed Comparison
 										</Button>
@@ -691,6 +748,10 @@ export function CompetitorMirror() {
 												variant="outline"
 												size="sm"
 												className="w-full mt-3 text-xs"
+												onClick={() => {
+													setSelectedGap(gap);
+													setGapOpen(true);
+												}}
 											>
 												Explore Gap
 											</Button>
@@ -865,6 +926,379 @@ export function CompetitorMirror() {
 					</div>
 				</TabsContent>
 			</Tabs>
+
+			{/* Detailed Comparison Dialog */}
+			<Dialog open={detailOpen} onOpenChange={setDetailOpen}>
+				<DialogContent className="sm:max-w-5xl">
+					<DialogHeader>
+						<DialogTitle>
+							Detailed Comparison:{" "}
+							{comparison?.category || "Product"}
+						</DialogTitle>
+					</DialogHeader>
+					<div className="space-y-4">
+						{/* Tabs mimic: Overview, Price & Margin, Market & Adoption, AI Recs */}
+						<Tabs defaultValue="overview" className="space-y-3">
+							<TabsList className="grid w-full grid-cols-4">
+								<TabsTrigger value="overview">
+									Overview
+								</TabsTrigger>
+								<TabsTrigger value="price">
+									Price & Margin
+								</TabsTrigger>
+								<TabsTrigger value="market">
+									Market & Adoption
+								</TabsTrigger>
+								<TabsTrigger value="ai">AI Recs</TabsTrigger>
+							</TabsList>
+
+							<TabsContent value="overview" className="space-y-3">
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+									<div className="rounded-md border border-border p-3">
+										<img
+											src={getImageForCategory(
+												comparison?.category ||
+													"Executive Suits"
+											)}
+											alt={`${comparison?.category || "Product"} - Your Product`}
+											className="w-full h-28 object-cover rounded mb-2 border border-slate-200 dark:border-slate-900"
+										/>
+										<div className="font-medium mb-1">
+											Your Product
+										</div>
+										<div>
+											{comparison?.yourProduct.name}
+										</div>
+										<div>
+											Price: $
+											{comparison?.yourProduct.price}
+										</div>
+										<div>Stock: —</div>
+										<div>
+											Rating: ★{" "}
+											{comparison?.yourProduct.rating}
+										</div>
+									</div>
+									<div className="rounded-md border border-border p-3">
+										<img
+											src={getImageForCategory(
+												comparison?.category ||
+													"Executive Suits"
+											)}
+											alt={`${comparison?.category || "Product"} - Competitor Product`}
+											className="w-full h-28 object-cover rounded mb-2 border border-slate-200 dark:border-slate-900"
+										/>
+										<div className="font-medium mb-1">
+											Competitor
+										</div>
+										<div>
+											{comparison?.competitor.brand} –{" "}
+											{comparison?.competitor.name}
+										</div>
+										<div>
+											Price: $
+											{comparison?.competitor.price}
+										</div>
+										<div>
+											Rating: ★{" "}
+											{comparison?.competitor.rating}
+										</div>
+									</div>
+								</div>
+								<div className="text-sm text-muted-foreground">
+									Trend match: {comparison?.trendAlignment}% |
+									Demand signals: influencer mentions up 18%
+								</div>
+							</TabsContent>
+
+							<TabsContent value="price" className="space-y-3">
+								<div className="h-40">
+									<ResponsiveContainer
+										width="100%"
+										height="100%"
+									>
+										<LineChart
+											data={Array.from(
+												{ length: 12 },
+												(_, i) => ({
+													d: i + 1,
+													you: 500 + i * 2,
+													comp: 520 + (i % 4) * 5
+												})
+											)}
+										>
+											<CartesianGrid strokeDasharray="3 3" />
+											<XAxis dataKey="d" />
+											<YAxis />
+											<Tooltip />
+											<Line
+												dataKey="you"
+												type="monotone"
+												stroke="#2563eb"
+												name="Your Price"
+											/>
+											<Line
+												dataKey="comp"
+												type="monotone"
+												stroke="#10b981"
+												name="Competitor Price"
+											/>
+										</LineChart>
+									</ResponsiveContainer>
+								</div>
+								<div className="rounded-md border border-border p-3 text-sm">
+									Suggested corridor: $480 – $540. Competitor
+									promo spikes visible in weeks 3 and 8.
+								</div>
+								{showAdjustPricing && (
+									<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+										<div>
+											<label className="text-xs text-muted-foreground">
+												New Price
+											</label>
+											<Input
+												type="number"
+												defaultValue={
+													comparison?.yourProduct
+														.price
+												}
+												onChange={() => {}}
+											/>
+										</div>
+										<div>
+											<label className="text-xs text-muted-foreground">
+												Effective Date
+											</label>
+											<Input type="date" />
+										</div>
+										<div className="flex items-end">
+											<Button
+												className="w-full"
+												onClick={() => {
+													toast("Pricing adjusted");
+													setShowAdjustPricing(false);
+												}}
+											>
+												Apply
+											</Button>
+										</div>
+									</div>
+								)}
+							</TabsContent>
+
+							<TabsContent value="market" className="space-y-3">
+								<div className="text-sm">
+									Sales velocity trending upward; strongest in
+									US + UK.
+								</div>
+								<div className="h-40">
+									<ResponsiveContainer
+										width="100%"
+										height="100%"
+									>
+										<LineChart
+											data={Array.from(
+												{ length: 10 },
+												(_, i) => ({
+													t: i + 1,
+													units: 80 + i * 12
+												})
+											)}
+										>
+											<CartesianGrid strokeDasharray="3 3" />
+											<XAxis dataKey="t" />
+											<YAxis />
+											<Tooltip />
+											<Line
+												dataKey="units"
+												type="monotone"
+												stroke="#9333ea"
+												name="Units Sold"
+											/>
+										</LineChart>
+									</ResponsiveContainer>
+								</div>
+							</TabsContent>
+
+							<TabsContent
+								value="ai"
+								className="space-y-2 text-sm"
+							>
+								<ul className="list-disc pl-5 space-y-1">
+									<li>
+										Lower price by 5% to regain market
+										share.
+									</li>
+									<li>
+										Highlight sustainable fabric in
+										campaigns.
+									</li>
+									<li>
+										Competitor stock depleting fast; restock
+										within 3 weeks.
+									</li>
+								</ul>
+							</TabsContent>
+						</Tabs>
+					</div>
+					<DialogFooter>
+						<Button
+							variant="outline"
+							onClick={() => setShowAdjustPricing((v) => !v)}
+						>
+							Adjust Pricing
+						</Button>
+						<Button
+							variant="secondary"
+							onClick={() =>
+								toast("Competitor added to Watchlist")
+							}
+						>
+							Add to Watchlist
+						</Button>
+						<Button onClick={() => toast("Exported PDF")}>
+							Export Comparison PDF
+						</Button>
+						<Button
+							onClick={() => toast("Flagged for AI Playbook")}
+						>
+							Flag for AI Playbook
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
+
+			{/* Market Gap Explorer Dialog */}
+			<Dialog open={gapOpen} onOpenChange={setGapOpen}>
+				<DialogContent className="sm:max-w-5xl">
+					<DialogHeader>
+						<DialogTitle>
+							Market Gap: {selectedGap?.category || "Category"}
+						</DialogTitle>
+					</DialogHeader>
+					<div className="space-y-3 text-sm">
+						<div>
+							<p className="text-muted-foreground">
+								Competitors are capturing demand in{" "}
+								{selectedGap?.category}. You don’t currently
+								offer products here.
+							</p>
+							<div className="flex flex-wrap gap-1 mt-2">
+								{selectedGap?.competitors.map((c, i) => (
+									<Badge
+										key={i}
+										variant="outline"
+										className="text-xs"
+									>
+										{c}
+									</Badge>
+								))}
+							</div>
+						</div>
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+							<div className="rounded-md border border-border p-3">
+								<div className="font-medium mb-1">
+									Demand & Market Size
+								</div>
+								<div>
+									TAM: $
+									{selectedGap?.opportunity === "High"
+										? "4.1M"
+										: selectedGap?.opportunity === "Medium"
+											? "1.8M"
+											: "0.7M"}
+								</div>
+								<div className="h-28 mt-2">
+									<ResponsiveContainer
+										width="100%"
+										height="100%"
+									>
+										<LineChart
+											data={Array.from(
+												{ length: 6 },
+												(_, i) => ({
+													m: i + 1,
+													g: 60 + i * 8
+												})
+											)}
+										>
+											<CartesianGrid strokeDasharray="3 3" />
+											<XAxis dataKey="m" />
+											<YAxis />
+											<Tooltip />
+											<Line
+												dataKey="g"
+												type="monotone"
+												stroke="#16a34a"
+												name="Growth"
+											/>
+										</LineChart>
+									</ResponsiveContainer>
+								</div>
+							</div>
+							<div className="rounded-md border border-border p-3">
+								<div className="font-medium mb-1">
+									Competitive Landscape
+								</div>
+								<div>
+									Price bands: $120–$240 | Positioning:
+									sustainability, value
+								</div>
+							</div>
+						</div>
+						<div className="rounded-md border border-border p-3">
+							<div className="font-medium mb-1">
+								AI Opportunity Fit
+							</div>
+							<ul className="list-disc pl-5 space-y-1">
+								<li>
+									Introduce Eco Wool Suit, projected margin
+									48–55%.
+								</li>
+								<li>
+									Timeline: Next 6 weeks = early mover
+									advantage.
+								</li>
+							</ul>
+							<div className="grid grid-cols-3 gap-2 mt-2">
+								<Input
+									placeholder="New Product Name (auto)"
+									defaultValue={`${selectedGap?.category} – Concept`}
+								/>
+								<Input
+									placeholder="Category"
+									defaultValue={selectedGap?.category}
+								/>
+								<Input
+									placeholder="Target Price"
+									defaultValue={
+										selectedGap?.opportunity === "High"
+											? "229.99"
+											: "179.99"
+									}
+								/>
+							</div>
+						</div>
+					</div>
+					<DialogFooter>
+						<Button
+							variant="outline"
+							onClick={() => toast("Generated product brief")}
+						>
+							Generate New Product Brief
+						</Button>
+						<Button
+							variant="secondary"
+							onClick={() => toast("Assigned to Trend Agent")}
+						>
+							Assign to Trend Agent
+						</Button>
+						<Button onClick={() => toast("Saved to Watchlist")}>
+							Save to Watchlist
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
 		</div>
 	);
 }

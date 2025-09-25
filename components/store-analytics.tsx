@@ -432,17 +432,20 @@ export function StoreAnalytics() {
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<div className="h-80">
-							<ResponsiveContainer width="100%" height="100%">
-								<ScatterChart data={productPerformanceData}>
+						<div className="h-96">
+								<ResponsiveContainer width="100%" height="100%">
+									<ScatterChart
+										data={productPerformanceData}
+										margin={{ top: 16, right: 16, bottom: 40, left: 16 }}
+									>
 									<CartesianGrid strokeDasharray="3 3" />
 									<XAxis
 										dataKey="trendAlignment"
 										name="Trend Alignment"
 										label={{
 											value: "Trend Alignment Score",
-											position: "insideBottom",
-											offset: -10
+											position: "bottom",
+											offset: 0
 										}}
 									/>
 									<YAxis
@@ -455,11 +458,26 @@ export function StoreAnalytics() {
 										}}
 									/>
 									<Tooltip
-										formatter={(value, name, props) => [
-											props.payload.name,
-											`Trend: ${props.payload.trendAlignment}%`,
-											`Sales: ${props.payload.salesPerformance}%`
-										]}
+										cursor={{ strokeDasharray: "3 3" }}
+										content={({ active, payload }) => {
+											if (active && payload && payload.length) {
+												const point = payload[0].payload as any;
+												return (
+													<div className="rounded-md border bg-white p-3 shadow-sm">
+														<div className="text-sm font-medium">
+															{point.name}
+														</div>
+														<div className="mt-1 text-xs text-muted-foreground">
+															Trend: {point.trendAlignment}%
+														</div>
+														<div className="text-xs text-muted-foreground">
+															Sales: {point.salesPerformance}%
+														</div>
+													</div>
+												);
+											}
+											return null;
+										}}
 									/>
 									<Scatter
 										dataKey="salesPerformance"

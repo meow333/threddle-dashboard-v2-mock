@@ -16,7 +16,7 @@ const backgroundImage = "/images/backgrounds/bg2.jpg";
 const parentBackgroundImage = "/images/backgrounds/bg6.jpg";
 const splitRegisterBackgroundImage = "/images/backgrounds/login-cover.png";
 const splitLoginBackgroundImage = "/images/backgrounds/login-cover-2.png";
-const loginRegisterBackgroundImage = "/images/backgrounds/login-cover-1.png";
+const loginRegisterBackgroundImage = "/images/backgrounds/login-cover-12.png";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
@@ -56,8 +56,8 @@ export function LoginRegistration({
 	return (
 		<div className="w-full min-h-screen flex flex-col items-center justify-center bg-black text-foreground transition-colors">
 			{/* Left Panel - Hero Section */}
-			<div className="w-full h-screen flex flex-col lg:flex-row items-center justify-center p-12">
-				<div className="shrink h-full">
+			<div className="w-full h-screen flex flex-col lg:flex-row items-center justify-around">
+				<div className="h-full">
 					{/* <img
 						src={
 							loginRegisterBackgroundImage
@@ -69,11 +69,11 @@ export function LoginRegistration({
 					/> */}
 					<img
 						src={loginRegisterBackgroundImage}
-						className="hidden xl:block h-screen object-contain transform animate-all"
+						className="hidden xl:block h-full object-contain transform animate-all"
 					/>
 					<img
 						src={splitRegisterBackgroundImage}
-						className="xl:hidden h-screen object-contain transform animate-all"
+						className="xl:hidden h-full object-contain transform animate-all"
 					/>
 					{/* <div className="relative z-10 flex flex-col justify-between px-12 py-16 text-white h-full">
 						<div className="mb-8">
@@ -142,8 +142,8 @@ export function LoginRegistration({
 				</div>
 
 				{/* Right Panel - Form Section */}
-				<div className="flex-1 flex items-center h-full justify-center transition-colors">
-					<div className="w-full h-full max-w-xl space-y-8 p-12 overflow-clip rounded-xl bg-card transition-colors  border border-border">
+				<div className="flex flex-col items-center h-full justify-center transition-colors  p-12">
+					<div className="w-[600px] h-full space-y-8 p-12 overflow-clip rounded-xl bg-card transition-colors">
 						{/* Mobile Logo */}
 						<div className="flex justify-center">
 							<img
@@ -161,7 +161,7 @@ export function LoginRegistration({
 							<p className="text-muted-foreground font-normal">
 								{isLogin
 									? "Sign in to access your fashion insights dashboard"
-									: "Access your trends, insights, and analytics anytime, anywhere - and keep everything flowing in one place."}
+									: "Start your agent-powered journey to brand growth with Trend, Inventory, and Competitor agents."}
 							</p>
 						</div>
 

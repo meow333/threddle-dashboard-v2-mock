@@ -83,16 +83,15 @@ export function RecommendationsSetup({
 					/>
 				</div>
 
-				{/* Header */}
-				<div className="text-center space-y-4">
-					<h1 className="text-3xl font-medium text-foreground">
-						Customize Your Insights
-					</h1>
-					<p className="text-lg text-slate-600 font-normal">
-						Choose how you want to receive updates and
-						recommendations
-					</p>
-				</div>
+                {/* Header */}
+                <div className="text-center space-y-4">
+                    <h1 className="text-3xl font-medium text-foreground">
+                        Stay Ahead of the Curve
+                    </h1>
+                    <p className="text-lg text-slate-600 font-normal">
+                        Agents monitor, so you can act faster than your competition.
+                    </p>
+                </div>
 
 				{/* Recommendations Cards */}
 				<div className="space-y-2">
@@ -105,20 +104,15 @@ export function RecommendationsSetup({
 										<Package className="h-6 w-6 text-orange-600" />
 									</div>
 									<div className="flex-1">
-										<h3 className="font-medium text-foreground mb-2">
-											Inventory Health Alerts
-										</h3>
-										<p className="text-sm text-slate-600 font-normal mb-3">
-											Get notified when products are
-											running low or trending items need
-											restocking
-										</p>
+                            <h3 className="font-medium text-foreground mb-2">
+                                Inventory Alerts
+                            </h3>
+                            <p className="text-sm text-slate-600 font-normal mb-3">
+                                Get real-time notifications from your Inventory Agent about stockouts and overstocks.
+                            </p>
 										<div className="flex items-center gap-2 text-xs text-slate-500">
 											<Bell className="h-3 w-3" />
-											<span className="font-normal">
-												Daily notifications • Email +
-												Dashboard
-											</span>
+                            <span className="font-normal">Real-time • Email + Dashboard</span>
 										</div>
 									</div>
 								</div>
@@ -144,19 +138,15 @@ export function RecommendationsSetup({
 										<TrendingUp className="h-6 w-6 text-blue-600" />
 									</div>
 									<div className="flex-1">
-										<h3 className="font-medium text-foreground mb-2">
-											Weekly Trends Digest
-										</h3>
-										<p className="text-sm text-slate-600 font-normal mb-3">
-											Comprehensive weekly report with
-											market trends, competitor insights,
-											and growth opportunities
-										</p>
+                            <h3 className="font-medium text-foreground mb-2">
+                                Weekly Trend Digest
+                            </h3>
+                            <p className="text-sm text-slate-600 font-normal mb-3">
+                                Get a weekly report from your Trend Agent with a summary of market shifts and opportunities.
+                            </p>
 										<div className="flex items-center gap-2 text-xs text-slate-500">
 											<Calendar className="h-3 w-3" />
-											<span className="font-normal">
-												Every Monday • Email summary
-											</span>
+                            <span className="font-normal">Every Monday • Email summary</span>
 										</div>
 									</div>
 								</div>
@@ -182,14 +172,12 @@ export function RecommendationsSetup({
 										<Users className="h-6 w-6 text-green-600" />
 									</div>
 									<div className="flex-1">
-										<h3 className="font-medium text-foreground mb-2">
-											Competitor Activity Alerts
-										</h3>
-										<p className="text-sm text-slate-600 font-normal mb-3">
-											Real-time alerts when competitors
-											launch new products, change pricing,
-											or run promotions
-										</p>
+                            <h3 className="font-medium text-foreground mb-2">
+                                Competitor Alerts
+                            </h3>
+                            <p className="text-sm text-slate-600 font-normal mb-3">
+                                Let your Competitor Agent track competitor pricing and product launches for you.
+                            </p>
 										<div className="flex items-center gap-2 text-xs text-slate-500">
 											<Zap className="h-3 w-3" />
 											<span className="font-normal">
@@ -259,9 +247,9 @@ export function RecommendationsSetup({
 					)}
 				</div>
 				{/* Progress Indicator */}
-				<div className="pt-6">
-					<ProgressIndicator currentStep={5} totalSteps={6} />
-				</div>
+            <div className="pt-6">
+                <ProgressIndicator currentStep={5} totalSteps={5} />
+            </div>
 			</div>
 		</div>
 	);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
 	Filter,
 	ArrowUp,
@@ -31,6 +31,24 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger
 } from "./ui/collapsible";
+import {
+	Dialog,
+	DialogContent,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle
+} from "./ui/dialog";
+import { Slider } from "./ui/slider";
+import {
+	LineChart as ReLineChart,
+	Line as ReLine,
+	XAxis as ReXAxis,
+	YAxis as ReYAxis,
+	CartesianGrid as ReCartesianGrid,
+	Tooltip as ReTooltip,
+	ResponsiveContainer as ReResponsiveContainer
+} from "recharts";
+import { toast } from "sonner";
 
 interface SmartProductMatchProps {}
 
@@ -220,6 +238,34 @@ const marketGaps = [
 export function SmartProductMatch() {
 	const [sortBy, setSortBy] = useState("relevance");
 	const [expandedCard, setExpandedCard] = useState<number | null>(null);
+	// Dialog state
+	const [trendDialogOpen, setTrendDialogOpen] = useState(false);
+	const [optDialogOpen, setOptDialogOpen] = useState(false);
+	const [gapDialogOpen, setGapDialogOpen] = useState(false);
+	const [selectedProductId, setSelectedProductId] = useState<number | null>(
+		null
+	);
+	const [selectedGapIndex, setSelectedGapIndex] = useState<number | null>(
+		null
+	);
+
+	const selectedProduct = useMemo(
+		() => productMatches.find((p) => p.id === selectedProductId) || null,
+		[selectedProductId]
+	);
+	const selectedGap = useMemo(
+		() => (selectedGapIndex != null ? marketGaps[selectedGapIndex] : null),
+		[selectedGapIndex]
+	);
+
+	// Optimization form state
+	const [optFocus, setOptFocus] = useState<"price" | "stock" | "promotion">(
+		"price"
+	);
+	const [adjustedPrice, setAdjustedPrice] = useState<number | null>(null);
+	const [reorderQty, setReorderQty] = useState<number>(0);
+	const [whatIfPriceDelta, setWhatIfPriceDelta] = useState<number>(0);
+	const [whatIfStockDelta, setWhatIfStockDelta] = useState<number>(0);
 
 	return (
 		<div className="p-6">
@@ -318,7 +364,7 @@ export function SmartProductMatch() {
 			<div className="grid grid-cols-12 gap-6">
 				{/* Main Product Grid */}
 				<div className="col-span-12 xl:col-span-9">
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 						{productMatches.map((product) => (
 							<Card
 								key={product.id}
@@ -337,32 +383,31 @@ export function SmartProductMatch() {
 												<Badge
 													key={index}
 													variant="secondary"
-													className="text-xs bg-white border border-slate-200"
+													className="text-xs"
 												>
 													{trend}
 												</Badge>
 											))}
 									</div>
-									<div className="absolute top-2 right-2">
+									{/* <div className="absolute top-2 right-2"></div> */}
+								</div>
+
+								<CardContent className="px-4 pb-5">
+									<div className="space-y-3">
 										<Badge
 											variant={
 												product.stockStatus ===
 												"In Stock"
-													? "default"
+													? "success"
 													: product.stockStatus ===
 														  "Low Stock"
 														? "destructive"
-														: "destructive"
+														: "neutral"
 											}
 											className="text-xs"
 										>
 											{product.stockStatus}
 										</Badge>
-									</div>
-								</div>
-
-								<CardContent className="p-4">
-									<div className="space-y-3">
 										{/* Product Info */}
 										<div>
 											<h3 className="font-medium">
@@ -442,12 +487,15 @@ export function SmartProductMatch() {
 											<div className="flex gap-1">
 												{product.topMarkets.map(
 													(flag, index) => (
-														<span
+														<Badge
 															key={index}
-															className="text-lg"
+															variant={
+																"secondary"
+															}
+															className="text-xs"
 														>
 															{flag}
-														</span>
+														</Badge>
 													)
 												)}
 											</div>
@@ -537,6 +585,44 @@ export function SmartProductMatch() {
 														}
 													</span>
 												</div>
+
+												{/* AI Insights actions per contents.md */}
+												<div className="grid grid-cols-3 gap-2 pt-2">
+													<Button
+														variant="outline"
+														size="sm"
+														className="text-[10px]"
+														onClick={() =>
+															toast(
+																"Saved to Insights Hub"
+															)
+														}
+													>
+														Save to Insights Hub
+													</Button>
+													<Button
+														variant="outline"
+														size="sm"
+														className="text-[10px]"
+														onClick={() =>
+															toast(
+																"Exported as report"
+															)
+														}
+													>
+														Export as Report
+													</Button>
+													<Button
+														variant="outline"
+														size="sm"
+														className="text-[10px]"
+														onClick={() =>
+															toast("Alert set")
+														}
+													>
+														Set Alert
+													</Button>
+												</div>
 											</CollapsibleContent>
 										</Collapsible>
 
@@ -546,12 +632,30 @@ export function SmartProductMatch() {
 												variant="outline"
 												size="sm"
 												className="text-xs"
+												onClick={() => {
+													setSelectedProductId(
+														product.id
+													);
+													setTrendDialogOpen(true);
+												}}
 											>
 												View Trend
 											</Button>
 											<Button
 												size="sm"
 												className="text-xs"
+												onClick={() => {
+													setSelectedProductId(
+														product.id
+													);
+													setOptDialogOpen(true);
+													setAdjustedPrice(
+														product.currentPrice
+													);
+													setReorderQty(0);
+													setWhatIfPriceDelta(0);
+													setWhatIfStockDelta(0);
+												}}
 											>
 												Optimize
 											</Button>
@@ -641,6 +745,10 @@ export function SmartProductMatch() {
 										variant="outline"
 										size="sm"
 										className="w-full mt-2 text-xs"
+										onClick={() => {
+											setSelectedGapIndex(index);
+											setGapDialogOpen(true);
+										}}
 									>
 										Explore Gap
 									</Button>
@@ -650,6 +758,350 @@ export function SmartProductMatch() {
 					</Card>
 				</div>
 			</div>
+
+			{/* Trend Deep Dive Dialog */}
+			<Dialog open={trendDialogOpen} onOpenChange={setTrendDialogOpen}>
+				<DialogContent className="max-w-2xl">
+					<DialogHeader>
+						<DialogTitle>
+							Trend Breakdown:{" "}
+							{selectedProduct?.primaryTrends?.[0] || "Trend"}
+						</DialogTitle>
+					</DialogHeader>
+
+					<div className="space-y-4 w-full pr-6">
+						<div className="h-48">
+							<ReResponsiveContainer width="100%" height="100%">
+								<ReLineChart
+									data={Array.from({ length: 8 }, (_, i) => ({
+										period: `M${i + 1}`,
+										yoy: 40 + i * 5 + (i % 2 ? 6 : -3),
+										mom: 30 + i * 4 + (i % 3 ? 5 : -2)
+									}))}
+								>
+									<ReCartesianGrid strokeDasharray="3 3" />
+									<ReXAxis dataKey="period" />
+									<ReYAxis />
+									<ReTooltip />
+									<ReLine
+										type="monotone"
+										dataKey="yoy"
+										stroke="#2563eb"
+										name="YoY"
+									/>
+									<ReLine
+										type="monotone"
+										dataKey="mom"
+										stroke="#10b981"
+										name="MoM"
+									/>
+								</ReLineChart>
+							</ReResponsiveContainer>
+						</div>
+						<div className="w-full grid grid-cols-1 gap-3 text-sm">
+							<div className="border border-border rounded-md p-3">
+								<div className="font-medium mb-1">
+									Top Influencers
+								</div>
+								<ul className="list-disc pl-4 space-y-1">
+									<li>@StyleAuthority (1.2K mentions)</li>
+									<li>@ExecFit (860 mentions)</li>
+								</ul>
+							</div>
+							<div className="border border-border rounded-md p-3">
+								<div className="font-medium mb-1">
+									Competitor Adoption
+								</div>
+								<div className="text-muted-foreground">
+									5 brands launched SKUs
+								</div>
+							</div>
+							<div className="border border-border rounded-md p-3">
+								<div className="font-medium mb-1">
+									Related Products
+								</div>
+								<ul className="list-disc pl-4 space-y-1">
+									<li>Oxford Dress Shoes</li>
+									<li>Silk Pocket Squares</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<DialogFooter>
+						{/* <Button
+							variant="outline"
+							onClick={() =>
+								toast("Opening competitor analysis…")
+							}
+						>
+							Analyze Competitors
+						</Button> */}
+						<Button
+							variant="secondary"
+							onClick={() => toast("Added to Priority List")}
+						>
+							Add to Priority List
+						</Button>
+						<Button onClick={() => toast("Trend bookmarked")}>
+							Bookmark Trend
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
+
+			{/* Optimization Wizard Dialog */}
+			<Dialog open={optDialogOpen} onOpenChange={setOptDialogOpen}>
+				<DialogContent className="max-w-2xl">
+					<DialogHeader>
+						<DialogTitle>
+							Optimize {selectedProduct?.name || "Product"}
+						</DialogTitle>
+					</DialogHeader>
+					<div className="space-y-4">
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+							<div className="space-y-2">
+								<div className="text-sm font-medium">
+									Optimization Focus
+								</div>
+								<Select
+									value={optFocus}
+									onValueChange={(v) => setOptFocus(v as any)}
+								>
+									<SelectTrigger className="w-full">
+										<SelectValue />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value="price">
+											Price
+										</SelectItem>
+										<SelectItem value="stock">
+											Stock
+										</SelectItem>
+										<SelectItem value="promotion">
+											Promotion
+										</SelectItem>
+									</SelectContent>
+								</Select>
+							</div>
+							<div className="space-y-2">
+								<div className="text-sm font-medium">
+									Adjust Price
+								</div>
+								<div className="flex items-center gap-3">
+									<Badge
+										variant="outline"
+										className="text-xs"
+									>
+										Current: $
+										{selectedProduct?.currentPrice?.toFixed(
+											2
+										)}
+									</Badge>
+									<input
+										type="number"
+										className="w-full rounded-md border border-border bg-background p-2 text-sm"
+										value={
+											adjustedPrice ??
+											selectedProduct?.currentPrice ??
+											0
+										}
+										onChange={(e) =>
+											setAdjustedPrice(
+												parseFloat(e.target.value)
+											)
+										}
+									/>
+								</div>
+							</div>
+							<div className="space-y-2">
+								<div className="text-sm font-medium">
+									Reorder Quantity
+								</div>
+								<input
+									type="number"
+									className="w-full rounded-md border border-border bg-background p-2 text-sm"
+									value={reorderQty}
+									onChange={(e) =>
+										setReorderQty(
+											parseInt(e.target.value || "0", 10)
+										)
+									}
+								/>
+							</div>
+							<div className="space-y-2">
+								<div className="text-sm font-medium">
+									What-If: Price Delta ($)
+								</div>
+								<Slider
+									value={[whatIfPriceDelta]}
+									min={-50}
+									max={50}
+									step={1}
+									onValueChange={([v]) =>
+										setWhatIfPriceDelta(v)
+									}
+								/>
+								<div className="text-xs text-muted-foreground">
+									Delta: {whatIfPriceDelta >= 0 ? "+" : ""}
+									{whatIfPriceDelta}
+								</div>
+							</div>
+							<div className="space-y-2">
+								<div className="text-sm font-medium">
+									What-If: Stock Delta (units)
+								</div>
+								<Slider
+									value={[whatIfStockDelta]}
+									min={-100}
+									max={200}
+									step={5}
+									onValueChange={([v]) =>
+										setWhatIfStockDelta(v)
+									}
+								/>
+								<div className="text-xs text-muted-foreground">
+									Delta: {whatIfStockDelta >= 0 ? "+" : ""}
+									{whatIfStockDelta}
+								</div>
+							</div>
+						</div>
+						<div className="rounded-md border border-border p-3 text-sm">
+							<div className="font-medium mb-1">
+								AI Suggestions
+							</div>
+							<ul className="list-disc pl-4 space-y-1 text-muted-foreground">
+								<li>
+									Competitors priced $20 lower, consider $
+									{(
+										(selectedProduct?.currentPrice || 0) -
+										20
+									).toFixed(2)}
+								</li>
+								<li>
+									Reorder recommended within 10 days for
+									sustained demand
+								</li>
+								<li>
+									Bundle with Oxford Shoes for +12% margin
+									lift
+								</li>
+							</ul>
+						</div>
+					</div>
+					<DialogFooter>
+						<Button
+							variant="outline"
+							onClick={() => {
+								toast("Draft saved");
+							}}
+						>
+							Save Draft
+						</Button>
+						<Button
+							variant="secondary"
+							onClick={() => {
+								setOptDialogOpen(false);
+							}}
+						>
+							Cancel
+						</Button>
+						<Button
+							onClick={() => {
+								toast("Optimization applied");
+								setOptDialogOpen(false);
+							}}
+						>
+							Apply Optimization
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
+
+			{/* Gap Opportunity Explorer Dialog */}
+			<Dialog open={gapDialogOpen} onOpenChange={setGapDialogOpen}>
+				<DialogContent className="max-w-2xl">
+					<DialogHeader>
+						<DialogTitle>
+							Market Gap: {selectedGap?.category || "Category"}
+						</DialogTitle>
+					</DialogHeader>
+					<div className="space-y-3 text-sm">
+						<p className="text-muted-foreground">
+							Competitors have entered this trend but your catalog
+							is missing relevant SKUs.
+						</p>
+						<div className="w-full grid grid-cols-1 gap-3">
+							<div className="rounded-md border border-border p-3">
+								<div className="font-medium mb-1">
+									Market Size Estimate
+								</div>
+								<div>
+									~$
+									{selectedGap
+										? selectedGap.opportunity === "High"
+											? "3.2M"
+											: "1.4M"
+										: "—"}{" "}
+									potential / quarter
+								</div>
+								<div>
+									Units:{" "}
+									{selectedGap
+										? selectedGap.opportunity === "High"
+											? "18k"
+											: "7k"
+										: "—"}
+								</div>
+							</div>
+							<div className="rounded-md border border-border p-3">
+								<div className="font-medium mb-1">
+									Competitor Presence
+								</div>
+								<div>
+									{selectedGap?.competitors ?? "—"} active
+									competitors
+								</div>
+							</div>
+						</div>
+						<div className="rounded-md border border-border p-3">
+							<div className="font-medium mb-1">
+								Potential Fit Products
+							</div>
+							<ul className="list-disc pl-4 space-y-1">
+								<li>Eco Wool Suit</li>
+								<li>Tech-Lined Blazer</li>
+								<li>Tall Fit Dress Shirt</li>
+							</ul>
+						</div>
+						<div className="rounded-md border border-border p-3">
+							<div className="font-medium mb-1">
+								Launch Timeline Advice
+							</div>
+							<div>
+								Window: Next 4–6 weeks for early mover
+								advantage.
+							</div>
+						</div>
+					</div>
+					<DialogFooter>
+						{/* <Button
+							variant="outline"
+							onClick={() => toast("Added new product idea")}
+						>
+							Add New Product Idea
+						</Button> */}
+						<Button
+							variant="secondary"
+							onClick={() => toast("Assigned to Trend Agent")}
+						>
+							Assign to Trend Agent
+						</Button>
+						<Button onClick={() => toast("Saved to Watchlist")}>
+							Save Gap to Watchlist
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
 		</div>
 	);
 }

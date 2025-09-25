@@ -283,7 +283,17 @@ export function SocialMediaIntel({ timeRange, geography }: SocialMediaIntelProps
                       <div key={index} className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <span className="font-medium text-blue-600">{hashtag.tag}</span>
-                          <Badge variant="outline">{hashtag.sentiment}</Badge>
+                          <Badge
+                            variant={
+                              hashtag.sentiment === 'positive'
+                                ? 'success'
+                                : hashtag.sentiment === 'neutral'
+                                ? 'secondary'
+                                : 'destructive'
+                            }
+                          >
+                            {hashtag.sentiment}
+                          </Badge>
                         </div>
                         <div className="text-right">
                           <p className="text-sm">{(hashtag.volume / 1000000).toFixed(1)}M</p>

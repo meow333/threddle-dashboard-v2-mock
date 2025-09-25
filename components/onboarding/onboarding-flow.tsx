@@ -3,7 +3,7 @@ import { LoginRegistration } from "../login-registration";
 import { WelcomeScreen } from "./welcome-screen";
 import { StoreConnectionProgress } from "./store-connection-progress";
 import { BusinessContext } from "./business-context";
-import { ProductInsightsDashboard } from "./product-insights-dashboard";
+import { ShopifyDataSync } from "./shopify-data-sync";
 import { RecommendationsSetup } from "./recommendations-setup";
 import { WelcomePage } from "./welcome-page";
 
@@ -75,16 +75,12 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 			onNext={handleNext}
 			onBack={handleBack}
 		/>,
-		<BusinessContext
-			key="business"
-			onNext={handleBusinessContext}
-			onBack={handleBack}
-		/>,
-		<ProductInsightsDashboard
-			key="insights"
-			onNext={handleNext}
-			onBack={handleBack}
-		/>,
+    <BusinessContext
+        key="business"
+        onNext={handleBusinessContext}
+        onBack={handleBack}
+    />,
+    <ShopifyDataSync key="sync" onNext={handleNext} onBack={handleBack} />,
 		<RecommendationsSetup
 			key="recommendations"
 			onNext={handleNotificationSettings}

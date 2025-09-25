@@ -55,10 +55,11 @@ export function ShopifyDataSync({ onNext, onBack }: ShopifyDataSyncProps) {
 							</div>
 							<div className="space-y-2">
 								<h2 className="text-2xl font-medium text-foreground">
-									Syncing your catalog...
+									Syncing AI agents with your product catalog
 								</h2>
 								<p className="text-muted-foreground">
-									Importing your products and analyzing trends
+									Solving your inventory pain while we import
+									your products and analyze trends.
 								</p>
 							</div>
 						</>
@@ -73,8 +74,9 @@ export function ShopifyDataSync({ onNext, onBack }: ShopifyDataSyncProps) {
 										Sync Complete!
 									</h2>
 									<p className="text-muted-foreground">
-										Your catalog has been successfully
-										imported
+										Trend matching, demand forecasting,
+										restock guidance, price tracking —
+										powered by agents.
 									</p>
 								</div>
 
@@ -143,9 +145,9 @@ export function ShopifyDataSync({ onNext, onBack }: ShopifyDataSyncProps) {
 				</div>
 
 				{/* Progress Indicator */}
-				<div className="pt-8">
-					<ProgressIndicator currentStep={4} totalSteps={7} />
-				</div>
+				{/* <div className="pt-8">
+                    <ProgressIndicator currentStep={4} totalSteps={5} />
+                </div> */}
 			</div>
 		</div>
 	);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Loader2, Store, ArrowLeft } from "lucide-react";
+import { Loader2, Store, ArrowLeft, Circle, Check } from "lucide-react";
 const logoImage = "/images/logos/logo-threddle.png";
 import { Button } from "../ui/button";
 import { ProgressIndicator } from "./progress-indicator";
@@ -18,20 +18,36 @@ export function StoreConnectionProgress({
 }: StoreConnectionProgressProps) {
 	const [isConnecting, setIsConnecting] = useState(true);
 	const [isComplete, setIsComplete] = useState(false);
+	const [stepIndex, setStepIndex] = useState(0);
 
 	useEffect(() => {
-		// Simulate connection process
-		const timer = setTimeout(() => {
-			setIsConnecting(false);
-			setIsComplete(true);
-
-			// Auto-advance after showing success
+		// Simulate multi-step connection process
+		const timeouts: NodeJS.Timeout[] = [];
+		const steps = [0, 1, 2, 3];
+		steps.forEach((_, i) => {
+			timeouts.push(
+				setTimeout(() => {
+					setStepIndex(i);
+				}, 700 * i)
+			);
+		});
+		timeouts.push(
 			setTimeout(() => {
-				onNext();
-			}, 1500);
-		}, 3000);
+				setIsConnecting(false);
+				setIsComplete(true);
+			}, 700 * steps.length)
+		);
+		// Auto-advance after showing success
+		timeouts.push(
+			setTimeout(
+				() => {
+					onNext();
+				},
+				700 * steps.length + 1500
+			)
+		);
 
-		return () => clearTimeout(timer);
+		return () => timeouts.forEach(clearTimeout);
 	}, [onNext]);
 
 	return (
@@ -53,14 +69,68 @@ export function StoreConnectionProgress({
 								<div className="flex justify-center">
 									<Loader2 className="h-12 w-12 text-blue-500 animate-spin" />
 								</div>
-								<div className="space-y-3">
+								<div className="space-y-4">
 									<h2 className="text-2xl font-medium text-foreground">
 										Connecting your store...
 									</h2>
-									<p className="text-slate-600 font-normal">
-										Setting up secure connection to your
-										Shopify store
-									</p>
+									<ul className="text-sm text-muted-foreground text-left space-y-1">
+										<li
+											className={
+												stepIndex >= 0
+													? "flex flex-row items-center justify-start gap-2 text-blue-500"
+													: "flex flex-row items-center justify-start gap-2 "
+											}
+										>
+											{stepIndex >= 0 ? (
+												<Check className="h-4 w-4" />
+											) : (
+												<div className="w-2 h-2 bg-slate-500 rounded-full"></div>
+											)}
+											Credentials authenticated
+										</li>
+										<li
+											className={
+												stepIndex >= 1
+													? "flex flex-row items-center justify-start gap-2 text-blue-500"
+													: "flex flex-row items-center justify-start gap-2 "
+											}
+										>
+											{stepIndex >= 1 ? (
+												<Check className="h-4 w-4" />
+											) : (
+												<div className="w-2 h-2 bg-slate-500 rounded-full"></div>
+											)}
+											Store linked
+										</li>
+										<li
+											className={
+												stepIndex >= 2
+													? "flex flex-row items-center justify-start gap-2 text-blue-500"
+													: "flex flex-row items-center justify-start gap-2 "
+											}
+										>
+											{stepIndex >= 2 ? (
+												<Check className="h-4 w-4" />
+											) : (
+												<div className="w-2 h-2 bg-slate-500 rounded-full"></div>
+											)}
+											Data sync in progress
+										</li>
+										<li
+											className={
+												stepIndex >= 3
+													? "flex flex-row items-center justify-start gap-2 text-blue-500"
+													: "flex flex-row items-center justify-start gap-2 "
+											}
+										>
+											{stepIndex >= 3 ? (
+												<Check className="h-4 w-4" />
+											) : (
+												<div className="w-2 h-2 bg-slate-500 rounded-full"></div>
+											)}
+											Agent network activated
+										</li>
+									</ul>
 								</div>
 							</>
 						) : (
@@ -74,8 +144,9 @@ export function StoreConnectionProgress({
 											Store Connected!
 										</h2>
 										<p className="text-slate-600 font-normal">
-											Successfully connected to Elite
-											Formal Wear
+											Credentials authenticated. Store
+											linked. Agent network activated.
+											Smart agents, smarter outcomes.
 										</p>
 									</div>
 
@@ -132,9 +203,9 @@ export function StoreConnectionProgress({
 			</div>
 
 			{/* Progress Indicator */}
-			<div className="pt-8">
-				<ProgressIndicator currentStep={2} totalSteps={6} />
-			</div>
+			{/* <div className="pt-8">
+				<ProgressIndicator currentStep={2} totalSteps={5} />
+			</div> */}
 		</div>
 	);
 }

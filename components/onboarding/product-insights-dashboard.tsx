@@ -196,8 +196,8 @@ export function ProductInsightsDashboard({
 									</Badge>
 								</div>
 							</CardHeader>
-							<CardContent className="space-y-5 p-6 pt-0">
-								<div className="flex items-center space-x-4">
+							<CardContent className="space-y-5 p-6 pt-0 ">
+								<div className="flex justify-start items-center space-x-4">
 									<div className="w-16 h-16 rounded-lg overflow-hidden bg-slate-100 ">
 										<ImageWithFallback
 											src={inventoryInsight.image}
@@ -291,12 +291,12 @@ export function ProductInsightsDashboard({
 														competitorInsight.competitorPrice
 													}
 												</div>
+												<div className="font-medium text-center text-green-600 bg-green-500/10 px-3 py-1 text-xs border border-green-500/30 rounded-lg backdrop-blur-lg">
+													{
+														competitorInsight.advantage
+													}
+												</div>
 											</div>
-										</div>
-									</div>
-									<div className="w-full text-right flex flex-row justify-center items-center ">
-										<div className="font-medium text-center text-green-600 bg-green-500/10 px-3 py-1 border border-green-500/30 rounded-full shadow backdrop-blur-lg">
-											{competitorInsight.advantage}
 										</div>
 									</div>
 								</div>

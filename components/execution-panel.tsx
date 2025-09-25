@@ -62,21 +62,15 @@ export function ExecutionPanel({ className }: ExecutionPanelProps) {
 	};
 
 	return (
-    <div
-        className={`border-b border-border bg-white dark:bg-black px-4 sm:px-6 md:px-8 py-4 md:py-5 transition-colors ${
-            className || ""
-        }`}
-    >
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+		<div
+			className={`border-b border-border bg-card px-4 sm:px-6 md:px-8 py-4 md:py-5 transition-colors ${
+				className || ""
+			}`}
+		>
+			<div className="flex flex-col gap-4 lg:flex-row md:items-center md:justify-between">
 				{/* Header */}
 				<div className="flex items-center gap-3">
 					<SidebarTrigger />
-					<div className="p-2 bg-accent rounded-lg">
-						<Target className="h-4 w-4 text-blue-200" />
-					</div>
-					<span className="font-medium text-foreground">
-						Execution Panel
-					</span>
 
 					{/* Theme toggle */}
 					<button
@@ -103,17 +97,24 @@ export function ExecutionPanel({ className }: ExecutionPanelProps) {
 							/>
 						</span>
 						<span
-							className={`absolute left-1 top-1 h-6 w-6 rounded-full bg-card shadow-sm transition-transform duration-300 ${
+							className={`absolute left-1 top-1 h-6 w-6 rounded-full bg-slate-200 dark:bg-slate-800 shadow-sm transition-transform duration-300 ${
 								theme === "dark"
 									? "translate-x-6"
 									: "translate-x-0"
 							}`}
 						/>
 					</button>
+
+					<div className="p-2 bg-accent rounded-lg">
+						<Target className="h-4 w-4 text-blue-200" />
+					</div>
+					<span className="font-medium text-foreground">
+						Execution Panel
+					</span>
 				</div>
 
 				{/* Metrics Grid */}
-                <div className="flex flex-wrap items-center gap-4 sm:gap-6 md:gap-8 xl:gap-12">
+				<div className="flex flex-wrap items-center gap-4 sm:gap-6 md:gap-8 xl:gap-12">
 					{/* Top Priority Action */}
 					<div className="flex items-center gap-4">
 						<div className="p-2 bg-accent rounded-lg">
@@ -154,8 +155,8 @@ export function ExecutionPanel({ className }: ExecutionPanelProps) {
 								THREAT
 							</span>
 							<Badge
-								variant="secondary"
-								className="text-foreground border border-border font-normal"
+								variant="destructive"
+								className="font-normal"
 							>
 								{executionData.biggestThreat}
 							</Badge>

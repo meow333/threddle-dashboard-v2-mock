@@ -1,29 +1,30 @@
 /* eslint-disable @next/next/no-sync-scripts */
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: 'Threddle Dashboard',
-  description: 'Fashion retail intelligence dashboard',
-}
+	title: "Threddle Dashboard",
+	description: "Fashion retail intelligence dashboard"
+};
 
 export default function RootLayout({
-  children,
+	children
 }: {
-  children: React.ReactNode
+	children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <head>
-        {/* Initialize theme before paint to avoid FOUC */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "(function(){try{var t=localStorage.getItem('theme');var d=t==='dark'||(!t&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);var c=document.documentElement.classList;c.toggle('dark', d);}catch(e){}})();",
-          }}
-        />
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script dangerouslySetInnerHTML={{ __html: `
+	return (
+		<html lang="en">
+			<head>
+				{/* Initialize theme before paint to avoid FOUC */}
+				<script
+					dangerouslySetInnerHTML={{
+						__html: "(function(){try{var t=localStorage.getItem('theme');var d=t==='dark'||(!t&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);var c=document.documentElement.classList;c.toggle('dark', d);}catch(e){}})();"
+					}}
+				/>
+				<script src="https://cdn.tailwindcss.com"></script>
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `
               tailwind.config = {
                 darkMode: 'class',
                 theme: {
@@ -33,6 +34,7 @@ export default function RootLayout({
                       foreground: 'var(--foreground)',
                       card: 'var(--card)',
                       'card-foreground': 'var(--card-foreground)',
+                      'card-login': 'var(--card-login)',
                       popover: 'var(--popover)',
                       'popover-foreground': 'var(--popover-foreground)',
                       primary: 'var(--primary)',
@@ -70,9 +72,11 @@ export default function RootLayout({
                   },
                 },
               }
-        `}} />
-      </head>
-      <body className="transition-colors">{children}</body>
-    </html>
-  )
+        `
+					}}
+				/>
+			</head>
+			<body className="transition-colors">{children}</body>
+		</html>
+	);
 }
